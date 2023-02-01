@@ -1,5 +1,14 @@
 # Projektin nimi
-Tiimi: Etunimi Sukunimi, Etunimi Sukunimi
+
+##### Tiimi: Koodivelhot
+
+##### Projektiryhmän jäsenet:
+Elias Hörkkö
+Alex Kiippa
+Jaakko Huovelin
+Susanna Lehto
+Vesa Liukkonen
+Jenny Berg
 
 ## Johdanto
 Johdantoon kirjoitetaan lyhyt, ytimekäs kuvaus siitä, mikä on projektin aihe, kuka on asiakas (käyttäjä), mitä hän haluaa ja saa järjestelmältä, mitä tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti päättyy.
