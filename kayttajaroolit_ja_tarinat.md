@@ -18,6 +18,7 @@
 * As an **admin user** of the software, I want to have all the rights to use the software and database so that I can read, add, edit and delete the events.
 * As an **admin user** of the software, I want to be able to add/save, edit and delete different events.
 * As an **admin user** of the software, I need to be able to set, start and end pre-selling of tickets.
+* As an **admin user** of the software, I want to be able to add/save, edit and delete different types of tickets.
 
 * As the **owner of the software** , I want to have a clear UI so that I can easily add and delete events.
 * As the **owner of the software** , I want to get ticket sales reports from the software so that I can improve my business model.
