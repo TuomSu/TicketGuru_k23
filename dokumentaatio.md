@@ -29,15 +29,19 @@ ___
 
 ## Järjestelmän määrittely
 
-*Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän käyttäjäryhmät.*
+
 
 TicketGurussa on kolme käyttäjäroolia: Admin, Pääkäyttäjä ja käyttäjä. 
 
 * Admin käyttäjäryhmä on pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus.  
-* Pääkäyttäjä on lipputoimiston henkilökunnalla. Pääkäyttäjät voivat lisätä ja poistaa tapahtumia palvelusta
-* Käyttäjä on asiakkaiden käyttäjäryhmä, jotka ostavat lippuja palvelusta. Tämä Käyttäjä ryhmä pystyy siis ainoastaan ostamaan lippuja. 
+* Pääkäyttäjä on lipputoimiston henkilökunnalla. Pääkäyttäjät voivat lisätä ja poistaa tapahtumia palvelusta. Tälle ryhmälle on myös oma sivu johon kerääntyy dataa lippujne myynnistä.
+* Käyttäjä on asiakkaiden käyttäjäryhmä, jotka ostavat lippuja palvelusta. Tämä Käyttäjä ryhmä pystyy siis ainoastaan ostamaan lippuja.
+
+
 
 ___
+
+*Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän käyttäjäryhmät.*
 
 * Lyhyt kuvaus käyttäjäryhmistä (rooleista)
 * Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona (use case diagram) tai käyttäjätarinoina.
@@ -47,11 +51,12 @@ ___
 
 ## Käyttöliittymä
 
-Tärkeimmät käyttöliittymät ovat: etusivu, hakusivuja,  oma sivu.
+Tärkeimmät käyttöliittymät ovat: etusivu, hakusivuja,  oma sivu ja myyntisivu.
 
-* Etusivulla näkyy suositeltuja tapahtumia ja sivun ylälaidassa sijaitsee hakupalkki mistä käyttäjän on mahdollista etsiä mieluisa tapahtuma.
+* Etusivulla näkyy suositeltuja tapahtumia lähellä käyttäjää ja sivun ylälaidassa sijaitsee hakupalkki mistä käyttäjän on mahdollista etsiä mieluisa tapahtuma.
 * Hakusivulla on näkymä sitten hakusanalla etsityistä tapahtumista jonne on lippuja. Tällä sivulla on myös mahdollista ostaa tiettyyn tapahtumaan lippu
-* Oma sivu. Omallasivulla näkyy sitten käyttäjän ostetut liput tapahtumiin.
+* Oma sivu. Omallasivulla näkyy sitten käyttäjän ostetut liput tuleviin ja menneisiin tapahtumiin.
+* Myyntisivu on pääkäyttäjälle eli tapahtumien listaajalle. Myyntisivulle kerääntyy dataa lippujen myynneistä.
 
 ___
 
