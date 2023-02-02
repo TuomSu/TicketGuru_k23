@@ -1,23 +1,57 @@
 # Projektin nimi
-Tiimi: Etunimi Sukunimi, Etunimi Sukunimi
+
+##### Tiimi: Koodivelhot
+
+##### Projektiryhmän jäsenet:
+* Elias Hörkkö
+* Alex Kiippa
+* Jaakko Huovelin
+* Susanna Lehto
+* Vesa Liukkonen
+* Jenny Berg
 
 ## Johdanto
+
+Projektin tavoitteena on tuottaa lipputoimiston tilaama lipunmyyntijärjestelmä, jonka avulla lipputoimiston henkilökunta voi myydä lippuja erilaisiin tapahtumiin myyntipisteessä. Asiakas voi määritellä järjestelmään ne tapahtumat, joihin lippuja myydään.  
+
+Järjestelmän avulla lipputoimiston lipunmyynti tehostuu ja heidän on helpompi hallita myytäviä tapahtumia. Lisäksi asiakas saa järjestelmästä liiketoiminnan kehittämisen kannalta hyödyllisiä myyntiraportteja. Järjestelmän alustava nimi on TicketGuru.
+
+Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Käyttöliittymäratkaisut ja teknologiat tarkentuvat myöhemmin.
+
+
 Johdantoon kirjoitetaan lyhyt, ytimekäs kuvaus siitä, mikä on projektin aihe, kuka on asiakas (käyttäjä), mitä hän haluaa ja saa järjestelmältä, mitä tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti päättyy.
 
-## Järjestelmän tarkoitus
-ja tiivis kuvaus siitä, mistä on kyse ja kenelle järjestelmä on tarkoitettu.
-Toteutus- ja toimintaympäristö lyhyesti:
-Palvelinpuolen ratkaisut ja teknologiat (esim. palvelinteknologia, mikä tietokantajärjestelmä on käytössä)
-Käyttöliittymäratkaisut ja teknologiat (esim. päätelaitteet: puhelin, täppäri, desktop)
-Järjestelmän määrittely
+* Järjestelmän tarkoitus ja tiivis kuvaus siitä, mistä on kyse ja kenelle järjestelmä on tarkoitettu.
+* Toteutus- ja toimintaympäristö lyhyesti:
+    ⋅⋅* Palvelinpuolen ratkaisut ja teknologiat (esim. palvelinteknologia, mikä tietokantajärjestelmä on käytössä)
+    ⋅⋅* Käyttöliittymäratkaisut ja teknologiat (esim. päätelaitteet: puhelin, täppäri, desktop)
+
+## Järjestelmän määrittely
+
 Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän käyttäjäryhmät.
 
-## Lyhyt kuvaus käyttäjäryhmistä (rooleista)
-Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona (use case diagram) tai käyttäjätarinoina.
-Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
+TicketGurussa on kolme käyttäjäroolia: Admin, Pääkäyttäjä ja käyttäjä. 
+
+* Admin käyttäjäryhmä on pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollisestataan kaiken tietojen muokkaus.  
+* Pääkäyttäjä on lipputoimiston henkilökunnalla. Pääkäyttäjät voivat lisätä ja poistaa tapahtumia palvelusta
+* Käyttäjä on asiakkaiden käyttäjäryhmä, jotka ostavat lippuja palvelusta. Tämä Käyttäjä ryhmä pystyy siis ainoastaan ostamaan lippuja. 
+
+
+
+* Lyhyt kuvaus käyttäjäryhmistä (rooleista)
+* Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona (use case diagram) tai käyttäjätarinoina.
+* Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
+
 Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista tietoa ja keskittyä siihen.
 
 ## Käyttöliittymä
+
+Tärkeimmäit käyttöliittymät ovat: etusivu, hakusivuja oma sivu.
+
+* Etusivulla näkyy suositeltuja tapahtumia ja sivun ylälaidassa sijaitsee hakupalkki mistä käyttäjän on mahdollista etsiä mieluisa tapahtuma.
+* Hakusivulla on näkymä sitten hakusanalla etsityistä tapahtumista jonne on lippuja. Tällä sivulla on myös mahdollista ostaa tiettyyn tapahtumaan lippu
+*Oma sivu. Omallasivulla näkyy sitten käyttäjän ostetut liput tapahtumiin.
+
 Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona.
 
 Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
