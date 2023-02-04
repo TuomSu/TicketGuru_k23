@@ -29,15 +29,46 @@ ___
 
 ## Järjestelmän määrittely
 
+3 olennaista tehtävää, jonka järjestelmän pitäisi pystyä tekemään on:
+1.	Lipunmyynti
+- myynnistä muodostuu myyntitapahtuma, josta päästään tulostamaan asiakkaalle lippu
+- lippuja myydään ennakkoon tietty määrä, ja loput, joista ei ole muodostunut myyntitapahtumaa, tulostetaan ja myydään ovella.
+- lipputyyppejä on erihintaisia (tässä voitaisiin käyttää kerrointa, esim. lapsen lippu x0,5)
+2.	Tapahtumien hallinta
+- tapahtumia on pystyttävä luomaan järjestelmässä, mutta tämän lisäksi myös muokkaamaan ja poistamaan
+3.	Myyntiraportti
+- tapahtumakohtaisten myyntiraporttien näyttäminen, lipputyypeittäin myyntien näyttäminen sekä kronologisessa järjestyksessä tapahtuman myyntitapahtumat näyttämään
+
+### TicketGurussa on kolme käyttäjäroolia: Admin, pääkäyttäjä ja käyttäjä:
+
+**Admin**: pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus tietokantaan ja järjestelmään (sis. CRUD toiminnallisuudet),
+
+*Käyttäjätarinoita:*
+
+As an admin user, I want to have all the rights to use the software and database so that I can read, add, edit and delete the events.
+
+As an admin user, I want to be able to add/save, edit and delete different events.
+
+As an admin user, I need to be able to set, start and end pre-selling of tickets.
+
+As an admin user, I want to be able to add/save, edit and delete tickets.
+
+**Pääkäyttäjä**: toimistotyöntekijällä olisi CRUD-oikeudet sekä oikeus ottaa raportteja, 
+
+*Käyttäjätarinoita:*
+
+As the operator at the office, I want to get ticket sales reports from the software so that I can improve my business model.
+
+As the operator at the office, I want to be able to distinguish between used and not used tickets.
 
 
-TicketGurussa on kolme käyttäjäroolia: Admin, Pääkäyttäjä ja käyttäjä. 
+**Käyttäjä**: lipunmyyjälle taas riittää oikeudet nähdä tapahtumat ja luoda myyntitapahtuma.
 
-* Admin käyttäjäryhmä on pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus.  
-* Pääkäyttäjä on lipputoimiston henkilökunnalla. Pääkäyttäjät voivat lisätä ja poistaa tapahtumia palvelusta. Tälle ryhmälle on myös oma sivu johon kerääntyy dataa lippujne myynnistä.
-* Käyttäjä on asiakkaiden käyttäjäryhmä, jotka ostavat lippuja palvelusta. Tämä Käyttäjä ryhmä pystyy siis ainoastaan ostamaan lippuja.
+*Käyttäjätarinoita:*
 
+As the ticket salesperson, I want to be able to sell discounted tickets for kids for example.
 
+As the ticket salesperson, I want to be able to see the events and sell tickets and print them to customers so that they can show the ticket before the event.
 
 ___
 
