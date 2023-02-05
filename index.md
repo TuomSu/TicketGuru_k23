@@ -51,7 +51,7 @@ ___
 
 ## Linkki projektin työjonoon ja Scrum-tauluun
 
-[TyöjonojaScrum-taulu](./tyojono_Scrumtaulu.md)
+[Työjono ja Scrum-taulu](./tyojono_Scrumtaulu.md)
 
 ## Käyttöliittymä
 
