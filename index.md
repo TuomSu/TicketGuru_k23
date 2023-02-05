@@ -63,7 +63,7 @@ Tapahtumien hallinnan näkymässä on listaus järjestelmään tallennetuista ta
 
 Alustavat käyttöliittymän näkymät ja niiden väliset suhteet on esitetty kuvassa 1.
 
-![alt text](https://github.com/perunajenny/pictures/issues/1#issue-1571596250)
+![alt text](https://user-images.githubusercontent.com/83058532/216842539-7a343ef6-0d69-44be-98cf-d6ea2a484d73.png)
 Kuva 1. Alustava käyttöliittymäkaavio.
 
 ___
