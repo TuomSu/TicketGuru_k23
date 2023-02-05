@@ -49,6 +49,10 @@ ___
 
 *Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista tietoa ja keskittyä siihen.*
 
+## Linkki projektin työjonoon ja Scrum-tauluun
+
+[TyöjonojaScrum-taulu](./tyojono_Scrumtaulu.md)
+
 ## Käyttöliittymä
 
 Tärkeimmät käyttöliittymät ovat: etusivu, hakusivuja,  oma sivu ja myyntisivu.
