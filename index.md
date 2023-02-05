@@ -55,18 +55,19 @@ ___
 
 ## Käyttöliittymä
 
-Tärkeimmät käyttöliittymät ovat: etusivu, hakusivuja,  oma sivu ja myyntisivu.
+Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. 
 
-* Etusivulla näkyy suositeltuja tapahtumia lähellä käyttäjää ja sivun ylälaidassa sijaitsee hakupalkki mistä käyttäjän on mahdollista etsiä mieluisa tapahtuma.
-* Hakusivulla on näkymä sitten hakusanalla etsityistä tapahtumista jonne on lippuja. Tällä sivulla on myös mahdollista ostaa tiettyyn tapahtumaan lippu
-* Oma sivu. Omallasivulla näkyy sitten käyttäjän ostetut liput tuleviin ja menneisiin tapahtumiin.
-* Myyntisivu on pääkäyttäjälle eli tapahtumien listaajalle. Myyntisivulle kerääntyy dataa lippujen myynneistä.
+Lipunmyyntinäkymässä on listaus myytävissä olevissa tapahtumista. Listauksessa näytetään tapahtumista perustiedot kuten aika ja nimi. Klikkaamalla tapahtumariviä päästään valitsemaan, kuinka monta lippua kyseiseen tapahtumaan halutaan myydä. Myynnin jälkeen avautuu yksittäisen myyntitapahtuman näkymä, jossa näkyy myyntitapahtuman maksutiedot sekä ostetut liput. Sivulta löytyy linkki, josta liput voidaan tulostaa.
+
+Tapahtumien hallinnan näkymässä on listaus järjestelmään tallennetuista tapahtumista, joista näytetään listauksessa perustiedot kuten aika, paikka ja nimi. Näkymän kautta jo lisättyjä tapahtumia ja niiden lipputyyppejä on mahdollista päästä muokkaamaan. Lisäksi tapahtumista voi tulostaa myyntiraportin. Näkymästä löytyy myös linkki uuden tapahtuman lisäämiseen. Myyntiraporttinäkymässä näytetään, kuinka paljon kyseiseen tapahtumaan on myyty lippuja.
+
+Alustavat käyttöliittymän näkymät ja niiden väliset suhteet on esitetty kuvassa 1.
+
+![alt text](https://github.com/perunajenny/pictures/issues/1#issue-1571596250)
+Kuva 1. Alustava käyttöliittymäkaavio.
 
 ___
 
-*Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona.*
-
-*Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.*
 
 ## Tietokanta
 *Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.*
