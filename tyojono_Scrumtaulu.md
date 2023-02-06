@@ -5,8 +5,12 @@
 - Lippu: tapahtumat- ja lipputyypit -välitaulu
 - Myynnit: tapahtumat- ja lipputyypit -välitaulu
 - Myyntiraportit myyntipäivämäärän mukaan
-2. As an admin user, I want to be able to add/save, edit and delete different events.
-3. As an admin user, I want to be able to add/save, edit and delete tickets.
+2. CRUD-toimintojen luonti
+- Tapahtuman lisäys
+- Tapahtumien listaaminen
+- Tapahtuman muokkaaminen
+- Tapahtuman poisto
+3. Käyttöliittymä
 4. As the ticket salesperson, I want to be able to see the events and sell tickets and print them to customers so that they can show the ticket before the event.
 5. As the operator at the office, I want to get ticket sales reports from the software so that I can improve my business model.
 
