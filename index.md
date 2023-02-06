@@ -6,7 +6,7 @@
 * Elias Hörkkö
 * Alex Kiippa
 * Jaakko Huovelin
-* Susanna Lehto
+* Susanna Tuomi
 * Vesa Liukkonen
 * Jenny Berg
 
