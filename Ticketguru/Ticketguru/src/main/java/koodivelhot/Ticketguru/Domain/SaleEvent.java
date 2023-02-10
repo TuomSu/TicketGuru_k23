@@ -3,10 +3,16 @@ package koodivelhot.Ticketguru.Domain;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,10 +30,14 @@ public class SaleEvent {
 	private Date saledate;
 	private Time saletime;
 	
-	@jakarta.persistence.ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JsonIgnore
-    @jakarta.persistence.JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
+    @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
     private AppUser user;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
+	private List<PreSaleTicket> presaletickets;
 
 	public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
 		super();
