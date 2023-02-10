@@ -102,6 +102,29 @@ ___
 | avatar | int FK      |    Tilin avatar, viittaus avatar-tauluun |
 | kayttaja      | int FK      |   Viittaus käyttäjän käyttäjä-taulussa |
 
+### Myyntitapahtumat
+*Myyntitapahtumat-taulu sisältää ennakkolippujen myyntitapahtumat. Sama myyntitapahtuma voi kuulua usealle ennakkolipulle. Ennakkolipulla on aina vain yksi myyntitapahtuma*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| saleid      | int PK | Myyntitapahtuman id |
+| sale_date    | Date     |   Myyntitapahtuman päivämäärä |
+| sale_time | Time      |    Myyntitapahtuman kellonaika |
+| user_id      | int FK      |   Viittaus myyntitapahtuman myyjään käyttäjä-taulussa |
+
+### Ennakkoliput
+*Ennakkoliput-taulu sisältää tapahtumaan ennakkomyyntiaikana myydyt liput. Ennakkolippu kuuluu aina vain yhteen tapahtumaan ja myyntitapahtumaan. Sama tapahtuma ja myyntitapahtuma voivat kuulua usealle eri ennakkolipulle. Ennakkolipulla on vain yksi lipputyyppi. Sama lipputyyppi voi kuulua useaan ennakkolippuun*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| preticketid      | int PK | Ennakkolipun id |
+| tickettypeid    | int FK     |   Viittaus lipputyyppiin lipputyypit - taulussa |
+| saleid | intFK      |    Viittaus lipun myyntitapahtumaan myyntitapahtumat - taulussa |
+| eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
+| used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
+
 ## Tekninen kuvaus
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
 
