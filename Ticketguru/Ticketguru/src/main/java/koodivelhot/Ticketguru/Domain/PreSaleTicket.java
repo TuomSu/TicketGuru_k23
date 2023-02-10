@@ -2,6 +2,8 @@ package koodivelhot.Ticketguru.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +18,14 @@ public class PreSaleTicket {
 	private Long presaleticketid;
 	private Boolean used;
 	
-	@jakarta.persistence.ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JsonIgnore
-    @jakarta.persistence.JoinColumn(name = "saleid") // myyntitapahtuma, johon lippu liittyy
+    @JoinColumn(name = "saleid") // myyntitapahtuma, johon lippu liittyy
     private SaleEvent sale;
 	
-	@jakarta.persistence.ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JsonIgnore
-    @jakarta.persistence.JoinColumn(name = "event_id") // tapahtuma, johon lippu liittyy
+    @JoinColumn(name = "event_id") // tapahtuma, johon lippu liittyy
     private Event event;
 	
 	// Lipputyyppi täytyy vielä lisätä 

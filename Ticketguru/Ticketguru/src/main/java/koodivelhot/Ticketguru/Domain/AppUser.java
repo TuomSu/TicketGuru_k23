@@ -1,6 +1,10 @@
 package koodivelhot.Ticketguru.Domain;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -24,13 +28,13 @@ public class AppUser {
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "saleid")
+	private List<SaleEvent> saleevents;
 	
 	public AppUser() {
 		super();
 	}
-
-
-
 
 	public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
 			String passwordHash) {
