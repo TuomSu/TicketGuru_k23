@@ -132,7 +132,7 @@ ___
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
 | areaCode      | varchar PK | Postinumero (ilmoitettu varchar, koska int ei salli 0 alkua) |
-| city    | int     |  Kaupunki johon postinumero kuuluu |
+| city    | varchar     |  Kaupunki johon postinumero kuuluu |
 
 ### Tapahtumapaikat
 *Tapahtumapaikat-taulu sisältää tapahtumien tapahtumapaikat*
