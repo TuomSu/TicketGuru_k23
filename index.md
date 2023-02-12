@@ -6,7 +6,7 @@
 * Elias Hörkkö
 * Alex Kiippa
 * Jaakko Huovelin
-* Susanna Lehto
+* Susanna Tuomi
 * Vesa Liukkonen
 * Jenny Berg
 
@@ -16,38 +16,55 @@ Projektin tavoitteena on tuottaa lipputoimiston tilaama lipunmyyntijärjestelmä
 
 Järjestelmän avulla lipputoimiston lipunmyynti tehostuu ja heidän on helpompi hallita myytäviä tapahtumia. Lisäksi asiakas saa järjestelmästä liiketoiminnan kehittämisen kannalta hyödyllisiä myyntiraportteja. Järjestelmän alustava nimi on TicketGuru.
 
-Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Käyttöliittymäratkaisut ja teknologiat tarkentuvat myöhemmin.
-
+Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Käyttöliittymäratkaisut ja -teknologiat tarkentuvat myöhemmin.
 ___
-
-*Johdantoon kirjoitetaan lyhyt, ytimekäs kuvaus siitä, mikä on projektin aihe, kuka on asiakas (käyttäjä), mitä hän haluaa ja saa järjestelmältä, mitä tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti päättyy.*
-
-* Järjestelmän tarkoitus ja tiivis kuvaus siitä, mistä on kyse ja kenelle järjestelmä on tarkoitettu.
-* Toteutus- ja toimintaympäristö lyhyesti:
-    * Palvelinpuolen ratkaisut ja teknologiat (esim. palvelinteknologia, mikä tietokantajärjestelmä on käytössä)
-    * Käyttöliittymäratkaisut ja teknologiat (esim. päätelaitteet: puhelin, täppäri, desktop)
 
 ## Järjestelmän määrittely
 
+3 olennaista tehtävää, jonka järjestelmän pitäisi pystyä tekemään on:
+1.	Lipunmyynti
+- myynnistä muodostuu myyntitapahtuma, josta päästään tulostamaan asiakkaalle lippu
+- lippuja myydään ennakkoon tietty määrä, ja loput, joista ei ole muodostunut myyntitapahtumaa, tulostetaan ja myydään ovella.
+- lipputyyppejä on erihintaisia (tässä voitaisiin käyttää kerrointa, esim. lapsen lippu x0,5)
+2.	Tapahtumien hallinta
+- tapahtumia on pystyttävä luomaan järjestelmässä, mutta tämän lisäksi myös muokkaamaan ja poistamaan
+3.	Myyntiraportti
+- tapahtumakohtaisten myyntiraporttien näyttäminen, lipputyypeittäin myyntien näyttäminen sekä kronologisessa järjestyksessä tapahtuman myyntitapahtumat näyttämään
 
 
-TicketGurussa on kolme käyttäjäroolia: Admin, Pääkäyttäjä ja käyttäjä. 
+### TicketGurussa on kolme käyttäjäroolia: Admin, pääkäyttäjä ja käyttäjä:
 
-* Admin käyttäjäryhmä on pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus.  
-* Pääkäyttäjä on lipputoimiston henkilökunnalla. Pääkäyttäjät voivat lisätä ja poistaa tapahtumia palvelusta. Tälle ryhmälle on myös oma sivu johon kerääntyy dataa lippujne myynnistä.
-* Käyttäjä on asiakkaiden käyttäjäryhmä, jotka ostavat lippuja palvelusta. Tämä Käyttäjä ryhmä pystyy siis ainoastaan ostamaan lippuja.
+**Admin**: pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus tietokantaan ja järjestelmään (sis. CRUD toiminnallisuudet)
+
+*Käyttäjätarinoita:*
+
+As an admin user, I want to have all the rights to use the software and database so that I can read, add, edit and delete the events.
+
+As an admin user, I want to be able to add/save, edit and delete different events.
+
+As an admin user, I need to be able to set, start and end pre-selling of tickets.
+
+As an admin user, I want to be able to add/save, edit and delete tickets.
+
+**Pääkäyttäjä**: toimistotyöntekijällä olisi CRUD-oikeudet sekä oikeus ottaa raportteja, 
+
+*Käyttäjätarinoita:*
+
+As the operator at the office, I want to get ticket sales reports from the software so that I can improve my business model.
+
+As the operator at the office, I want to be able to distinguish between used and not used tickets.
 
 
+**Käyttäjä**: lipunmyyjälle taas riittää oikeudet nähdä tapahtumat ja luoda myyntitapahtuma.
+
+*Käyttäjätarinoita:*
+
+As the ticket salesperson, I want to be able to sell discounted tickets for kids for example.
+
+As the ticket salesperson, I want to be able to see the events and sell tickets and print them to customers so that they can show the ticket before the event.
 
 ___
 
-*Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän käyttäjäryhmät.*
-
-* Lyhyt kuvaus käyttäjäryhmistä (rooleista)
-* Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona (use case diagram) tai käyttäjätarinoina.
-* Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
-
-*Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista tietoa ja keskittyä siihen.*
 
 ## Linkki projektin työjonoon ja Scrum-tauluun
 
@@ -55,18 +72,19 @@ ___
 
 ## Käyttöliittymä
 
-Tärkeimmät käyttöliittymät ovat: etusivu, hakusivuja,  oma sivu ja myyntisivu.
+Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. 
 
-* Etusivulla näkyy suositeltuja tapahtumia lähellä käyttäjää ja sivun ylälaidassa sijaitsee hakupalkki mistä käyttäjän on mahdollista etsiä mieluisa tapahtuma.
-* Hakusivulla on näkymä sitten hakusanalla etsityistä tapahtumista jonne on lippuja. Tällä sivulla on myös mahdollista ostaa tiettyyn tapahtumaan lippu
-* Oma sivu. Omallasivulla näkyy sitten käyttäjän ostetut liput tuleviin ja menneisiin tapahtumiin.
-* Myyntisivu on pääkäyttäjälle eli tapahtumien listaajalle. Myyntisivulle kerääntyy dataa lippujen myynneistä.
+Lipunmyyntinäkymässä on listaus myytävissä olevissa tapahtumista. Listauksessa näytetään tapahtumista perustiedot kuten aika ja nimi. Klikkaamalla tapahtumariviä päästään valitsemaan, kuinka monta lippua kyseiseen tapahtumaan halutaan myydä. Myynnin jälkeen avautuu yksittäisen myyntitapahtuman näkymä, jossa näkyy myyntitapahtuman maksutiedot sekä ostetut liput. Sivulta löytyy linkki, josta liput voidaan tulostaa.
+
+Tapahtumien hallinnan näkymässä on listaus järjestelmään tallennetuista tapahtumista, joista näytetään listauksessa perustiedot kuten aika, paikka ja nimi. Näkymän kautta jo lisättyjä tapahtumia ja niiden lipputyyppejä on mahdollista päästä muokkaamaan. Lisäksi tapahtumista voi tulostaa myyntiraportin. Näkymästä löytyy myös linkki uuden tapahtuman lisäämiseen. Myyntiraporttinäkymässä näytetään, kuinka paljon kyseiseen tapahtumaan on myyty lippuja.
+
+Alustavat käyttöliittymän näkymät ja niiden väliset suhteet on esitetty kuvassa 1.
+
+![alt text](https://user-images.githubusercontent.com/83058532/216845243-17b119ea-4f5a-4708-978e-59869c8ee71d.png)
+Kuva 1. Alustava käyttöliittymäkaavio.
 
 ___
 
-*Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona.*
-
-*Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.*
 
 ## Tietokanta
 *Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.*
@@ -83,6 +101,65 @@ ___
 | nimimerkki      | varchar(30)      |   Tilin nimimerkki |
 | avatar | int FK      |    Tilin avatar, viittaus avatar-tauluun |
 | kayttaja      | int FK      |   Viittaus käyttäjän käyttäjä-taulussa |
+
+### Myyntitapahtumat
+*Myyntitapahtumat-taulu sisältää ennakkolippujen myyntitapahtumat. Sama myyntitapahtuma voi kuulua usealle ennakkolipulle. Ennakkolipulla on aina vain yksi myyntitapahtuma*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| saleid      | int PK | Myyntitapahtuman id |
+| sale_date    | Date     |   Myyntitapahtuman päivämäärä |
+| sale_time | Time      |    Myyntitapahtuman kellonaika |
+| user_id      | int FK      |   Viittaus myyntitapahtuman myyjään käyttäjä-taulussa |
+
+### Ennakkoliput
+*Ennakkoliput-taulu sisältää tapahtumaan ennakkomyyntiaikana myydyt liput. Ennakkolippu kuuluu aina vain yhteen tapahtumaan ja myyntitapahtumaan. Sama tapahtuma ja myyntitapahtuma voivat kuulua usealle eri ennakkolipulle. Ennakkolipulla on vain yksi lipputyyppi. Sama lipputyyppi voi kuulua useaan ennakkolippuun*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| preticketid      | int PK | Ennakkolipun id |
+| tickettypeid    | int FK     |   Viittaus lipputyyppiin lipputyypit - taulussa |
+| saleid | intFK      |    Viittaus lipun myyntitapahtumaan myyntitapahtumat - taulussa |
+| eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
+| used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
+
+### Postinumero
+*Postinumerot-taulu sisältää postinumerot, sekä niiden kaupungit*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| areaCode      | varchar PK | Postinumero (ilmoitettu varchar, koska int ei salli 0 alkua) |
+| city    | int     |  Kaupunki johon postinumero kuuluu |
+
+### Tapahtumapaikat
+*Tapahtumapaikat-taulu sisältää tapahtumien tapahtumapaikat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| venue_id     | int PK | Tapahtumapaikka ID |
+| venueName    | varchar     |   Tapahtumapaikan nimi |
+| areaCode | varchar FK     |    Tapahtumapaikan postinumero |
+
+### Tapahtumat
+*Tapahtumat-taulu sisältää tapahtumat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| event_id     | int PK | Tapahtuma ID |
+| eventName    | varchar     |   Tapahtuman nimi |
+| eventStartDate | Date    |    Tapahtuman aloitus päivämärää ja aika |
+| eventEndDate | Date    |    Tapahtuman lopetus päivämärää ja aika |
+| ticketAmount | int    |    Kuinka monta lippua tapahtumaan on myynnissä |
+| ticketPrice | Double    |    Kuinka paljon tapahtuman lippu maksaa |
+| description | varchar    |    Tapahtuman kuvaus |
+| presaleStarts | Date    |    Lippujen ennakkomyynti alkaa |
+| presaleEnds | Date    |    Lippujen ennakkomyynti päättyy |
+| venue | int FK    |    Tapahtumapaikka |
 
 ## Tekninen kuvaus
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
