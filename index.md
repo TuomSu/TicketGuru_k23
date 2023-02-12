@@ -125,6 +125,42 @@ ___
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
 
+### Postinumero
+*Postinumerot-taulu sisältää postinumerot, sekä niiden kaupungit*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| areaCode      | varchar PK | Postinumero (ilmoitettu varchar, koska int ei salli 0 alkua) |
+| city    | int     |  Kaupunki johon postinumero kuuluu |
+
+### Tapahtumapaikat
+*Tapahtumapaikat-taulu sisältää tapahtumien tapahtumapaikat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| venue_id     | int PK | Tapahtumapaikka ID |
+| venueName    | varchar     |   Tapahtumapaikan nimi |
+| areaCode | varchar FK     |    Tapahtumapaikan postinumero |
+
+### Tapahtumat
+*Tapahtumat-taulu sisältää tapahtumat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| event_id     | int PK | Tapahtuma ID |
+| eventName    | varchar     |   Tapahtuman nimi |
+| eventStartDate | Date    |    Tapahtuman aloitus päivämärää ja aika |
+| eventEndDate | Date    |    Tapahtuman lopetus päivämärää ja aika |
+| ticketAmount | int    |    Kuinka monta lippua tapahtumaan on myynnissä |
+| ticketPrice | Double    |    Kuinka paljon tapahtuman lippu maksaa |
+| description | varchar    |    Tapahtuman kuvaus |
+| presaleStarts | Date    |    Lippujen ennakkomyynti alkaa |
+| presaleEnds | Date    |    Lippujen ennakkomyynti päättyy |
+| venue | int FK    |    Tapahtumapaikka |
+
 ## Tekninen kuvaus
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
 
