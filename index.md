@@ -128,6 +128,16 @@ ___
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
 
+### Lipputyypit
+*Lipputyypit-taulu sisältää lipputyypit(lapsi, eläkeläinen jne.) ja niitä vastaavat hintakertoimet.*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| tickettypeid      | int PK | Lipputyypin id |
+| multiplier    | Double     |  Lipputyypin hintakerroin |
+| tickettype    | varchar    | Lipputyyppi |
+
 ### Postinumero
 *Postinumerot-taulu sisältää postinumerot, sekä niiden kaupungit*
 
