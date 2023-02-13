@@ -2,12 +2,18 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.time.LocalDate;
 
+import javax.persistence.JoinColumn;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
 
 
 
@@ -28,16 +34,24 @@ public class PrintedTicket {
 	@Column (name = "datesold")
 	private LocalDate dateSold;
 	
+	@ManyToOne
+	@JsonIgnore
+    @JoinColumn(name = "even_id")
+	private Event event;
+	
+	
+	
 	
 	public PrintedTicket () {
 		super();
 	}
 	
-	public PrintedTicket(Long pTicketId, Double ticketPrice, Boolean ticketSold, LocalDate dateSold) {
+	public PrintedTicket(Long pTicketId, Double ticketPrice, Boolean ticketSold, LocalDate dateSold, Event event) {
 		this.pTicketId = pTicketId;
 		this.ticketPrice = ticketPrice;
 		this.ticketSold = ticketSold;
 		this.dateSold = dateSold;
+		this.event = event;
 	}
 	
 	
@@ -64,6 +78,13 @@ public class PrintedTicket {
 	}
 	public void setDateSold(LocalDate dateSold) {
 		this.dateSold = dateSold;
+	}
+	
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 	
 	@Override
