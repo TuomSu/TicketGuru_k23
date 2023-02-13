@@ -1,11 +1,11 @@
 package koodivelhot.Ticketguru.Domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table (name = "appuser")
@@ -14,7 +14,11 @@ public class AppUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userid;
-	private Long roleid;
+	
+	@ManyToOne
+	@JoinColumn(name = "roleid")
+	private UserRole role;
+	
 	@Column(name = "firstname")
 	private String firstName;
 	@Column(name = "lastname")
@@ -24,20 +28,26 @@ public class AppUser {
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "saleid")
+	private List<SaleEvent> saleevents;
 	
 	public AppUser() {
 		super();
 	}
 
-
-	public AppUser(Long roleid, String firstName, String lastName, String username, String passwordHash) {
+	public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
+			String passwordHash) {
 		super();
-		this.roleid = roleid;
+		this.userid = userid;
+		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.passwordHash = passwordHash;
 	}
+
+
 
 
 	public Long getUserid() {
@@ -45,19 +55,27 @@ public class AppUser {
 	}
 
 
+
+
 	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
 
-	public Long getRoleid() {
-		return roleid;
+
+
+	public UserRole getRole() {
+		return role;
 	}
 
 
-	public void setRoleid(Long roleid) {
-		this.roleid = roleid;
+
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
+
+
 
 
 	public String getFirstName() {
@@ -65,9 +83,13 @@ public class AppUser {
 	}
 
 
+
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
+
 
 
 	public String getLastName() {
@@ -75,9 +97,13 @@ public class AppUser {
 	}
 
 
+
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+
 
 
 	public String getUsername() {
@@ -85,9 +111,13 @@ public class AppUser {
 	}
 
 
+
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
 
 
 	public String getPasswordHash() {
@@ -95,17 +125,24 @@ public class AppUser {
 	}
 
 
+
+
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
 
 
+
+
 	@Override
 	public String toString() {
-		return "AppUser [userid=" + userid + ", roleid=" + roleid + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", username=" + username + ", passwordHash=" + passwordHash + "]";
+		return "AppUser [userid=" + userid + ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", username=" + username + ", passwordHash=" + passwordHash + "]";
 	}
 
+
+
+	
 
 	
 	
