@@ -88,22 +88,8 @@ ___
 
 
 ## Tietokanta
-*Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.*
-
-*Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:*
 
 ![Tietokantakaavio](https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot/blob/develop/tietokantakaavio_TicketGuru.png)
-
-### Tilit
-*Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle.*
-
-
-| Kenttä        | Tyyppi           | Kuvaus  |
-| ------------- |:-------------:| -----:|
-| id      | int PK | Tilin id |
-| nimimerkki      | varchar(30)      |   Tilin nimimerkki |
-| avatar | int FK      |    Tilin avatar, viittaus avatar-tauluun |
-| kayttaja      | int FK      |   Viittaus käyttäjän käyttäjä-taulussa |
 
 ### Myyntitapahtumat
 *Myyntitapahtumat-taulu sisältää ennakkolippujen myyntitapahtumat. Sama myyntitapahtuma voi kuulua usealle ennakkolipulle. Ennakkolipulla on aina vain yksi myyntitapahtuma*
@@ -181,7 +167,7 @@ ___
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
 | user_id      | int PK | käyttäjän id |
-| role_id      | int FK      |   käyttäjärooli id |
+| role_id      | int FK      |   käyttäjärooli id, viittaus käyttäjäroolitauluun |
 | first name | varchar      |    etunimi |
 | last name      | varchar      |   sukunimi |
 | username      |    varchar |käyttäjätunnus|
