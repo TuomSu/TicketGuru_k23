@@ -3,7 +3,6 @@
 ##### Tiimi: Koodivelhot
 
 ##### Projektiryhmän jäsenet:
-* Elias Hörkkö
 * Alex Kiippa
 * Jaakko Huovelin
 * Susanna Tuomi
@@ -70,6 +69,8 @@ ___
 
 [Työjono ja Scrum-taulu](./tyojono_Scrumtaulu.md)
 
+[Projects-työkalu](https://github.com/users/VesaLiukkonen/projects/1)
+
 ## Käyttöliittymä
 
 Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. 
@@ -90,6 +91,8 @@ ___
 *Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.*
 
 *Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:*
+
+![Tietokantakaavio] (./tietokantakaavio_TicketGuru)
 
 ### Tilit
 *Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle.*
@@ -160,6 +163,25 @@ ___
 | presaleStarts | Date    |    Lippujen ennakkomyynti alkaa |
 | presaleEnds | Date    |    Lippujen ennakkomyynti päättyy |
 | venue | int FK    |    Tapahtumapaikka |
+
+### Käyttäjät ja Käyttäjäroolit
+
+*Käyttäjät ovat yksittäiset henkilöt ja käyttäjäroolit määrittelevät mitkä käyttöoikeudet henkilölle annetaan.*
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| user_id      | int PK | käyttäjän id |
+| role_id      | int FK      |   käyttäjärooli id |
+| first name | varchar      |    etunimi |
+| last name      | varchar      |   sukunimi |
+| username      |    varchar |käyttäjätunnus|
+| password      | varchar      |   salasana|
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| role_id      | int PK | käyttäjärooli id |
+| role      | varchar      |   roolin kuvaus |
+| rights | varchar      |    kuvaus oikeuksista |
 
 ## Tekninen kuvaus
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
