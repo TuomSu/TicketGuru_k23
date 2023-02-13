@@ -1,9 +1,10 @@
 package koodivelhot.Ticketguru.Domain;
 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import java.util.List;
+
+import javax.persistence.*
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TicketType {
@@ -13,6 +14,10 @@ public class TicketType {
 	private Long type_id;
 	private double multiplier;
 	private String type;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
+	private List<PreSaleTicket> presaletickets;
 	
 	public TicketType() {
 		super();
