@@ -24,6 +24,7 @@ import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
 public class PrintedTicket {
 
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long pTicketId;
@@ -36,7 +37,7 @@ public class PrintedTicket {
 	
 	@ManyToOne
 	@JsonIgnore
-    @JoinColumn(name = "even_id")
+    @JoinColumn(name = "event_id")
 	private Event event;
 	
 	
