@@ -22,7 +22,9 @@
 - Kehitysympäristö kaikille tiimin jäsenille
 
 ## Sprintti 2
--
--
--
+- Tietokantakaavio
+- Dokumentaation luku Tietokanta
+- Spring Boot projektissa entity-luokat ja niiden suhteet, repository-luokkia toteutettu
+
+
 ## Sprintti 3

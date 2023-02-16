@@ -3,7 +3,6 @@
 ##### Tiimi: Koodivelhot
 
 ##### Projektiryhmän jäsenet:
-* Elias Hörkkö
 * Alex Kiippa
 * Jaakko Huovelin
 * Susanna Tuomi
@@ -70,6 +69,8 @@ ___
 
 [Työjono ja Scrum-taulu](./tyojono_Scrumtaulu.md)
 
+[Projects-työkalu](https://github.com/users/VesaLiukkonen/projects/1)
+
 ## Käyttöliittymä
 
 Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. 
@@ -87,20 +88,8 @@ ___
 
 
 ## Tietokanta
-*Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.*
 
-*Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:*
-
-### Tilit
-*Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle.*
-
-
-| Kenttä        | Tyyppi           | Kuvaus  |
-| ------------- |:-------------:| -----:|
-| id      | int PK | Tilin id |
-| nimimerkki      | varchar(30)      |   Tilin nimimerkki |
-| avatar | int FK      |    Tilin avatar, viittaus avatar-tauluun |
-| kayttaja      | int FK      |   Viittaus käyttäjän käyttäjä-taulussa |
+![Tietokantakaavio](https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot/blob/develop/tietokantakaavio_TicketGuru.png)
 
 ### Myyntitapahtumat
 *Myyntitapahtumat-taulu sisältää ennakkolippujen myyntitapahtumat. Sama myyntitapahtuma voi kuulua usealle ennakkolipulle. Ennakkolipulla on aina vain yksi myyntitapahtuma*
@@ -124,6 +113,71 @@ ___
 | saleid | intFK      |    Viittaus lipun myyntitapahtumaan myyntitapahtumat - taulussa |
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
+
+### Lipputyypit
+*Lipputyypit-taulu sisältää lipputyypit(lapsi, eläkeläinen jne.) ja niitä vastaavat hintakertoimet.*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| tickettypeid      | int PK | Lipputyypin id |
+| multiplier    | Double     |  Lipputyypin hintakerroin |
+| tickettype    | varchar    | Lipputyyppi |
+
+### Postinumero
+*Postinumerot-taulu sisältää postinumerot, sekä niiden kaupungit*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| areaCode      | varchar PK | Postinumero (ilmoitettu varchar, koska int ei salli 0 alkua) |
+| city    | varchar     |  Kaupunki johon postinumero kuuluu |
+
+### Tapahtumapaikat
+*Tapahtumapaikat-taulu sisältää tapahtumien tapahtumapaikat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| venue_id     | int PK | Tapahtumapaikka ID |
+| venueName    | varchar     |   Tapahtumapaikan nimi |
+| areaCode | varchar FK     |    Tapahtumapaikan postinumero |
+
+### Tapahtumat
+*Tapahtumat-taulu sisältää tapahtumat*
+
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| event_id     | int PK | Tapahtuma ID |
+| eventName    | varchar     |   Tapahtuman nimi |
+| eventStartDate | Date    |    Tapahtuman aloitus päivämärää ja aika |
+| eventEndDate | Date    |    Tapahtuman lopetus päivämärää ja aika |
+| ticketAmount | int    |    Kuinka monta lippua tapahtumaan on myynnissä |
+| ticketPrice | Double    |    Kuinka paljon tapahtuman lippu maksaa |
+| description | varchar    |    Tapahtuman kuvaus |
+| presaleStarts | Date    |    Lippujen ennakkomyynti alkaa |
+| presaleEnds | Date    |    Lippujen ennakkomyynti päättyy |
+| venue | int FK    |    Tapahtumapaikka |
+
+### Käyttäjät ja Käyttäjäroolit
+
+*Käyttäjät ovat yksittäiset henkilöt ja käyttäjäroolit määrittelevät mitkä käyttöoikeudet henkilölle annetaan.*
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| user_id      | int PK | käyttäjän id |
+| role_id      | int FK      |   käyttäjärooli id, viittaus käyttäjäroolitauluun |
+| first name | varchar      |    etunimi |
+| last name      | varchar      |   sukunimi |
+| username      |    varchar |käyttäjätunnus|
+| password      | varchar      |   salasana|
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| role_id      | int PK | käyttäjärooli id |
+| role      | varchar      |   roolin kuvaus |
+| rights | varchar      |    kuvaus oikeuksista |
 
 ## Tekninen kuvaus
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
