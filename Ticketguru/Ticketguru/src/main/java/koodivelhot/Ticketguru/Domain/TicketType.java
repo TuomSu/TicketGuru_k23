@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import koodivelhot.Ticketguru.Domain.PlaceOfEvent.AcceptableTicketTypes;
+
 @Entity
 public class TicketType {
 	
@@ -18,6 +20,10 @@ public class TicketType {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
 	private List<PreSaleTicket> presaletickets;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "acceptableTicketTypes")
+    private AcceptableTicketTypes acceptableTypes;
 	
 	public TicketType() {
 		super();
