@@ -1,5 +1,6 @@
 package koodivelhot.Ticketguru.Domain.PlaceOfEvent;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,8 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import koodivelhot.Ticketguru.Domain.PrintedTicket;
 
 @Entity
 public class Event {
@@ -27,6 +34,15 @@ public class Event {
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+	private List<PrintedTicket> printedTickets;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "acceptableType")
+    private AcceptableTicketTypes acceptableTypes;
+	
 	
 	public Event() {}
 
@@ -122,4 +138,21 @@ public class Event {
 	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
+
+	public List<PrintedTicket> getPrintedTickets() {
+		return printedTickets;
+	}
+
+	public void setPrintedTickets(List<PrintedTicket> printedTickets) {
+		this.printedTickets = printedTickets;
+	}
+
+	public AcceptableTicketTypes getAcceptableTypes() {
+		return acceptableTypes;
+	}
+
+	public void setAcceptableTypes(AcceptableTicketTypes acceptableTypes) {
+		this.acceptableTypes = acceptableTypes;
+	}
+
 }
