@@ -18,7 +18,7 @@ public class TicketType {
 	private String type;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
 	private List<PreSaleTicket> presaletickets;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
