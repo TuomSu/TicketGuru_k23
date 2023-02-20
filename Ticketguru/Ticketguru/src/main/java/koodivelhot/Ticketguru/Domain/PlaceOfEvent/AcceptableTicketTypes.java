@@ -23,11 +23,9 @@ public class AcceptableTicketTypes {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long line_id;
 	
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
 	private List<TicketType> ticketTypes;
 	
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
 	private List<Event> events;
 	
