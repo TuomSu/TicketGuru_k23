@@ -2,17 +2,10 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.time.LocalDate;
 
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
 
 
