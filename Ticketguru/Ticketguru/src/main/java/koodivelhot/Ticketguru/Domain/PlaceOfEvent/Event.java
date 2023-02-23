@@ -45,6 +45,11 @@ public class Event {
 	
 	
 	public Event() {}
+	
+	public Event(String eventName, int ticketAmount) {
+		this.eventName = eventName;
+		this.ticketAmount = ticketAmount;
+	}
 
 	public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds, Venue venue) {
 		super();
