@@ -160,4 +160,11 @@ public class Event {
 		this.acceptableTypes = acceptableTypes;
 	}
 
+	@Override
+	public String toString() {
+		return "Event [eventName=" + eventName + ", ticketAmount=" + ticketAmount + "]";
+	}
+	
+	
+
 }
