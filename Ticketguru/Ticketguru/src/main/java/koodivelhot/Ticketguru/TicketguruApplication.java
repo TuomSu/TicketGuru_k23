@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import koodivelhot.Ticketguru.Domain.PlaceOfEvent.EventRepository;
 import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
 
+
 @SpringBootApplication
+@ComponentScan(basePackages = {"koodivelhot.Ticketguru.Domain.PlaceOfEvent"})
 public class TicketguruApplication implements CommandLineRunner {
 	
 	private static final Logger log = LoggerFactory.getLogger(TicketguruApplication.class);
 	
-	@Autowired
+	//@Autowired
 	EventRepository eventRepository;
 
 	public static void main(String[] args) {

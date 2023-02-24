@@ -22,7 +22,7 @@ import koodivelhot.Ticketguru.Domain.PlaceOfEvent.EventRepository;
 @Controller
 public class TicketguruController {
 	
-	@Autowired
+	//@Autowired
 	EventRepository eventRepository;
 	//@Autowired
 	//AppUserRepository urepository;
