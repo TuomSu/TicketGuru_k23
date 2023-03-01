@@ -1,4 +1,4 @@
-package koodivelhot.Ticketguru.Domain.PlaceOfEvent;
+package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 

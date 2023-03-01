@@ -2,9 +2,18 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-import javax.persistence.*;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 
 
@@ -16,9 +25,9 @@ public class UserRole {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long roleid;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-	private List<AppUser> appusers;
+	private List<AppUser> appusers;*/
 	
 	@Column(name = "role")
 	private String role;
@@ -31,13 +40,13 @@ public class UserRole {
 	}
 
 
-	public UserRole(Long roleid, List<AppUser> appusers, String role, String rights) {
+	/*public UserRole(Long roleid, List<AppUser> appusers, String role, String rights) {
 		super();
 		this.roleid = roleid;
 		this.appusers = appusers;
 		this.role = role;
 		this.rights = rights;
-	}
+	}*/
 
 
 	public Long getRoleid() {
@@ -50,14 +59,14 @@ public class UserRole {
 	}
 
 
-	public List<AppUser> getAppusers() {
+	/*public List<AppUser> getAppusers() {
 		return appusers;
 	}
 
 
 	public void setAppusers(List<AppUser> appusers) {
 		this.appusers = appusers;
-	}
+	}*/
 
 
 	public String getRole() {
@@ -82,7 +91,7 @@ public class UserRole {
 
 	@Override
 	public String toString() {
-		return "UserRole [roleid=" + roleid + ", appusers=" + appusers + ", role=" + role + ", rights=" + rights + "]";
+		return "UserRole [roleid=" + roleid + ", appusers=" + ", role=" + role + ", rights=" + rights + "]";
 	}
 	
 	

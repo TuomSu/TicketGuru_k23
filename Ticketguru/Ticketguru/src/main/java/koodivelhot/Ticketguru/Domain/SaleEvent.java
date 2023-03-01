@@ -5,14 +5,19 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Venue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class SaleEvent {
@@ -20,25 +25,29 @@ public class SaleEvent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long saleid;
-	private Date saledate;
-	private Time saletime;
+	//private Date saledate;
+//	private Time saletime;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
     private AppUser user;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
-	private List<PreSaleTicket> presaletickets;
+	private List<PreSaleTicket> presaletickets;*/
+	
+	public SaleEvent() {
+		super();
+	}
 
-	public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
+	/*public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
 		super();
 		this.saleid = saleid;
 		this.saledate = saledate;
 		this.saletime = saletime;
 		this.user = user;
-	}
+	}*/
 
 	public Long getSaleid() {
 		return saleid;
@@ -48,7 +57,7 @@ public class SaleEvent {
 		this.saleid = saleid;
 	}
 
-	public Date getSaledate() {
+	/*public Date getSaledate() {
 		return saledate;
 	}
 
@@ -62,15 +71,15 @@ public class SaleEvent {
 
 	public void setSaletime(Time saletime) {
 		this.saletime = saletime;
-	}
+	}*/
 
-	public AppUser getUser() {
+	/*public AppUser getUser() {
 		return user;
 	}
 
 	public void setUser(AppUser user) {
 		this.user = user;
-	}
+	}*/
 	
 	
 }

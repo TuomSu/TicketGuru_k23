@@ -1,14 +1,15 @@
-package koodivelhot.Ticketguru.Domain.PlaceOfEvent;
+package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class AreaCode {
@@ -16,9 +17,9 @@ public class AreaCode {
 	private String areaCode; //postinumero. Ilmoitettu String, koska Integer ei salli 0 alkua
 	private String city;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "areaCode")
-	private List<Venue> venues;
+	private List<Venue> venues;*/
 	
 	public AreaCode() {}
 	
@@ -44,12 +45,12 @@ public class AreaCode {
 		this.city = city;
 	}
 
-	public List<Venue> getVenues() {
+	/*public List<Venue> getVenues() {
 		return venues;
 	}
 
 	public void setVenues(List<Venue> venues) {
 		this.venues = venues;
-	}
+	}*/
 	
 }

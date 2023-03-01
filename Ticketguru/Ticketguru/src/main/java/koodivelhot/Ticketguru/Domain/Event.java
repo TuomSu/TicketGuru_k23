@@ -1,21 +1,22 @@
-package koodivelhot.Ticketguru.Domain.PlaceOfEvent;
+package koodivelhot.Ticketguru.Domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import koodivelhot.Ticketguru.Domain.PrintedTicket;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Event {
@@ -31,7 +32,7 @@ public class Event {
 	private Date presaleStarts;
 	private Date presaleEnds;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	/*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
 	
@@ -41,7 +42,7 @@ public class Event {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "acceptableType")
-    private AcceptableTicketTypes acceptableTypes;
+    private AcceptableTicketTypes acceptableTypes;*/
 	
 	
 	public Event() {}
@@ -51,7 +52,7 @@ public class Event {
 		this.ticketAmount = ticketAmount;
 	}
 
-	public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds, Venue venue) {
+	public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds) {
 		super();
 		this.eventName = eventName;
 		this.eventStartDate = eventStartDate;
@@ -61,7 +62,13 @@ public class Event {
 		this.description = description;
 		this.presaleStarts = presaleStarts;
 		this.presaleEnds = presaleEnds;
-		this.venue = venue;
+		
+	}
+
+	// this.venue = venue;
+	public Event(String eventName) {
+		this.eventName = eventName;
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getEvent_id() {
@@ -136,7 +143,7 @@ public class Event {
 		this.presaleEnds = presaleEnds;
 	}
 
-	public Venue getVenue() {
+	/*public Venue getVenue() {
 		return venue;
 	}
 
@@ -163,7 +170,7 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [eventName=" + eventName + ", ticketAmount=" + ticketAmount + "]";
-	}
+	}*/
 	
 	
 
