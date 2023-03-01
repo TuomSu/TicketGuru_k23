@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PreSaleTicketRepository extends CrudRepository <PreSaleTicket, Long> {
 		
-	List <PreSaleTicket> findByPreSaleTicketId(Long presaleticketid);
+	//List <PreSaleTicket> findByPreSaleTicketId(Long presaleticketid);
 }

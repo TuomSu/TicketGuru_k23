@@ -2,9 +2,14 @@ package koodivelhot.Ticketguru.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
+
 
 @Entity
 public class PreSaleTicket {
@@ -13,7 +18,7 @@ public class PreSaleTicket {
 	private Long presaleticketid;
 	private Boolean used;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "saleid") // myyntitapahtuma, johon lippu liittyy
     private SaleEvent sale;
@@ -26,16 +31,20 @@ public class PreSaleTicket {
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "type_id") // lipputyyppi
-	private TicketType type;
+	private TicketType type;*/
+	
+	public PreSaleTicket() {
+		super();
+	}
 
-	public PreSaleTicket(Long presaleticketid, Boolean used, SaleEvent sale, Event event, TicketType type) {
+	/*public PreSaleTicket(Long presaleticketid, Boolean used, SaleEvent sale, Event event, TicketType type) {
 		super();
 		this.presaleticketid = presaleticketid;
 		this.used = used;
 		this.sale = sale;
 		this.event = event;
 		this.type = type;
-	}
+	}*/
 
 	public Long getPresaleticketid() {
 		return presaleticketid;
@@ -53,7 +62,7 @@ public class PreSaleTicket {
 		this.used = used;
 	}
 
-	public SaleEvent getSale() {
+	/*public SaleEvent getSale() {
 		return sale;
 	}
 
@@ -75,6 +84,6 @@ public class PreSaleTicket {
 	
 	public void setType(TicketType type) {
 		this.type = type;
-	}
+	}*/
 	
 }

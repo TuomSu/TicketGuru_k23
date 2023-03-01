@@ -2,11 +2,19 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-import javax.persistence.*;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import koodivelhot.Ticketguru.Domain.PlaceOfEvent.AcceptableTicketTypes;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class TicketType {
@@ -17,9 +25,9 @@ public class TicketType {
 	private double multiplier;
 	private String type;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-	private List<PreSaleTicket> presaletickets;
+	private List<PreSaleTicket> presaletickets;*/
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "acceptableTicketTypes")

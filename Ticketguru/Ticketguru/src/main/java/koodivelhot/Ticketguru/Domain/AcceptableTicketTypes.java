@@ -1,12 +1,5 @@
-package koodivelhot.Ticketguru.Domain.PlaceOfEvent;
+package koodivelhot.Ticketguru.Domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +8,11 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import koodivelhot.Ticketguru.Domain.TicketType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class AcceptableTicketTypes {
@@ -23,20 +20,20 @@ public class AcceptableTicketTypes {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long line_id;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
+/*	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
 	private List<TicketType> ticketTypes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
-	private List<Event> events;
+	private List<Event> events;*/
 	
 	public AcceptableTicketTypes() {}
 
-	public AcceptableTicketTypes(Long line_id, List<TicketType> ticketTypes, List<Event> events) {
+	/*public AcceptableTicketTypes(Long line_id, List<TicketType> ticketTypes, List<Event> events) {
 		super();
 		this.line_id = line_id;
 		this.ticketTypes = ticketTypes;
 		this.events = events;
-	}
+	}*/
 	
 	public Long getLine_id() {
 		return line_id;
@@ -46,7 +43,7 @@ public class AcceptableTicketTypes {
 		this.line_id = line_id;
 	}
 
-	public List<TicketType> getTicketTypes() {
+	/*public List<TicketType> getTicketTypes() {
 		return ticketTypes;
 	}
 
@@ -60,6 +57,6 @@ public class AcceptableTicketTypes {
 
 	public void setEvents(List<Event> events) {
 		this.events = events;
-	}
+	}*/
 
 }

@@ -1,4 +1,4 @@
-package koodivelhot.Ticketguru.Controller;
+package koodivelhot.Ticketguru.web;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
-import koodivelhot.Ticketguru.Domain.PlaceOfEvent.Event;
-import koodivelhot.Ticketguru.Domain.PlaceOfEvent.EventRepository;
+import koodivelhot.Ticketguru.Domain.Event;
+import koodivelhot.Ticketguru.Domain.EventRepository;
 
 @Controller
 public class TicketguruController {
 	
-	//@Autowired
-	EventRepository eventRepository;
+	@Autowired
+	private EventRepository erepository;
 	//@Autowired
 	//AppUserRepository urepository;
 	
@@ -37,7 +37,7 @@ public class TicketguruController {
 	// Ei vielä testattu, heittää jotain erroreita entiteetteihin liittyen käynnistäessä
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public @ResponseBody List<Event> eventListRest() {
-		return(List<Event>) eventRepository.findAll();
+		return(List<Event>) erepository.findAll();
 	}
 	
 	// REST, get event by id

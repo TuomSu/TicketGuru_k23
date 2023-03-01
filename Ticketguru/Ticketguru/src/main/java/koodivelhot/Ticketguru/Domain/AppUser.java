@@ -2,9 +2,17 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 
 @Entity
@@ -15,9 +23,9 @@ public class AppUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userid;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "roleid")
-	private UserRole role;
+	private UserRole role;*/
 	
 	@Column(name = "firstname")
 	private String firstName;
@@ -28,15 +36,15 @@ public class AppUser {
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "saleid")
-	private List<SaleEvent> saleevents;
+	private List<SaleEvent> saleevents;*/
 	
 	public AppUser() {
 		super();
 	}
 
-	public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
+	/*public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
 			String passwordHash) {
 		super();
 		this.userid = userid;
@@ -45,7 +53,7 @@ public class AppUser {
 		this.lastName = lastName;
 		this.username = username;
 		this.passwordHash = passwordHash;
-	}
+	}*/
 
 
 
@@ -64,7 +72,7 @@ public class AppUser {
 
 
 
-	public UserRole getRole() {
+	/*public UserRole getRole() {
 		return role;
 	}
 
@@ -73,7 +81,7 @@ public class AppUser {
 
 	public void setRole(UserRole role) {
 		this.role = role;
-	}
+	}*/
 
 
 
@@ -136,7 +144,7 @@ public class AppUser {
 
 	@Override
 	public String toString() {
-		return "AppUser [userid=" + userid + ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName
+		return "AppUser [userid=" + userid + ", role=" + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", username=" + username + ", passwordHash=" + passwordHash + "]";
 	}
 
