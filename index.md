@@ -114,6 +114,17 @@ ___
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
 
+### Tulostettulippu
+*Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut liput kuuluuvain tapahtumaan. Tulostetulla lipulla ei ole lipputyyppiä, vaan toimii itsenäisesti, ja se sisältää hinnan ja myynti ajankohdan.
+
+| Kenttä        | Tyyppi           | Kuvaus  |
+| ------------- |:-------------:| -----:|
+| printedTicketid      | int PK | Tulostetunlipun id |
+| price    | Double     |   Lipun hinta |
+| ticketSold | Boolean      |    Lipun myynti status onko myyty tai eikö ole myyty |
+| SoldDate      | LocalDate     |   Lipun myyti päivämäärä |
+| eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
+
 ### Lipputyypit
 *Lipputyypit-taulu sisältää lipputyypit(lapsi, eläkeläinen jne.) ja niitä vastaavat hintakertoimet.*
 
