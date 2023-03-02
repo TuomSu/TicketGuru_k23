@@ -32,7 +32,7 @@ public class Event {
 	private Date presaleStarts;
 	private Date presaleEnds;
 	
-	/*@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
 	
@@ -40,16 +40,21 @@ public class Event {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
 	private List<PrintedTicket> printedTickets;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+	private List<PreSaleTicket> presaleTickets;
+	
+	/*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "acceptableType")
     private AcceptableTicketTypes acceptableTypes;*/
 	
 	
 	public Event() {}
 	
-	public Event(String eventName, int ticketAmount) {
+	public Event(String eventName, int ticketAmount, Venue venue) {
 		this.eventName = eventName;
 		this.ticketAmount = ticketAmount;
+		this.venue = venue;
 	}
 
 	public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds) {
@@ -143,7 +148,7 @@ public class Event {
 		this.presaleEnds = presaleEnds;
 	}
 
-	/*public Venue getVenue() {
+	public Venue getVenue() {
 		return venue;
 	}
 
@@ -159,7 +164,15 @@ public class Event {
 		this.printedTickets = printedTickets;
 	}
 
-	public AcceptableTicketTypes getAcceptableTypes() {
+	public List<PreSaleTicket> getPresaleTickets() {
+		return presaleTickets;
+	}
+
+	public void setPresaleTickets(List<PreSaleTicket> presaleTickets) {
+		this.presaleTickets = presaleTickets;
+	}
+
+	/*public AcceptableTicketTypes getAcceptableTypes() {
 		return acceptableTypes;
 	}
 

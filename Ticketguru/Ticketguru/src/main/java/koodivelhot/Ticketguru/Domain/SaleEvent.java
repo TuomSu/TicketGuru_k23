@@ -31,23 +31,20 @@ public class SaleEvent {
 	/*@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
-    private AppUser user;
+    private AppUser user;*/
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
 	private List<PreSaleTicket> presaletickets;*/
 	
-	public SaleEvent() {
-		super();
-	}
+	public SaleEvent() {}
 
-	/*public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
+	public SaleEvent(Date saledate, Time saletime, AppUser user) {
 		super();
-		this.saleid = saleid;
-		this.saledate = saledate;
-		this.saletime = saletime;
-		this.user = user;
-	}*/
+		//this.saledate = saledate;
+		//this.saletime = saletime;
+		//this.user = user;
+	}
 
 	public Long getSaleid() {
 		return saleid;
