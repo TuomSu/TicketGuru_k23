@@ -25,6 +25,7 @@ public class TicketguruApplication {
 		return (args) -> {
 			log.info("save an event");
 			erepository.save(new Event("Testitapahtuma"));
+			erepository.save(new Event("Demotapahtuma"));
 			
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {
