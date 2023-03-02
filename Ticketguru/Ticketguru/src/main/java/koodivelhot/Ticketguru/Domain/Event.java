@@ -36,9 +36,9 @@ public class Event {
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	private List<PrintedTicket> printedTickets;
+	private List<PrintedTicket> printedTickets;*/
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
@@ -156,7 +156,7 @@ public class Event {
 		this.venue = venue;
 	}
 
-	public List<PrintedTicket> getPrintedTickets() {
+	/*public List<PrintedTicket> getPrintedTickets() {
 		return printedTickets;
 	}
 
