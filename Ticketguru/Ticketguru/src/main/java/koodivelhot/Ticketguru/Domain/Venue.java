@@ -28,17 +28,16 @@ public class Venue {
     @JoinColumn(name = "areaCode")
     private AreaCode areaCode;
 	
-	/*@JsonIgnore
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "venue")
-	private List<Event> events;*/
+	private List<Event> events;
 
 	public Venue() {}
 	
-	public Venue(Long venue_id, String venueName, String description, AreaCode areaCode) {
+	public Venue(String venueName, AreaCode areaCode) { //AreaCode areaCode String description
 		super();
-		this.venue_id = venue_id;
 		this.venueName = venueName;
-		this.description = description;
+		//this.description = description;
 		this.areaCode = areaCode;
 	}
 
@@ -74,13 +73,13 @@ public class Venue {
 		this.areaCode = areaCode;
 	}
 
-	/*public List<Event> getEvents() {
+	public List<Event> getEvents() {
 		return events;
 	}
 
 	public void setEvents(List<Event> events) {
 		this.events = events;
-	}*/
+	}
 	
 	
 }

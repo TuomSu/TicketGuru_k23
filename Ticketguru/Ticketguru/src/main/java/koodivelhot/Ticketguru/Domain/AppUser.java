@@ -148,15 +148,6 @@ public class AppUser {
 	public String toString() {
 		return "AppUser [userid=" + userid + ", role=" + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", username=" + username + ", passwordHash=" + passwordHash + "]";
-	}
-
-
-
+	}	
 	
-
-	
-	
-	
-	
-
 }
