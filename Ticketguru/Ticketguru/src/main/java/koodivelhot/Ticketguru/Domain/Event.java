@@ -40,9 +40,9 @@ public class Event {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
 	private List<PrintedTicket> printedTickets;*/
 	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	private List<PreSaleTicket> presaleTickets;
+	//@JsonIgnore
+	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+	//private List<PreSaleTicket> presaleTickets;
 	
 	/*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "acceptableType")
