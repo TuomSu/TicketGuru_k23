@@ -7,17 +7,16 @@ import java.util.List;
 
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class SaleEvent {
@@ -33,9 +32,9 @@ public class SaleEvent {
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
     private AppUser user;*/
 	
-	/*@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "presaleticketid")
-	private List<PreSaleTicket> presaletickets;*/
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
+	private List<PreSaleTicket> presaletickets;
 	
 	public SaleEvent() {}
 
@@ -46,13 +45,31 @@ public class SaleEvent {
 		//this.user = user;
 	}
 
+	
+	
 	public Long getSaleid() {
 		return saleid;
+	}
+
+	public SaleEvent(Long saleid, List<PreSaleTicket> presaletickets) {
+		super();
+		this.saleid = saleid;
+		this.presaletickets = presaletickets;
 	}
 
 	public void setSaleid(Long saleid) {
 		this.saleid = saleid;
 	}
+
+	public List<PreSaleTicket> getPresaletickets() {
+		return presaletickets;
+	}
+
+	public void setPresaletickets(List<PreSaleTicket> presaletickets) {
+		this.presaletickets = presaletickets;
+	}
+	
+	
 
 	/*public Date getSaledate() {
 		return saledate;

@@ -23,9 +23,9 @@ public class AppUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userid;
 	
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "roleid")
-	private UserRole role;*/
+	private UserRole role;
 	
 	@Column(name = "firstname")
 	private String firstName;
@@ -44,7 +44,7 @@ public class AppUser {
 		super();
 	}
 
-	/*public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
+	public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
 			String passwordHash) {
 		super();
 		this.userid = userid;
@@ -53,7 +53,7 @@ public class AppUser {
 		this.lastName = lastName;
 		this.username = username;
 		this.passwordHash = passwordHash;
-	}*/
+	}
 
 
 
@@ -72,7 +72,7 @@ public class AppUser {
 
 
 
-	/*public UserRole getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
@@ -81,7 +81,7 @@ public class AppUser {
 
 	public void setRole(UserRole role) {
 		this.role = role;
-	}*/
+	}
 
 
 
@@ -146,15 +146,6 @@ public class AppUser {
 	public String toString() {
 		return "AppUser [userid=" + userid + ", role=" + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", username=" + username + ", passwordHash=" + passwordHash + "]";
-	}
-
-
-
+	}	
 	
-
-	
-	
-	
-	
-
 }

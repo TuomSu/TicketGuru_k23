@@ -25,9 +25,9 @@ public class UserRole {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long roleid;
 	
-	/*@JsonIgnore
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-	private List<AppUser> appusers;*/
+	private List<AppUser> appusers;
 	
 	@Column(name = "role")
 	private String role;
@@ -40,13 +40,13 @@ public class UserRole {
 	}
 
 
-	/*public UserRole(Long roleid, List<AppUser> appusers, String role, String rights) {
+	public UserRole(Long roleid, List<AppUser> appusers, String role, String rights) {
 		super();
 		this.roleid = roleid;
 		this.appusers = appusers;
 		this.role = role;
 		this.rights = rights;
-	}*/
+	}
 
 
 	public Long getRoleid() {
@@ -59,14 +59,14 @@ public class UserRole {
 	}
 
 
-	/*public List<AppUser> getAppusers() {
+	public List<AppUser> getAppusers() {
 		return appusers;
 	}
 
 
 	public void setAppusers(List<AppUser> appusers) {
 		this.appusers = appusers;
-	}*/
+	}
 
 
 	public String getRole() {

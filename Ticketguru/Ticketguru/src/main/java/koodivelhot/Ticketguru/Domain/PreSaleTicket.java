@@ -18,11 +18,12 @@ public class PreSaleTicket {
 	private Long presaleticketid;
 	//private Boolean used;
 	
-	/*@JsonIgnore
+
 	@ManyToOne
     @JoinColumn(name = "saleid") // myyntitapahtuma, johon lippu liittyy
-    private SaleEvent sale;*/
+    private SaleEvent sale;
 	
+	/*
 	@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "event_id") // tapahtuma, johon lippu liittyy
@@ -35,13 +36,10 @@ public class PreSaleTicket {
 	
 	public PreSaleTicket() {}
 
-	public PreSaleTicket(Event event) { //Event event, TicketType type Boolean used, SaleEvent sale
+	public PreSaleTicket(Long presaleticketid, SaleEvent sale) {
 		super();
-		this.event = event;
-		//this.used = used;
-		//this.sale = sale;
-		//this.event = event;
-		//this.type = type;
+		this.presaleticketid = presaleticketid;
+		this.sale = sale;
 	}
 
 	public Long getPresaleticketid() {
@@ -52,22 +50,23 @@ public class PreSaleTicket {
 		this.presaleticketid = presaleticketid;
 	}
 
-	//public Boolean getUsed() {
-		//return used;
-	//}
+	/*public Boolean getUsed() {
+		return used;
+	}
 
-	//public void setUsed(Boolean used) {
-		//this.used = used;
-	//}
-
-	/*public SaleEvent getSale() {
+	public void setUsed(Boolean used) {
+		this.used = used;
+	}*/
+	
+	public SaleEvent getSale() {
 		return sale;
 	}
 
 	public void setSale(SaleEvent sale) {
 		this.sale = sale;
-	}*/
+	}
 
+	/*
 	public Event getEvent() {
 		return event;
 	}
