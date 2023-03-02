@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
+import koodivelhot.Ticketguru.Domain.AppUser;
+import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 
@@ -26,6 +28,9 @@ public class TicketguruApplication {
 			log.info("save an event");
 			erepository.save(new Event("Testitapahtuma"));
 			erepository.save(new Event("Demotapahtuma"));
+			
+		
+			
 			
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {

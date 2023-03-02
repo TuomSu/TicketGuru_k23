@@ -25,9 +25,9 @@ public class UserRole {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long roleid;
 	
-	/*@JsonIgnore
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-	private List<AppUser> appusers;*/
+	private List<AppUser> appusers;
 	
 	@Column(name = "role")
 	private String role;
