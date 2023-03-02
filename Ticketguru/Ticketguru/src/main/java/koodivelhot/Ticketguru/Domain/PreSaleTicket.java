@@ -16,13 +16,13 @@ public class PreSaleTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long presaleticketid;
-	private Boolean used;
+	//private Boolean used;
 	
-	/*@ManyToOne
-	@JsonIgnore
+	@ManyToOne
     @JoinColumn(name = "saleid") // myyntitapahtuma, johon lippu liittyy
     private SaleEvent sale;
 	
+	/*
 	@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "event_id") // tapahtuma, johon lippu liittyy
@@ -37,14 +37,11 @@ public class PreSaleTicket {
 		super();
 	}
 
-	/*public PreSaleTicket(Long presaleticketid, Boolean used, SaleEvent sale, Event event, TicketType type) {
+	public PreSaleTicket(Long presaleticketid, SaleEvent sale) {
 		super();
 		this.presaleticketid = presaleticketid;
-		this.used = used;
 		this.sale = sale;
-		this.event = event;
-		this.type = type;
-	}*/
+	}
 
 	public Long getPresaleticketid() {
 		return presaleticketid;
@@ -54,15 +51,15 @@ public class PreSaleTicket {
 		this.presaleticketid = presaleticketid;
 	}
 
-	public Boolean getUsed() {
+	/*public Boolean getUsed() {
 		return used;
 	}
 
 	public void setUsed(Boolean used) {
 		this.used = used;
-	}
+	}*/
 
-	/*public SaleEvent getSale() {
+	public SaleEvent getSale() {
 		return sale;
 	}
 
@@ -70,6 +67,7 @@ public class PreSaleTicket {
 		this.sale = sale;
 	}
 
+	/*
 	public Event getEvent() {
 		return event;
 	}
