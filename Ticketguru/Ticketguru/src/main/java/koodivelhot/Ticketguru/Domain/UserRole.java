@@ -39,15 +39,21 @@ public class UserRole {
 		super();
 	}
 
-
+/*
 	public UserRole(Long roleid, List<AppUser> appusers, String role, String rights) {
 		super();
 		this.roleid = roleid;
 		this.appusers = appusers;
 		this.role = role;
 		this.rights = rights;
-	}
+	}*/
 
+	
+	public UserRole(String role, String rights) {
+		super();
+		this.role = role;
+		this.rights = rights;
+	}
 
 	public Long getRoleid() {
 		return roleid;
