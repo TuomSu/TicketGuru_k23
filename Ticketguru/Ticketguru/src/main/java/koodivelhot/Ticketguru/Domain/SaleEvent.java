@@ -39,12 +39,20 @@ public class SaleEvent {
 	
 	public SaleEvent() {}
 
-
+/*
 	public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
 		super();
 		this.saleid = saleid;
 		this.saledate = saledate;
 		this.saletime = saletime;
+		this.user = user;
+	}
+*/
+	
+
+
+	public SaleEvent(AppUser user) {
+		super();
 		this.user = user;
 	}
 
@@ -90,6 +98,11 @@ public class SaleEvent {
 
 	public void setUser(AppUser user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "SaleEvent [saleid=" + saleid + ", user=" + user + "]";
 	}
 	
 	

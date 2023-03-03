@@ -46,6 +46,7 @@ public class AppUser {
 		super();
 	}
 
+	/*
 	public AppUser(Long userid, UserRole role, String firstName, String lastName, String username,
 			String passwordHash) {
 		super();
@@ -56,9 +57,19 @@ public class AppUser {
 		this.username = username;
 		this.passwordHash = passwordHash;
 	}
+*/
 
-
-
+	
+	public AppUser(UserRole role, String firstName, String lastName, String username, String passwordHash) {
+		super();
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.passwordHash = passwordHash;
+	}
+	
+	
 
 	public Long getUserid() {
 		return userid;
@@ -66,6 +77,8 @@ public class AppUser {
 
 
 
+
+	
 
 	public void setUserid(Long userid) {
 		this.userid = userid;
@@ -146,8 +159,9 @@ public class AppUser {
 
 	@Override
 	public String toString() {
-		return "AppUser [userid=" + userid + ", role=" + ", firstName=" + firstName + ", lastName=" + lastName
+		return "AppUser [userid=" + userid + ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", username=" + username + ", passwordHash=" + passwordHash + "]";
 	}	
+	
 	
 }

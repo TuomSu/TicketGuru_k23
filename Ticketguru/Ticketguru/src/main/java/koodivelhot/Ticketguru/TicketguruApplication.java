@@ -8,10 +8,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
+import koodivelhot.Ticketguru.Domain.AppUser;
+import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
+import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
+import koodivelhot.Ticketguru.Domain.SaleEvent;
+import koodivelhot.Ticketguru.Domain.SaleEventRepository;
+import koodivelhot.Ticketguru.Domain.UserRole;
+import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
@@ -25,7 +32,7 @@ public class TicketguruApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository) {
+	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, UserRoleRepository rolerepository, SaleEventRepository salerepository) {
 		return (args) -> {
 			log.info("save an event");
 			
@@ -36,12 +43,27 @@ public class TicketguruApplication {
 			erepository.save(new Event("Testitapahtuma", 10, vrepository.findByVenueName("Testipaikka").get(0)));
 			erepository.save(new Event("Demotapahtuma"));
 			
-		
+			
+			UserRole role1 = new UserRole("admin", "all rights");
+			rolerepository.save(role1);
+			
+			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "$2a$10$WDMEAdeX.N/M6oJnNpDyUO5szwepvUl6irlqJ/o5aRcZtth9Yfnom");
+			userrepository.save(user1);
+			
+			SaleEvent sale1 = new SaleEvent(userrepository.findByUsername("usernameAnna").get(0));
+			salerepository.save(sale1);
+			
 			
 			
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {
 				log.info(event.toString());
+			}
+			for (AppUser appuser : userrepository.findAll()) {
+				log.info(appuser.toString());
+			}
+			for (SaleEvent sale : salerepository.findAll()) {
+				log.info(sale.toString());
 			}
 		};
 		
