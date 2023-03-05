@@ -7,7 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -17,6 +20,8 @@ import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
+import koodivelhot.Ticketguru.Domain.TicketType;
+import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
 import koodivelhot.Ticketguru.Domain.UserRole;
 import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
@@ -32,16 +37,23 @@ public class TicketguruApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, UserRoleRepository rolerepository, SaleEventRepository salerepository) {
+	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, 
+			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository) {
 		return (args) -> {
 			log.info("save an event");
 			
-			acrepository.save(new AreaCode("00000"));
+			ttrepository.save(new TicketType(0.5, "Student"));
+			ttrepository.save(new TicketType(0, "Child under 7"));
 			
-			vrepository.save(new Venue("Testipaikka", acrepository.findByAreaCode("00000").get(0)));
+			acrepository.save(new AreaCode("00000", "Testikaupunki"));
 			
-			erepository.save(new Event("Testitapahtuma", 10, vrepository.findByVenueName("Testipaikka").get(0)));
+			vrepository.save(new Venue("Testipaikka", "Testi", acrepository.findByAreaCode("00000").get(0)));
+			
+			erepository.save(new Event("Testitapahtuma", 10, "10/10/2023", vrepository.findByVenueName("Testipaikka").get(0)));
 			erepository.save(new Event("Demotapahtuma"));
+			
+			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
+			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Child under 7").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
 			
 			
 			UserRole role1 = new UserRole("admin", "all rights");

@@ -4,7 +4,7 @@ package koodivelhot.Ticketguru.Domain;
 import java.util.Date;
 import java.util.List;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,21 +24,29 @@ public class Event {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long event_id;
 	private String eventName;
-	private Date eventStartDate;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
+	private String eventStartDate;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
 	private Date eventEndDate;
+	
 	private int ticketAmount; //kuinka monta lippua myynnissä
 	private double ticketPrice;
 	private String description;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
 	private Date presaleStarts;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
 	private Date presaleEnds;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
 	
-	/*@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	private List<PrintedTicket> printedTickets;*/
+	private List<AcceptableTicketTypes> aTicketTypes;
 	
 	//@JsonIgnore
 	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
@@ -51,13 +59,14 @@ public class Event {
 	
 	public Event() {}
 	
-	public Event(String eventName, int ticketAmount, Venue venue) {
+	public Event(String eventName, int ticketAmount, String eventStartDate, Venue venue) {
 		this.eventName = eventName;
 		this.ticketAmount = ticketAmount;
+		this.eventStartDate = eventStartDate;
 		this.venue = venue;
 	}
 
-	public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds) {
+	/*public Event(String eventName, Date eventStartDate, Date eventEndDate, int ticketAmount, double ticketPrice, String description, Date presaleStarts, Date presaleEnds, Venue venue) {
 		super();
 		this.eventName = eventName;
 		this.eventStartDate = eventStartDate;
@@ -67,10 +76,10 @@ public class Event {
 		this.description = description;
 		this.presaleStarts = presaleStarts;
 		this.presaleEnds = presaleEnds;
+		this.venue = venue;
 		
-	}
+	}*/
 
-	// this.venue = venue;
 	public Event(String eventName) {
 		this.eventName = eventName;
 		// TODO Auto-generated constructor stub
@@ -92,11 +101,11 @@ public class Event {
 		this.eventName = eventName;
 	}
 
-	public Date getEventStartDate() {
+	public String getEventStartDate() {
 		return eventStartDate;
 	}
-
-	public void setEventStartDate(Date eventStartDate) {
+	
+	public void setEventStartDate(String eventStartDate) {
 		this.eventStartDate = eventStartDate;
 	}
 	
@@ -156,6 +165,16 @@ public class Event {
 		this.venue = venue;
 	}
 
+	public List<AcceptableTicketTypes> getaTicketTypes() {
+		return aTicketTypes;
+	}
+
+	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
+		this.aTicketTypes = aTicketTypes;
+	}
+	
+	
+
 	/*public List<PrintedTicket> getPrintedTickets() {
 		return printedTickets;
 	}
@@ -170,14 +189,6 @@ public class Event {
 
 	public void setPresaleTickets(List<PreSaleTicket> presaleTickets) {
 		this.presaleTickets = presaleTickets;
-	}
-
-	/*public AcceptableTicketTypes getAcceptableTypes() {
-		return acceptableTypes;
-	}
-
-	public void setAcceptableTypes(AcceptableTicketTypes acceptableTypes) {
-		this.acceptableTypes = acceptableTypes;
 	}
 
 	@Override
