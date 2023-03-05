@@ -23,6 +23,8 @@ import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
+import koodivelhot.Ticketguru.Domain.SaleEvent;
+import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
@@ -37,6 +39,9 @@ public class TicketguruController {
 	
 	@Autowired
 	private AreaCodeRepository acrepository;
+	
+	@Autowired
+	private SaleEventRepository serepository;
 	
 	//@Autowired
 	//AppUserRepository urepository;
@@ -147,6 +152,14 @@ public class TicketguruController {
 	public @ResponseBody List<AreaCode> deleteAreaCode(@PathVariable("id") String areaCode) {
 		acrepository.deleteById(areaCode);
 		return (List<AreaCode>) acrepository.findAll();
+	}
+	
+	//Myyntitapahtuma
+	
+	// REST, get all sale events
+	@RequestMapping(value = "/saleEvents", method = RequestMethod.GET)
+	public @ResponseBody List<SaleEvent> saleEventListRest() {
+		return(List<SaleEvent>) serepository.findAll();
 	}
 	
 	// REST, get all users

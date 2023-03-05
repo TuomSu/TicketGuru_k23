@@ -24,16 +24,15 @@ public class SaleEvent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long saleid;
-	private Date saledate;
+	//private LocalDate saledate;
 	private Time saletime;
 	
-	@ManyToOne
 	@JsonIgnore
+	@ManyToOne
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
 	
     private AppUser user;
 
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
 	
@@ -48,8 +47,6 @@ public class SaleEvent {
 		this.user = user;
 	}
 */
-	
-
 
 	public SaleEvent(AppUser user) {
 		super();
@@ -61,20 +58,24 @@ public class SaleEvent {
 		return saleid;
 	}
 
-	public SaleEvent(Long saleid, List<PreSaleTicket> presaletickets) {
+	/*public SaleEvent(Long saleid, List<PreSaleTicket> presaletickets) {
 		super();
 		this.saleid = saleid;
 		this.presaletickets = presaletickets;
-	}
+	}*/
 
 	public void setSaleid(Long saleid) {
 		this.saleid = saleid;
 	}
 
-
-	public Date getSaledate() {
+	/*public LocalDate getSaledate() {
 		return saledate;
 	}
+
+	public void setSaledate(LocalDate saledate) {
+		this.saledate = saledate;
+	}*/
+
 	public List<PreSaleTicket> getPresaletickets() {
 		return presaletickets;
 	}

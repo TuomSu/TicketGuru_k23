@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
 import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
@@ -17,6 +16,7 @@ import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
+import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
@@ -38,7 +38,7 @@ public class TicketguruApplication {
 	
 	@Bean
 	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, 
-			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository) {
+			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository, PreSaleTicketRepository pstrepository) {
 		return (args) -> {
 			log.info("save an event");
 			
@@ -54,8 +54,7 @@ public class TicketguruApplication {
 			
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Child under 7").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
-			
-			
+				
 			UserRole role1 = new UserRole("admin", "all rights");
 			rolerepository.save(role1);
 			
@@ -65,6 +64,7 @@ public class TicketguruApplication {
 			SaleEvent sale1 = new SaleEvent(userrepository.findByUsername("usernameAnna").get(0));
 			salerepository.save(sale1);
 			
+			pstrepository.save(new PreSaleTicket(10, erepository.findByEventName("Testitapahtuma").get(0), salerepository.findBySaleid(Long.valueOf(1)).get(0)));
 			
 			
 			log.info("fetch demovent");

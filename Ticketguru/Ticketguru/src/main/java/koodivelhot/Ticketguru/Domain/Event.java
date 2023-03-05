@@ -48,13 +48,9 @@ public class Event {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
 	private List<AcceptableTicketTypes> aTicketTypes;
 	
-	//@JsonIgnore
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	//private List<PreSaleTicket> presaleTickets;
-	
-	/*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "acceptableType")
-    private AcceptableTicketTypes acceptableTypes;*/
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+	private List<PreSaleTicket> presaleTickets;
 	
 	
 	public Event() {}
