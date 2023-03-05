@@ -29,17 +29,16 @@ public class TicketType {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
 	private List<PreSaleTicket> presaletickets;*/
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "acceptableTicketTypes")
-    private AcceptableTicketTypes acceptableTypes;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketType")
+	private List<AcceptableTicketTypes> aTicketTypes;
 	
 	public TicketType() {
 		super();
 	}
 	
-	public TicketType(Long type_id, double multiplier, String type) {
+	public TicketType(double multiplier, String type) {
 		super();
-		this.type_id = type_id;
 		this.multiplier = multiplier;
 		this.type = type;
 	}
@@ -66,6 +65,14 @@ public class TicketType {
 	
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<AcceptableTicketTypes> getaTicketTypes() {
+		return aTicketTypes;
+	}
+
+	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
+		this.aTicketTypes = aTicketTypes;
 	}
 	
 	

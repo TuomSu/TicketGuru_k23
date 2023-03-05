@@ -23,10 +23,10 @@ public class AreaCode {
 	
 	public AreaCode() {}
 	
-	public AreaCode(String areaCode) { //String city
+	public AreaCode(String areaCode, String city) {
 		super();
 		this.areaCode = areaCode;
-		//this.city = city;
+		this.city = city;
 	}
 
 	public String getAreaCode() {

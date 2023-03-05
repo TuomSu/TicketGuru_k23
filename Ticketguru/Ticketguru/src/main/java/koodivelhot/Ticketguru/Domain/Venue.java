@@ -34,10 +34,10 @@ public class Venue {
 
 	public Venue() {}
 	
-	public Venue(String venueName, AreaCode areaCode) { //AreaCode areaCode String description
+	public Venue(String venueName, String description, AreaCode areaCode) {
 		super();
 		this.venueName = venueName;
-		//this.description = description;
+		this.description = description;
 		this.areaCode = areaCode;
 	}
 

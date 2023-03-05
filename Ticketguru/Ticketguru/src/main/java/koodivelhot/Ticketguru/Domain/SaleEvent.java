@@ -24,29 +24,39 @@ public class SaleEvent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long saleid;
-	//private Date saledate;
-//	private Time saletime;
+	private Date saledate;
+	private Time saletime;
 	
-	/*@ManyToOne
+	@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
-    private AppUser user;*/
 	
+    private AppUser user;
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
 	
 	public SaleEvent() {}
 
-	public SaleEvent(Date saledate, Time saletime, AppUser user) {
+/*
+	public SaleEvent(Long saleid, Date saledate, Time saletime, AppUser user) {
 		super();
-		//this.saledate = saledate;
-		//this.saletime = saletime;
-		//this.user = user;
+		this.saleid = saleid;
+		this.saledate = saledate;
+		this.saletime = saletime;
+		this.user = user;
+	}
+*/
+	
+
+
+	public SaleEvent(AppUser user) {
+		super();
+		this.user = user;
 	}
 
-	
-	
+
 	public Long getSaleid() {
 		return saleid;
 	}
@@ -61,6 +71,10 @@ public class SaleEvent {
 		this.saleid = saleid;
 	}
 
+
+	public Date getSaledate() {
+		return saledate;
+	}
 	public List<PreSaleTicket> getPresaletickets() {
 		return presaletickets;
 	}
@@ -69,15 +83,6 @@ public class SaleEvent {
 		this.presaletickets = presaletickets;
 	}
 	
-	
-
-	/*public Date getSaledate() {
-		return saledate;
-	}
-
-	public void setSaledate(Date saledate) {
-		this.saledate = saledate;
-	}
 
 	public Time getSaletime() {
 		return saletime;
@@ -85,15 +90,20 @@ public class SaleEvent {
 
 	public void setSaletime(Time saletime) {
 		this.saletime = saletime;
-	}*/
+	}
 
-	/*public AppUser getUser() {
+	public AppUser getUser() {
 		return user;
 	}
 
 	public void setUser(AppUser user) {
 		this.user = user;
-	}*/
+	}
+
+	@Override
+	public String toString() {
+		return "SaleEvent [saleid=" + saleid + ", user=" + user + "]";
+	}
 	
 	
 }

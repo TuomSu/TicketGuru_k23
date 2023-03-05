@@ -3,16 +3,18 @@ package koodivelhot.Ticketguru.Domain;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class AcceptableTicketTypes {
@@ -20,21 +22,28 @@ public class AcceptableTicketTypes {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long line_id;
 	
-/*	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
-	private List<TicketType> ticketTypes;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ticketType")
+    private TicketType ticketType;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event")
+    private Event event;
+	
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
 	private List<Event> events;*/
 	
 	public AcceptableTicketTypes() {}
 
-	/*public AcceptableTicketTypes(Long line_id, List<TicketType> ticketTypes, List<Event> events) {
-		super();
-		this.line_id = line_id;
-		this.ticketTypes = ticketTypes;
-		this.events = events;
-	}*/
 	
+	public AcceptableTicketTypes(TicketType ticketType, Event event) {
+		super();
+		this.ticketType = ticketType;
+		this.event = event;
+	}
+
+
 	public Long getLine_id() {
 		return line_id;
 	}
@@ -43,20 +52,23 @@ public class AcceptableTicketTypes {
 		this.line_id = line_id;
 	}
 
-	/*public List<TicketType> getTicketTypes() {
-		return ticketTypes;
+	public TicketType getTicketType() {
+		return ticketType;
 	}
 
-	public void setTicketTypes(List<TicketType> ticketTypes) {
-		this.ticketTypes = ticketTypes;
+
+	public void setTicketType(TicketType ticketType) {
+		this.ticketType = ticketType;
 	}
 
-	public List<Event> getEvents() {
-		return events;
+
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}*/
 
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	
 }

@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TicketTypeRepository extends CrudRepository<TicketType, Long> {
 
-	//List<TicketType> findByTicketTypeName(String type);
+	List<TicketType> findByType(String type);
     
 }
