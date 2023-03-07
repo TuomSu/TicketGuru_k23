@@ -43,8 +43,8 @@ public class TicketguruController {
 	@Autowired
 	private SaleEventRepository serepository;
 	
-	//@Autowired
-	//AppUserRepository urepository;
+	@Autowired
+	AppUserRepository urepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -164,9 +164,9 @@ public class TicketguruController {
 	
 	// REST, get all users
 	
-	//@RequestMapping(value = "/users", method = RequestMethod.GET)
-	//public @ResponseBody List<AppUser> UserListRest() {
-		//return(List<AppUser>) urepository.findAll();
-	//}
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public @ResponseBody List<AppUser> UserListRest() {
+		return(List<AppUser>) urepository.findAll();
+	}
 	
 }
