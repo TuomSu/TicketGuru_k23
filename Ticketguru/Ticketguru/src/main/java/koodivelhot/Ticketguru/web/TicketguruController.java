@@ -162,6 +162,12 @@ public class TicketguruController {
 		return(List<SaleEvent>) serepository.findAll();
 	}
 	
+	// REST, get sale event by id
+	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<SaleEvent> findsaleEventRest(@PathVariable("id") Long saleid) {
+		return serepository.findById(saleid);
+	}
+	
 	// REST, get all users
 	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
