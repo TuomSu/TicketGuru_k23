@@ -67,6 +67,7 @@ public class TicketguruApplication {
 			pstrepository.save(new PreSaleTicket(10, erepository.findByEventName("Testitapahtuma").get(0), salerepository.findBySaleid(Long.valueOf(1)).get(0)));
 			
 			
+			
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {
 				log.info(event.toString());

@@ -27,11 +27,10 @@ public class SaleEvent {
 	//private LocalDate saledate;
 	private Time saletime;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
-	
-    private AppUser user;
+	private AppUser user;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
@@ -47,12 +46,19 @@ public class SaleEvent {
 		this.user = user;
 	}
 */
-
+	
+	
 	public SaleEvent(AppUser user) {
 		super();
 		this.user = user;
 	}
 
+
+	public SaleEvent(AppUser user, List<PreSaleTicket> presaletickets) {
+	super();
+	this.user = user;
+	this.presaletickets = presaletickets;
+}
 
 	public Long getSaleid() {
 		return saleid;
