@@ -25,6 +25,8 @@ import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
+import koodivelhot.Ticketguru.Domain.UserRole;
+import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
@@ -45,6 +47,9 @@ public class TicketguruController {
 	
 	@Autowired
 	AppUserRepository urepository;
+	
+	@Autowired
+	UserRoleRepository rrepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -168,11 +173,57 @@ public class TicketguruController {
 		return serepository.findById(saleid);
 	}
 	
-	// REST, get all users
+	// Käyttäjät
+	
+	//REST, get all users
 	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public @ResponseBody List<AppUser> UserListRest() {
 		return(List<AppUser>) urepository.findAll();
 	}
+	
+	// GET user by id
+		@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+		public @ResponseBody Optional<AppUser> findUserRest(@PathVariable("id") Long userid) {
+			return urepository.findById(userid);
+		}
+		
+		// REST, add new user
+			@RequestMapping(value = "users", method = RequestMethod.POST)
+			public @ResponseBody AppUser newAppUser(@RequestBody AppUser appuser) {
+				return urepository.save(appuser);
+			}
+			
+			//REST, update user
+			@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+			public @ResponseBody AppUser editUser(@RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
+				editedUser.setUserid(userid);
+				return urepository.save(editedUser);
+			}
+			
+			//REST, delete by id user
+			@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+			public @ResponseBody List<AppUser> deleteUser(@PathVariable("id") Long userid) {
+				urepository.deleteById(userid);
+				return (List<AppUser>) urepository.findAll();
+			}
+
+	// REST, get all ROLES
+			@RequestMapping(value = "/roles", method = RequestMethod.GET)
+			public @ResponseBody List<UserRole> UserRoleRest() {
+				return(List<UserRole>) rrepository.findAll();
+			}
+			// GET role by id
+			@RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
+			public @ResponseBody Optional<UserRole> findRoleRest(@PathVariable("id") Long roleid) {
+				return rrepository.findById(roleid);
+			}
+			
+			// REST, add new role
+				@RequestMapping(value = "roles", method = RequestMethod.POST)
+				public @ResponseBody UserRole newUserRole(@RequestBody UserRole role) {
+					return rrepository.save(role);
+				}
+	
 	
 }
