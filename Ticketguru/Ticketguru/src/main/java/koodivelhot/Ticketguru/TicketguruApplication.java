@@ -64,7 +64,7 @@ public class TicketguruApplication {
 			SaleEvent sale1 = new SaleEvent(userrepository.findByUsername("usernameAnna").get(0));
 			salerepository.save(sale1);
 			
-			pstrepository.save(new PreSaleTicket(10, erepository.findByEventName("Testitapahtuma").get(0), salerepository.findBySaleid(Long.valueOf(1)).get(0)));
+			pstrepository.save(new PreSaleTicket(10, false, erepository.findByEventName("Testitapahtuma").get(0), salerepository.findBySaleid(Long.valueOf(1)).get(0)));
 			
 			
 			
