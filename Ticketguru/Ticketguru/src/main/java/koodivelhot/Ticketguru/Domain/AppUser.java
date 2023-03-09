@@ -35,7 +35,6 @@ public class AppUser {
 	private String lastName;
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
-	@JsonIgnore
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
