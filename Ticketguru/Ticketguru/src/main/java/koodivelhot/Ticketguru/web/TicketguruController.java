@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
-
+import jakarta.validation.Valid;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -190,13 +192,13 @@ public class TicketguruController {
 		
 		// REST, add new user
 			@RequestMapping(value = "users", method = RequestMethod.POST)
-			public @ResponseBody AppUser newAppUser(@RequestBody AppUser appuser) {
+			public @ResponseBody AppUser newAppUser(@Valid @RequestBody AppUser appuser) {
 				return urepository.save(appuser);
 			}
 			
 			//REST, update user
 			@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-			public @ResponseBody AppUser editUser(@RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
+			public @ResponseBody AppUser editUser(@Valid @RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
 				editedUser.setUserid(userid);
 				return urepository.save(editedUser);
 			}

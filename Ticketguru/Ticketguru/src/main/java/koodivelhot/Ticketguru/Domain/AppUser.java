@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -27,13 +29,17 @@ public class AppUser {
 	
 	@ManyToOne
 	@JoinColumn(name = "roleid")
+	@NotNull (message = "Choose a role for the user, cannot be null")
 	private UserRole role;
 	
 	@Column(name = "firstname")
+	@NotNull (message = "Name cannot be null")
 	private String firstName;
 	@Column(name = "lastname")
+	@NotNull (message = "Name cannot be null")
 	private String lastName;
 	@Column(name = "username", nullable = false, unique = true)
+	@NotNull (message = "username cannot be null")
 	private String username;
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
