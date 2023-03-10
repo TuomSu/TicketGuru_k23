@@ -16,7 +16,7 @@ public class PreSaleTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long presaleticketid;
-	//private Boolean used;
+	private Boolean used;
 	private double price;
 	
 	@JsonIgnore
@@ -35,8 +35,9 @@ public class PreSaleTicket {
 	
 	public PreSaleTicket() {}
 
-	public PreSaleTicket(double price, Event event, SaleEvent sale) { //SaleEvent sale
+	public PreSaleTicket(double price, Boolean used, Event event, SaleEvent sale) { //SaleEvent sale
 		this.price = price;
+		this.used = used;
 		this.event = event;
 		this.sale = sale;
 		//this.sale = sale;
@@ -50,13 +51,13 @@ public class PreSaleTicket {
 		this.presaleticketid = presaleticketid;
 	}
 
-	/*public Boolean getUsed() {
+	public Boolean getUsed() {
 		return used;
 	}
 
 	public void setUsed(Boolean used) {
 		this.used = used;
-	}*/
+	}
 	
 	public SaleEvent getSale() {
 		return sale;
