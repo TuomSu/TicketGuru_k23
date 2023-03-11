@@ -175,6 +175,28 @@ public class TicketguruController {
 		return serepository.findById(saleid);
 	}
 	
+	
+	// REST, delete sale event by id
+	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<SaleEvent> deleteSaleEvent(@PathVariable("id") Long saleid) {
+		serepository.deleteById(saleid);
+		return (List<SaleEvent>) serepository.findAll();
+	}
+	
+	//REST, update sale event by id
+	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.PUT)
+	public @ResponseBody SaleEvent editSaleEvent(@RequestBody SaleEvent editedSaleEvent, @PathVariable("id") Long saleid) {
+		editedSaleEvent.setSaleid(saleid);
+		return serepository.save(editedSaleEvent);
+	}
+	
+	// REST, add new SaleEvent
+	@RequestMapping(value = "saleEvents", method = RequestMethod.POST)
+	public @ResponseBody SaleEvent newSaleEvent(@RequestBody SaleEvent saleevent) {
+			return serepository.save(saleevent);
+	}
+
+	
 	// Käyttäjät
 	
 	//REST, get all users
