@@ -25,6 +25,8 @@ import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
+import koodivelhot.Ticketguru.Domain.PreSaleTicket;
+import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.UserRole;
@@ -52,6 +54,9 @@ public class TicketguruController {
 	
 	@Autowired
 	UserRoleRepository rrepository;
+	
+	@Autowired
+	PreSaleTicketRepository pstrepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -195,6 +200,40 @@ public class TicketguruController {
 	public @ResponseBody SaleEvent newSaleEvent(@RequestBody SaleEvent saleevent) {
 			return serepository.save(saleevent);
 	}
+	
+	// Ennakkoliput
+	
+	// REST, get all presale tickects
+		@RequestMapping(value = "/presaletickets", method = RequestMethod.GET)
+		public @ResponseBody List<PreSaleTicket> PreSaleTicketListRest() {
+			return(List<PreSaleTicket>) pstrepository.findAll();
+		}
+		
+	// REST, get presaleticket by id
+	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<PreSaleTicket> findPreSaleTicketRest(@PathVariable("id") Long presaleticketid) {
+		return pstrepository.findById(presaleticketid);
+	}
+	
+	// REST, delete sale event by id
+	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<PreSaleTicket> deletePreSaleTicket(@PathVariable("id") Long presaleticketid) {
+		pstrepository.deleteById(presaleticketid);
+		return (List<PreSaleTicket>) pstrepository.findAll();
+	}
+	
+	//REST, update sale event by id
+	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.PUT)
+	public @ResponseBody PreSaleTicket editPreSaleticket(@RequestBody PreSaleTicket editedPreSaleTicket, @PathVariable("id") Long presaleticketid) {
+		editedPreSaleTicket.setPresaleticketid(presaleticketid);
+		return pstrepository.save(editedPreSaleTicket);
+	}
+	
+	// REST, add new presale ticket
+		@RequestMapping(value = "presaletickets", method = RequestMethod.POST)
+		public @ResponseBody PreSaleTicket newPreSaleTicket(@RequestBody PreSaleTicket presaleticket) {
+				return pstrepository.save(presaleticket);
+		}
 
 	
 	// Käyttäjät
