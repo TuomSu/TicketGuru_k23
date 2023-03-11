@@ -33,6 +33,7 @@ public class SaleEvent {
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
 	private AppUser user;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
 	

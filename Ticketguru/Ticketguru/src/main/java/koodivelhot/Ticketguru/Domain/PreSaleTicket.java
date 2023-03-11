@@ -19,7 +19,7 @@ public class PreSaleTicket {
 	private Boolean used;
 	private double price;
 	
-	@JsonIgnore
+	
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
     private SaleEvent sale;
