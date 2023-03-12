@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 
 
@@ -16,31 +17,45 @@ public class PreSaleTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long presaleticketid;
+	@NotNull
 	private Boolean used;
+	@NotNull (message = "Price cannot be null") // hinta on pakollinen tieto, ilmaislipuille syötetään hinnaksi 0
 	private double price;
 	
 	
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
+	@NotNull (message = "Presale ticket must belong to a sale event")
     private SaleEvent sale;
 	
 	@ManyToOne
     @JoinColumn(name = "event") // tapahtuma, johon lippu liittyy
+	@NotNull (message = "Presale ticket must belong to an event")
     private Event event;
 	
-	/*@ManyToOne
-	@JsonIgnore
-	@JoinColumn(name = "type_id") // lipputyyppi
-	private TicketType type;*/
+	@ManyToOne
+	@JoinColumn(name = "tickettype") // lipputyyppi
+	@NotNull (message = "Presale ticket must have a ticket type")
+	private TicketType tickettype;
 	
 	public PreSaleTicket() {}
 
-	public PreSaleTicket(double price, Boolean used, Event event, SaleEvent sale) { //SaleEvent sale
+	public PreSaleTicket(double price, Boolean used, Event event, SaleEvent sale) {
 		this.price = price;
 		this.used = used;
 		this.event = event;
 		this.sale = sale;
-		//this.sale = sale;
+	}
+
+	public PreSaleTicket(@NotNull Boolean used, @NotNull(message = "Price cannot be null") double price,
+			@NotNull(message = "Presale ticket must belong to a sale event") SaleEvent sale,
+			@NotNull(message = "Presale ticket must belong to an event") Event event, TicketType tickettype) {
+		super();
+		this.used = used;
+		this.price = price;
+		this.sale = sale;
+		this.event = event;
+		this.tickettype = tickettype;
 	}
 
 	public Long getPresaleticketid() {
@@ -82,13 +97,14 @@ public class PreSaleTicket {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-	
-	/*public TicketType getType() {
-		return type;
+
+	public TicketType getTickettype() {
+		return tickettype;
+	}
+
+	public void setTickettype(TicketType tickettype) {
+		this.tickettype = tickettype;
 	}
 	
-	public void setType(TicketType type) {
-		this.type = type;
-	}*/
 	
 }

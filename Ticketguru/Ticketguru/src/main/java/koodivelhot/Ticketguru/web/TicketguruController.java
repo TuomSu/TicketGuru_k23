@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
@@ -29,12 +31,14 @@ import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
+import koodivelhot.Ticketguru.Domain.TicketType;
+import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
 import koodivelhot.Ticketguru.Domain.UserRole;
 import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
-@Controller
+@RestController
 public class TicketguruController {
 	
 	@Autowired
@@ -57,6 +61,9 @@ public class TicketguruController {
 	
 	@Autowired
 	PreSaleTicketRepository pstrepository;
+	
+	@Autowired
+	TicketTypeRepository ttrepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -165,7 +172,13 @@ public class TicketguruController {
 		acrepository.deleteById(areaCode);
 		return (List<AreaCode>) acrepository.findAll();
 	}
+	// Lipputyypit
 	
+	// REST, get all events
+	@RequestMapping(value = "/ticketypes", method = RequestMethod.GET)
+	public @ResponseBody List<TicketType> tickettypeListRest() {
+		return(List<TicketType>) ttrepository.findAll();
+	}
 	//Myyntitapahtuma
 	
 	// REST, get all sale events
@@ -197,6 +210,7 @@ public class TicketguruController {
 	
 	// REST, add new SaleEvent
 	@RequestMapping(value = "saleEvents", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Myyntitapahtuma luotu")
 	public @ResponseBody SaleEvent newSaleEvent(@RequestBody SaleEvent saleevent) {
 			return serepository.save(saleevent);
 	}
@@ -204,15 +218,21 @@ public class TicketguruController {
 	// Ennakkoliput
 	
 	// REST, get all presale tickects
-		@RequestMapping(value = "/presaletickets", method = RequestMethod.GET)
-		public @ResponseBody List<PreSaleTicket> PreSaleTicketListRest() {
-			return(List<PreSaleTicket>) pstrepository.findAll();
-		}
+	@RequestMapping(value = "/presaletickets", method = RequestMethod.GET)
+	public @ResponseBody List<PreSaleTicket> PreSaleTicketListRest() {
+		return(List<PreSaleTicket>) pstrepository.findAll();
+	}
 		
 	// REST, get presaleticket by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<PreSaleTicket> findPreSaleTicketRest(@PathVariable("id") Long presaleticketid) {
-		return pstrepository.findById(presaleticketid);
+		
+		   try {
+			   return pstrepository.findById(presaleticketid);
+		    } catch (Exception ex) {
+		        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annetulla id:llä ei löydy ennakkolippua", ex);
+		    }
+		
 	}
 	
 	// REST, delete sale event by id
@@ -224,16 +244,17 @@ public class TicketguruController {
 	
 	//REST, update sale event by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.PUT)
-	public @ResponseBody PreSaleTicket editPreSaleticket(@RequestBody PreSaleTicket editedPreSaleTicket, @PathVariable("id") Long presaleticketid) {
+	public @ResponseBody PreSaleTicket editPreSaleticket(@Valid @RequestBody PreSaleTicket editedPreSaleTicket, @PathVariable("id") Long presaleticketid) {
 		editedPreSaleTicket.setPresaleticketid(presaleticketid);
 		return pstrepository.save(editedPreSaleTicket);
 	}
 	
 	// REST, add new presale ticket
-		@RequestMapping(value = "presaletickets", method = RequestMethod.POST)
-		public @ResponseBody PreSaleTicket newPreSaleTicket(@RequestBody PreSaleTicket presaleticket) {
-				return pstrepository.save(presaleticket);
-		}
+	@RequestMapping(value = "presaletickets", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Ennakkolippu luotu")
+	public @ResponseBody PreSaleTicket newPreSaleTicket(@Valid @RequestBody PreSaleTicket presaleticket) {
+			return pstrepository.save(presaleticket);
+	}
 
 	
 	// Käyttäjät

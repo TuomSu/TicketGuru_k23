@@ -25,9 +25,9 @@ public class TicketType {
 	private double multiplier;
 	private String type;
 	
-	/*@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-	private List<PreSaleTicket> presaletickets;*/
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tickettype")
+	private List<PreSaleTicket> presaletickets;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketType")
@@ -73,6 +73,14 @@ public class TicketType {
 
 	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
 		this.aTicketTypes = aTicketTypes;
+	}
+
+	public List<PreSaleTicket> getPresaletickets() {
+		return presaletickets;
+	}
+
+	public void setPresaletickets(List<PreSaleTicket> presaletickets) {
+		this.presaletickets = presaletickets;
 	}
 	
 	
