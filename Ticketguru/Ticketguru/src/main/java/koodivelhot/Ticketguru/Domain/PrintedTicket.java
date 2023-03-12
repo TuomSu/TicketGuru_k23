@@ -2,7 +2,7 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.time.LocalDate;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 
 
@@ -28,13 +29,22 @@ public class PrintedTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long pTicketId;
+	
+	
 	@Column (name = "ticketprice")
+	@NotNull (message = "Price cannot be null") // hinta on pakollinen tieto, ilmaislipuille syötetään hinnaksi 0
 	private Double ticketPrice;
+	
+	@NotNull
 	@Column (name = "ticketsold")
 	private Boolean ticketSold;
-	@Column (name = "datesold")
-	private LocalDate dateSold;
 	
+	@NotNull (message = "Printed ticket needs sold date")
+	@Column (name = "datesold")
+	private String dateSold;
+	
+	
+	@NotNull (message = "Printed ticket needs event ")
 	@ManyToOne
 	@JsonIgnore
     @JoinColumn(name = "event_id")
@@ -47,8 +57,8 @@ public class PrintedTicket {
 		super();
 	}
 	
-	public PrintedTicket(Long pTicketId, Double ticketPrice, Boolean ticketSold, LocalDate dateSold, Event event) {
-		this.pTicketId = pTicketId;
+	public PrintedTicket( Double ticketPrice, Boolean ticketSold, String dateSold, Event event) {
+		
 		this.ticketPrice = ticketPrice;
 		this.ticketSold = ticketSold;
 		this.dateSold = dateSold;
@@ -74,10 +84,10 @@ public class PrintedTicket {
 	public void setTicketSold(Boolean ticketSold) {
 		this.ticketSold = ticketSold;
 	}
-	public LocalDate getDateSold() {
+	public String getDateSold() {
 		return dateSold;
 	}
-	public void setDateSold(LocalDate dateSold) {
+	public void setDateSold(String dateSold) {
 		this.dateSold = dateSold;
 	}
 	

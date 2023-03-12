@@ -29,6 +29,8 @@ import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
+import koodivelhot.Ticketguru.Domain.PrintedTicket;
+import koodivelhot.Ticketguru.Domain.PrintedTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
@@ -52,6 +54,9 @@ public class TicketguruController {
 	
 	@Autowired
 	private SaleEventRepository serepository;
+	
+	@Autowired
+	private PrintedTicketRepository prrepository;
 	
 	@Autowired
 	AppUserRepository urepository;
@@ -255,6 +260,53 @@ public class TicketguruController {
 	public @ResponseBody PreSaleTicket newPreSaleTicket(@Valid @RequestBody PreSaleTicket presaleticket) {
 			return pstrepository.save(presaleticket);
 	}
+	
+	
+	
+	//PrintedTicket
+	
+	// REST, get all printed tickets
+	@RequestMapping(value = "/printedtickets", method = RequestMethod.GET)
+	public @ResponseBody List<PrintedTicket> PrintedTicketListRest() {
+		return(List<PrintedTicket>) prrepository.findAll();
+	}
+		
+	// REST, get printedticket by id
+	@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<PrintedTicket> findPrintedTicketRest(@PathVariable("id") Long pTicketId) {
+		
+		   try {
+			   return prrepository.findById(pTicketId);
+		    } catch (Exception ex) {
+		        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annetulla id:llä ei löydy tulostettua lippua", ex);
+		    }
+		
+	}
+	
+	// REST, delete sale event by id
+	@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<PrintedTicket> deletePrintedTicket(@PathVariable("id") Long pTicketId) {
+		prrepository.deleteById(pTicketId);
+		return (List<PrintedTicket>) prrepository.findAll();
+	}
+	
+	//REST, update sale event by id
+	@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.PUT)
+	public @ResponseBody PrintedTicket editPrintedticket(@Valid @RequestBody PrintedTicket editedPrintedTicket, @PathVariable("id") Long pTicketId) {
+		editedPrintedTicket.setpTicketId(pTicketId);
+		return prrepository.save(editedPrintedTicket);
+	}
+	
+	// REST, add new printed ticket
+	@RequestMapping(value = "printedtickets", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tulostettu luotu")
+	public @ResponseBody PrintedTicket newPrintedTicket(@Valid @RequestBody PrintedTicket printedticket) {
+			return prrepository.save(printedticket);
+	}
+	
+	
+	
+	
 
 	
 	// Käyttäjät
