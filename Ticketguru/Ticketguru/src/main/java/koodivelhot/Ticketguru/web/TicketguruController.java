@@ -177,13 +177,41 @@ public class TicketguruController {
 		acrepository.deleteById(areaCode);
 		return (List<AreaCode>) acrepository.findAll();
 	}
+	
 	// Lipputyypit
 	
-	// REST, get all events
-	@RequestMapping(value = "/ticketypes", method = RequestMethod.GET)
+	// REST, get all tickettypes
+	@RequestMapping(value = "/tickettypes", method = RequestMethod.GET)
 	public @ResponseBody List<TicketType> tickettypeListRest() {
 		return(List<TicketType>) ttrepository.findAll();
 	}
+	
+	// REST, get tickettype by id
+	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<TicketType> findTicketTypeRest(@PathVariable("id") Long type_id) {
+		return ttrepository.findById(type_id);
+	}
+	
+	// REST, update tickettype by id
+	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.PUT)
+	public @ResponseBody TicketType editTicketType(@Valid @RequestBody TicketType editedTicketType, @PathVariable("id") Long type_id) {
+		editedTicketType.setType_id(type_id);
+		return ttrepository.save(editedTicketType);
+	}
+	
+	// REST, delete tickettype by id
+	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<TicketType> deleteTicketType(@PathVariable("id") Long type_id) {
+		ttrepository.deleteById(type_id);
+		return (List<TicketType>) ttrepository.findAll();
+	}
+	
+	// REST, add new tickettype
+	@RequestMapping(value = "/tickettypes", method = RequestMethod.POST)
+	public @ResponseBody TicketType newTicketType(@Valid @RequestBody TicketType newTicketType) {
+		return ttrepository.save(newTicketType);
+	}
+	
 	//Myyntitapahtuma
 	
 	// REST, get all sale events
