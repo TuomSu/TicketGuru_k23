@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 
 
@@ -30,6 +31,7 @@ public class UserRole {
 	private List<AppUser> appusers;
 	
 	@Column(name = "role")
+	@NotNull (message = "Insert role, cannot be null")
 	private String role;
 	@Column(name= "rights")
 	private String rights;

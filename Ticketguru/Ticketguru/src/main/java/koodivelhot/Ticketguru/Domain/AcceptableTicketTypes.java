@@ -26,7 +26,7 @@ public class AcceptableTicketTypes {
     @JoinColumn(name = "ticketType")
     private TicketType ticketType;
 	
-	@JsonIgnore
+	@JsonIgnore //Tapahtumissa näkyy hyväksytyt lipputyypit, kun tämä tässä. Ilman ei näy.
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event")
     private Event event;

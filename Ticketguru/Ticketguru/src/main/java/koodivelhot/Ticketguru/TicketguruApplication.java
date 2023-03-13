@@ -1,5 +1,11 @@
 package koodivelhot.Ticketguru;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -49,7 +55,16 @@ public class TicketguruApplication {
 			
 			vrepository.save(new Venue("Testipaikka", "Testi", acrepository.findByAreaCode("00000").get(0)));
 			
-			erepository.save(new Event("Testitapahtuma", 10, "10/10/2023", vrepository.findByVenueName("Testipaikka").get(0)));
+			String startDate1 = "11.12.2023 12:00";
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+			LocalDateTime startDate = LocalDateTime.parse(startDate1, df);
+			String endDate1 = "11.12.2023 23:00";
+			LocalDateTime endDate = LocalDateTime.parse(endDate1, df);
+			String preStart1 = "01.10.2023 01:00";
+			LocalDateTime preStart = LocalDateTime.parse(preStart1, df);
+			String preEnd1 = "10.12.2023 23:00";
+			LocalDateTime preEnd = LocalDateTime.parse(preEnd1, df);
+			erepository.save(new Event("Testitapahtuma", 10, startDate, endDate, 0, "Tapahtuma testaa tapahtuman toimintaa", preStart, preEnd, vrepository.findByVenueName("Testipaikka").get(0)));
 			erepository.save(new Event("Demotapahtuma"));
 			
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));

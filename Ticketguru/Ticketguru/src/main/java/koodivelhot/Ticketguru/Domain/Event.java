@@ -1,11 +1,14 @@
 package koodivelhot.Ticketguru.Domain;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -17,29 +20,41 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.websocket.OnMessage;
 
 @Entity
 public class Event {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long event_id;
+	@NotBlank(message = "Event must have a name")
 	private String eventName;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
-	private String eventStartDate;
+	//@Pattern(regexp = "^[0-31]{2}+.+[0-12]{2}+.+[0-9]{4}+ [0-24]{2}+:+[0-60]{2}+$", message = "not valid")
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+	//@NotNull(message = "Wrong date")
+	private LocalDateTime eventStartDate;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
-	private Date eventEndDate;
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+	private LocalDateTime eventEndDate;
 	
 	private int ticketAmount; //kuinka monta lippua myynnissä
+	@NotNull(message = "Ticket must have a price. If ticket is free, price is 0")
 	private double ticketPrice;
 	private String description;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
-	private Date presaleStarts;
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+	private LocalDateTime presaleStarts;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
-	private Date presaleEnds;
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+	private LocalDateTime presaleEnds;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
@@ -55,10 +70,16 @@ public class Event {
 	
 	public Event() {}
 	
-	public Event(String eventName, int ticketAmount, String eventStartDate, Venue venue) {
+	public Event(String eventName, int ticketAmount, LocalDateTime eventStartDate, LocalDateTime eventEndDate, double ticketPrice, String description, 
+			LocalDateTime presaleStarts, LocalDateTime presaleEnds, Venue venue) {
 		this.eventName = eventName;
 		this.ticketAmount = ticketAmount;
 		this.eventStartDate = eventStartDate;
+		this.eventEndDate = eventEndDate;
+		this.ticketPrice = ticketPrice;
+		this.description = description;
+		this.presaleStarts = presaleStarts;
+		this.presaleEnds = presaleEnds;
 		this.venue = venue;
 	}
 
@@ -97,19 +118,19 @@ public class Event {
 		this.eventName = eventName;
 	}
 
-	public String getEventStartDate() {
+	public LocalDateTime getEventStartDate() {
 		return eventStartDate;
 	}
 	
-	public void setEventStartDate(String eventStartDate) {
+	public void setEventStartDate(LocalDateTime eventStartDate) {
 		this.eventStartDate = eventStartDate;
 	}
 	
-	public Date getEventEndDate() {
+	public LocalDateTime getEventEndDate() {
 		return eventEndDate;
 	}
 
-	public void setEventEndDate(Date eventEndDate) {
+	public void setEventEndDate(LocalDateTime eventEndDate) {
 		this.eventEndDate = eventEndDate;
 	}
 
@@ -137,19 +158,19 @@ public class Event {
 		this.description = description;
 	}
 
-	public Date getPresaleStarts() {
+	public LocalDateTime getPresaleStarts() {
 		return presaleStarts;
 	}
 
-	public void setPresaleStarts(Date presaleStarts) {
+	public void setPresaleStarts(LocalDateTime presaleStarts) {
 		this.presaleStarts = presaleStarts;
 	}
 
-	public Date getPresaleEnds() {
+	public LocalDateTime getPresaleEnds() {
 		return presaleEnds;
 	}
 
-	public void setPresaleEnds(Date presaleEnds) {
+	public void setPresaleEnds(LocalDateTime presaleEnds) {
 		this.presaleEnds = presaleEnds;
 	}
 
