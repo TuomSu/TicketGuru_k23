@@ -208,6 +208,7 @@ public class TicketguruController {
 	
 	// REST, add new tickettype
 	@RequestMapping(value = "/tickettypes", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Lipputyyppi luotu")
 	public @ResponseBody TicketType newTicketType(@Valid @RequestBody TicketType newTicketType) {
 		return ttrepository.save(newTicketType);
 	}
