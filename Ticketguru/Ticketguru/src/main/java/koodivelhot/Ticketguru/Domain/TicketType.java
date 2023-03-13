@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class TicketType {
@@ -22,7 +23,9 @@ public class TicketType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long type_id;
+	@NotNull (message = "Tickettype must have a multiplier")
 	private double multiplier;
+	@NotNull (message = "Tickettype must have a type name")
 	private String type;
 	
 	@JsonIgnore
