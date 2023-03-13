@@ -37,7 +37,6 @@ import koodivelhot.Ticketguru.Domain.UserRole;
 import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
-import koodivelhot.Ticketguru.exceptions.NotFoundException;
 
 @RestController
 public class TicketguruController {
