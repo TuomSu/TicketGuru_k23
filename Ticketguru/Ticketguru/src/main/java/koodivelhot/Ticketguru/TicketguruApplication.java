@@ -24,6 +24,8 @@ import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
+import koodivelhot.Ticketguru.Domain.PrintedTicket;
+import koodivelhot.Ticketguru.Domain.PrintedTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
@@ -44,7 +46,7 @@ public class TicketguruApplication {
 	
 	@Bean
 	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, 
-			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository, PreSaleTicketRepository pstrepository) {
+			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository, PreSaleTicketRepository pstrepository, PrintedTicketRepository prrepository) {
 		return (args) -> {
 			log.info("save an event");
 			
@@ -79,8 +81,9 @@ public class TicketguruApplication {
 			SaleEvent sale1 = new SaleEvent(userrepository.findByUsername("usernameAnna").get(0));
 			salerepository.save(sale1);
 			
-			pstrepository.save(new PreSaleTicket(10, false, erepository.findByEventName("Testitapahtuma").get(0), salerepository.findBySaleid(Long.valueOf(1)).get(0)));
+			pstrepository.save(new PreSaleTicket(false, 10, salerepository.findBySaleid(Long.valueOf(1)).get(0), erepository.findByEventName("Testitapahtuma").get(0), ttrepository.findByType("Student").get(0)));
 			
+			prrepository.save(new PrintedTicket(10.99, true, "10/10/2023", erepository.findByEventName("Testitapahtuma").get(0)));
 			
 			
 			log.info("fetch demovent");
