@@ -226,8 +226,12 @@ public class TicketguruController {
 	// REST, get presaleticket by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<PreSaleTicket> findPreSaleTicketRest(@PathVariable("id") Long presaleticketid) {
-			   return pstrepository.findByPresaleticketid(presaleticketid);
+		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
 		
+		if (presaleticket.isPresent()) {
+			return pstrepository.findByPresaleticketid(presaleticketid);
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
 	}
 	
 	// REST, delete sale event by id
