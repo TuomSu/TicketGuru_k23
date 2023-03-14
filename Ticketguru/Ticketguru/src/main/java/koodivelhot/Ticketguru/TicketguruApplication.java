@@ -87,7 +87,7 @@ public class TicketguruApplication {
 			
 			prrepository.save(new PrintedTicket(10.99, true, "10/10/2023", erepository.findByEventName("Testitapahtuma").get(0)));
 			
-			
+			/*// kommentoin nämä pois koska ei varmaan enää tarvita testausta varten?
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {
 				log.info(event.toString());
@@ -97,7 +97,7 @@ public class TicketguruApplication {
 			}
 			for (SaleEvent sale : salerepository.findAll()) {
 				log.info(sale.toString());
-			}
+			}*/
 		};
 		
 	}

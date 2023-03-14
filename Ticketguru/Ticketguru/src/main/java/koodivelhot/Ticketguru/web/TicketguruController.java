@@ -223,22 +223,41 @@ public class TicketguruController {
 	// REST, get sale event by id
 	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<SaleEvent> findsaleEventRest(@PathVariable("id") Long saleid) {
-		return serepository.findById(saleid);
+			Optional<PreSaleTicket> sale = pstrepository.findById(saleid);
+		
+		if (sale.isPresent()) {
+			return serepository.findById(saleid);
+		} else {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Myyntitapahtumaa ei löytynyt annetulla id:llä");
+		}
 	}
-	
 	
 	// REST, delete sale event by id
 	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<SaleEvent> deleteSaleEvent(@PathVariable("id") Long saleid) {
-		serepository.deleteById(saleid);
-		return (List<SaleEvent>) serepository.findAll();
+		Optional<SaleEvent> sale = serepository.findById(saleid);
+		
+		if (sale.isPresent()) {
+			serepository.deleteById(saleid);
+			return (List<SaleEvent>) serepository.findAll();
+			
+		} else {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Myyntitapahtumaa ei löytynyt annetulla id:llä");
+		}
 	}
 	
 	//REST, update sale event by id
 	@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.PUT)
 	public @ResponseBody SaleEvent editSaleEvent(@RequestBody SaleEvent editedSaleEvent, @PathVariable("id") Long saleid) {
-		editedSaleEvent.setSaleid(saleid);
-		return serepository.save(editedSaleEvent);
+		Optional<SaleEvent> sale = serepository.findById(saleid);
+		
+		if (sale.isPresent()) {
+			editedSaleEvent.setSaleid(saleid);
+			return serepository.save(editedSaleEvent);
+			
+		} else { // jos myyntitapahtumaa ei löydy annetulla id:llä, muokkaus ei ole mahdollista eikä synny uutta myyntitapahtumaa
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Myyntitapahtumaa ei löytynyt annetulla id:llä");
+		}	
 	}
 	
 	// REST, add new SaleEvent
@@ -263,22 +282,35 @@ public class TicketguruController {
 		
 		if (presaleticket.isPresent()) {
 			return pstrepository.findByPresaleticketid(presaleticketid);
-		}
+		} else {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
+		}
 	}
 	
-	// REST, delete sale event by id
+	// REST, delete presale ticket by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<PreSaleTicket> deletePreSaleTicket(@PathVariable("id") Long presaleticketid) {
-		pstrepository.deleteById(presaleticketid);
-		return (List<PreSaleTicket>) pstrepository.findAll();
+		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
+		
+		if (presaleticket.isPresent()) {
+			pstrepository.deleteById(presaleticketid);
+			return (List<PreSaleTicket>) pstrepository.findAll();
+		} else {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
+		}
 	}
 	
-	//REST, update sale event by id
+	//REST, update presale ticket by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.PUT)
 	public @ResponseBody PreSaleTicket editPreSaleticket(@Valid @RequestBody PreSaleTicket editedPreSaleTicket, @PathVariable("id") Long presaleticketid) {
-		editedPreSaleTicket.setPresaleticketid(presaleticketid);
-		return pstrepository.save(editedPreSaleTicket);
+		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
+		
+		if (presaleticket.isPresent()) {
+			editedPreSaleTicket.setPresaleticketid(presaleticketid);
+			return pstrepository.save(editedPreSaleTicket);
+		} else { // jos ennakkolippua ei löydy annetulla id:llä ei muokkaus ole mahdollista eikä luoda uutta ennakkolippua
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
+		}
 	}
 	
 	// REST, add new presale ticket
