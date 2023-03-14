@@ -28,3 +28,9 @@
 
 
 ## Sprintti 3
+
+
+## Sprintti 5
+- Validointi
+- Retrospektiivi
+- Vastauskoodit
