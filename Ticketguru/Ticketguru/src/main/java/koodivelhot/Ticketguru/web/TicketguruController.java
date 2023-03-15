@@ -378,7 +378,12 @@ public class TicketguruController {
 	// GET user by id
 		@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 		public @ResponseBody Optional<AppUser> findUserRest(@PathVariable("id") Long userid) {
-			return urepository.findById(userid);
+			Optional<AppUser> user = urepository.findById(userid);
+			if(user.isPresent()) {
+				return urepository.findById(userid);
+			}else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
+			}
 		}
 		
 		// REST, add new user
@@ -390,15 +395,25 @@ public class TicketguruController {
 			//REST, update user
 			@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 			public @ResponseBody AppUser editUser(@Valid @RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
+			Optional<AppUser> user = urepository.findById(userid);
+			if(user.isPresent()) {
 				editedUser.setUserid(userid);
 				return urepository.save(editedUser);
+			}else { //jos käyttäjää ei löydy annetulla id:llä, ei muokkaus ole mahdollista eikä luoda uutta käyttäjää
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
 			}
+		}
 			
 			//REST, delete by id user
 			@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 			public @ResponseBody List<AppUser> deleteUser(@PathVariable("id") Long userid) {
-				urepository.deleteById(userid);
-				return (List<AppUser>) urepository.findAll();
+				Optional<AppUser> user = urepository.findById(userid);
+				if(user.isPresent()) {
+					urepository.deleteById(userid);
+					return (List<AppUser>) urepository.findAll();
+				}else {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
+					}
 			}
 
 	// REST, get all ROLES
@@ -409,7 +424,13 @@ public class TicketguruController {
 			// GET role by id
 			@RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
 			public @ResponseBody Optional<UserRole> findRoleRest(@PathVariable("id") Long roleid) {
-				return rrepository.findById(roleid);
+				Optional<UserRole> role = rrepository.findById(roleid);
+				if(role.isPresent()) {
+					return rrepository.findById(roleid);
+				}else {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Roolia ei löytynyt annetulla id:llä");
+				}
+				
 			}
 			
 			// REST, add new role
