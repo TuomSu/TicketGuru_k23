@@ -78,14 +78,16 @@ public class TicketguruApplication {
 			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "$2a$10$WDMEAdeX.N/M6oJnNpDyUO5szwepvUl6irlqJ/o5aRcZtth9Yfnom");
 			userrepository.save(user1);
 			
-			SaleEvent sale1 = new SaleEvent(userrepository.findByUsername("usernameAnna").get(0));
+			String saledate1 = "13.03.2023 16:02";
+			LocalDateTime saleDate = LocalDateTime.parse(saledate1, df); // jostain syystä päivämäärää ei muotoilla oikein?
+			SaleEvent sale1 = new SaleEvent(saleDate, userrepository.findByUsername("usernameAnna").get(0));
 			salerepository.save(sale1);
 			
 			pstrepository.save(new PreSaleTicket(false, 10, salerepository.findBySaleid(Long.valueOf(1)).get(0), erepository.findByEventName("Testitapahtuma").get(0), ttrepository.findByType("Student").get(0)));
 			
 			prrepository.save(new PrintedTicket(10.99, true, "10/10/2023", erepository.findByEventName("Testitapahtuma").get(0)));
 			
-			
+			/*// kommentoin nämä pois koska ei varmaan enää tarvita testausta varten?
 			log.info("fetch demovent");
 			for (Event event : erepository.findAll()) {
 				log.info(event.toString());
@@ -95,7 +97,7 @@ public class TicketguruApplication {
 			}
 			for (SaleEvent sale : salerepository.findAll()) {
 				log.info(sale.toString());
-			}
+			}*/
 		};
 		
 	}

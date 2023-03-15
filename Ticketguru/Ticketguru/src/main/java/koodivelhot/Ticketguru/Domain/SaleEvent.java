@@ -2,6 +2,7 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,20 +18,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class SaleEvent {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long saleid;
-	//private LocalDate saledate;
-	// Vaihdettu testausta varten String tyyppiin
-	private String saletime;
+	
+	@NotNull (message = "Sale event must have a saletime")
+	private LocalDateTime saledate;
 	
 	//@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
+	@NotNull (message = "Insert user, cannot be null")
 	private AppUser user;
 
 	@JsonIgnore
@@ -38,56 +41,33 @@ public class SaleEvent {
 	private List<PreSaleTicket> presaletickets;
 	
 	public SaleEvent() {}
-
-	public SaleEvent(Long saleid, String saletime, AppUser user) {
-		super();
-		this.saleid = saleid;
-		this.saletime = saletime;
-		this.user = user;
-	}
-
-	public SaleEvent(Long saleid, String saletime, AppUser user, List<PreSaleTicket> presaletickets) {
-		super();
-		this.saleid = saleid;
-		this.saletime = saletime;
-		this.user = user;
-		this.presaletickets = presaletickets;
-	}
 	
+	public SaleEvent(LocalDateTime saledate, @NotNull(message = "Insert user, cannot be null") AppUser user) {
+		super();
+		this.saledate = saledate;
+		this.user = user;
+	}
 	
 	public SaleEvent(AppUser user) {
 		super();
 		this.user = user;
 	}
 
-
-	public SaleEvent(AppUser user, List<PreSaleTicket> presaletickets) {
-	super();
-	this.user = user;
-	this.presaletickets = presaletickets;
-}
-
 	public Long getSaleid() {
 		return saleid;
 	}
-
-	/*public SaleEvent(Long saleid, List<PreSaleTicket> presaletickets) {
-		super();
-		this.saleid = saleid;
-		this.presaletickets = presaletickets;
-	}*/
 
 	public void setSaleid(Long saleid) {
 		this.saleid = saleid;
 	}
 
-	/*public LocalDate getSaledate() {
+	public LocalDateTime getSaledate() {
 		return saledate;
 	}
 
-	public void setSaledate(LocalDate saledate) {
+	public void setSaledate(LocalDateTime saledate) {
 		this.saledate = saledate;
-	}*/
+	}
 
 	public List<PreSaleTicket> getPresaletickets() {
 		return presaletickets;
@@ -95,15 +75,6 @@ public class SaleEvent {
 
 	public void setPresaletickets(List<PreSaleTicket> presaletickets) {
 		this.presaletickets = presaletickets;
-	}
-	
-
-	public String getSaletime() {
-		return saletime;
-	}
-
-	public void setSaletime(String saletime) {
-		this.saletime = saletime;
 	}
 
 	public AppUser getUser() {
