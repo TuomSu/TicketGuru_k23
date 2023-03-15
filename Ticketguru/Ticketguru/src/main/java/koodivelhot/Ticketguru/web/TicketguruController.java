@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -68,6 +70,9 @@ public class TicketguruController {
 	TicketTypeRepository ttrepository;
 	
 	@Autowired
+	AcceptableTicketTypesRepository attrepository;
+	
+	@Autowired
 	PrintedTicketRepository prrepository;
 	
 	@GetMapping("testi")
@@ -87,7 +92,15 @@ public class TicketguruController {
 	// REST, get event by id
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Event> findEventRest(@PathVariable("id") Long event_id) {
-		return erepository.findById(event_id);
+		Optional<Event> event = erepository.findById(event_id);
+		
+		if (event.isPresent()) {
+			erepository.findById(event_id);
+			return erepository.findById(event_id);
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa ei löytynyt annetulla id:llä");
+			}
 	}
 	
 	// REST, add new event
@@ -106,8 +119,31 @@ public class TicketguruController {
 	//rest, delete by id and show updated list of events
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<Event> deleteEvent(@PathVariable("id") Long event_id) {
-		erepository.deleteById(event_id);
-		return (List<Event>) erepository.findAll();
+		Optional<Event> event = erepository.findById(event_id);
+		
+		if (event.isPresent()) {
+			erepository.deleteById(event_id);
+			return (List<Event>) erepository.findAll();
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa ei löytynyt annetulla id:llä");
+			}
+	}
+	
+	//Tapahtumaan hyväksyttävät lipputyypit
+	
+	// REST, delete acceptable ticket type by line id
+	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<AcceptableTicketTypes> deleteAcceptableTicketTypes(@PathVariable("id") Long lineId) {
+		attrepository.deleteById(lineId);
+		return (List<AcceptableTicketTypes>) attrepository.findAll();
+	}
+
+	// REST, add new acceptable ticket type
+	@RequestMapping(value = "/acceptabletickettypes", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tapahtumaan hyväksyttävä lipputyyppi luotu")
+	public @ResponseBody AcceptableTicketTypes newAcceptableTicketTypes(@RequestBody AcceptableTicketTypes newAcceptableTicketTypes) {
+		return attrepository.save(newAcceptableTicketTypes);
 	}
 	
 	//Tapahtumapaikka

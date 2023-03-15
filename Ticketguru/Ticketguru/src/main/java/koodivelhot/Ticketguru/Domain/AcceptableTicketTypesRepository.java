@@ -7,6 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AcceptableTicketTypesRepository extends CrudRepository<AcceptableTicketTypes, Long> {
 	
-	List<AcceptableTicketTypes> findByEvent(Event eventName);
+	Optional<AcceptableTicketTypes> findByLineId(Long lineId);
+	
+	List<AcceptableTicketTypes> findByEventEventName(String eventName);
+	
+	Optional<AcceptableTicketTypes> findByEvent(Long event_id);
 
 }

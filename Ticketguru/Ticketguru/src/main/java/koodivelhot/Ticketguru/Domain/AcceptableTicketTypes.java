@@ -20,7 +20,7 @@ import jakarta.persistence.JoinColumn;
 public class AcceptableTicketTypes {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long line_id;
+	private Long lineId;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ticketType")
@@ -29,7 +29,7 @@ public class AcceptableTicketTypes {
 	@JsonIgnore //Tapahtumissa näkyy hyväksytyt lipputyypit, kun tämä tässä. Ilman ei näy.
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event")
-    private Event event;
+	private Event event;
 	
 	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "acceptableTypes")
 	private List<Event> events;*/
@@ -44,12 +44,12 @@ public class AcceptableTicketTypes {
 	}
 
 
-	public Long getLine_id() {
-		return line_id;
+	public Long getLineId() {
+		return lineId;
 	}
 
-	public void setLine_id(Long line_id) {
-		this.line_id = line_id;
+	public void setLineId(Long lineId) {
+		this.lineId = lineId;
 	}
 
 	public TicketType getTicketType() {
