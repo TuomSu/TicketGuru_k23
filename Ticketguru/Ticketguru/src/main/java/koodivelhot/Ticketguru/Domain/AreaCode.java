@@ -10,11 +10,15 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class AreaCode {
 	@Id
+	@NotEmpty(message = "Areacode must have and areacode")
 	private String areaCode; //postinumero. Ilmoitettu String, koska Integer ei salli 0 alkua
+	@NotBlank(message = "Areacode must belong to a city")
 	private String city;
 	
 	@JsonIgnore

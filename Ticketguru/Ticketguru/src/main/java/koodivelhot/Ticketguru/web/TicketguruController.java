@@ -81,6 +81,11 @@ public class TicketguruController {
 		return "Test successful";
 	}
 	
+	@RequestMapping(value="/login")
+    public String login() {	
+        return "login";
+    }
+	
 	//Tapahtuma
 	
 	// REST, get all events

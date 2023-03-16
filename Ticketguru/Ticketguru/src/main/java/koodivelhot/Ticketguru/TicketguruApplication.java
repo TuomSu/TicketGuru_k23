@@ -55,7 +55,7 @@ public class TicketguruApplication {
 			
 			acrepository.save(new AreaCode("00000", "Testikaupunki"));
 			
-			vrepository.save(new Venue("Testipaikka", "Testi", acrepository.findByAreaCode("00000").get(0)));
+			vrepository.save(new Venue("Testipaikka", "Testi", "Testikuja 2", acrepository.findByAreaCode("00000").get(0)));
 			
 			String startDate1 = "11.12.2023 12:00";
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");

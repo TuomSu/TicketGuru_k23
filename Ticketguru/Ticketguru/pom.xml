@@ -58,6 +58,10 @@
  			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+			<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId> Login tulee tästä, jos haluaa pois, poistaa tämän
+		</dependency>-->
 	</dependencies>
 
 	<build>
