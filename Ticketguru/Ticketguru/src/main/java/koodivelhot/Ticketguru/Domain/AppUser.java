@@ -2,6 +2,8 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,10 +25,13 @@ import jakarta.validation.constraints.Size;
 @Table (name = "appuser")
 public class AppUser {
 	
+	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userid;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "roleid")
 	@NotNull (message = "Choose a role for the user, cannot be null")
@@ -41,6 +46,8 @@ public class AppUser {
 	@Column(name = "username", nullable = false, unique = true)
 	@NotNull (message = "username cannot be null")
 	private String username;
+	
+	@JsonIgnore
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
@@ -72,7 +79,7 @@ public class AppUser {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-		this.passwordHash = passwordHash;
+		setPasswordHash(passwordHash);
 	}
 	
 	
@@ -157,7 +164,7 @@ public class AppUser {
 
 
 	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+		this.passwordHash = PASSWORD_ENCODER.encode(passwordHash);
 	}
 
 
