@@ -15,15 +15,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Venue {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long venue_id;
+	@NotBlank(message = "Venue must have a name")
 	private String venueName;
 	private String description;
+	@NotBlank(message = "Venue must have an address")
+	private String address;
 	
+	@NotNull(message = "Address must have an city and areacode")
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "areaCode")
     private AreaCode areaCode;
@@ -34,10 +40,11 @@ public class Venue {
 
 	public Venue() {}
 	
-	public Venue(String venueName, String description, AreaCode areaCode) {
+	public Venue(String venueName, String description, String address, AreaCode areaCode) {
 		super();
 		this.venueName = venueName;
 		this.description = description;
+		this.address = address;
 		this.areaCode = areaCode;
 	}
 
@@ -63,6 +70,14 @@ public class Venue {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public AreaCode getAreaCode() {
