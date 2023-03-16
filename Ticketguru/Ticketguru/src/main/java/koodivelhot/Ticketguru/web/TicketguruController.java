@@ -215,8 +215,8 @@ public class TicketguruController {
 	}
 	// Lipputyypit
 	
-	// REST, get all events
-	@RequestMapping(value = "/ticketypes", method = RequestMethod.GET)
+	// REST, get all tickettypes
+	@RequestMapping(value = "/tickettypes", method = RequestMethod.GET)
 	public @ResponseBody List<TicketType> tickettypeListRest() {
 		return(List<TicketType>) ttrepository.findAll();
 	}
@@ -224,21 +224,39 @@ public class TicketguruController {
 	// REST, get tickettype by id
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<TicketType> findTicketTypeRest(@PathVariable("id") Long type_id) {
-		return ttrepository.findById(type_id);
+		Optional<TicketType> type = ttrepository.findById(type_id);
+		
+		if (type.isPresent()) {
+			return ttrepository.findById(type_id);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lipputyyppiä ei löytynyt annetulla id:llä");
+		}
 	}
 
 	// REST, update tickettype by id
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.PUT)
 	public @ResponseBody TicketType editTicketType(@Valid @RequestBody TicketType editedTicketType, @PathVariable("id") Long type_id) {
-		editedTicketType.setType_id(type_id);
-		return ttrepository.save(editedTicketType);
+		Optional<TicketType> type = ttrepository.findById(type_id);
+		
+		if (type.isPresent()) {
+			editedTicketType.setType_id(type_id);
+			return ttrepository.save(editedTicketType);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lipputyyppiä ei löytynyt annetulla id:llä");
+		}
 	}
 
 	// REST, delete tickettype by id
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<TicketType> deleteTicketType(@PathVariable("id") Long type_id) {
-		ttrepository.deleteById(type_id);
-		return (List<TicketType>) ttrepository.findAll();
+		Optional<TicketType> type = ttrepository.findById(type_id);
+		
+		if (type.isPresent()) {
+			ttrepository.deleteById(type_id);
+			return (List<TicketType>) ttrepository.findAll();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lipputyyppiä ei löytynyt annetulla id:llä");
+		}
 	}
 
 	// REST, add new tickettype
