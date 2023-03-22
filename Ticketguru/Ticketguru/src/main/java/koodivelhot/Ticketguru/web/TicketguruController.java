@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -89,6 +90,7 @@ public class TicketguruController {
 	//Tapahtuma
 	
 	// REST, get all events
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public @ResponseBody List<Event> eventListRest() {
 		return(List<Event>) erepository.findAll();
@@ -109,6 +111,7 @@ public class TicketguruController {
 	}
 	
 	// REST, add new event
+	@PreAuthorize("hasAuthority('ADMIN'")
 	@RequestMapping(value = "/events", method = RequestMethod.POST)
 	public @ResponseBody Event newEvent(@RequestBody Event newEvent) {
 		return erepository.save(newEvent);
