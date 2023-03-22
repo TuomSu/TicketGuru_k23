@@ -23,19 +23,21 @@ public class WebSecurityConfig {
 	
     @Bean
     public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
-        http
-        .authorizeRequests()
-        	.anyRequest().authenticated()
-        	.and()
-      .formLogin()
-          .defaultSuccessUrl("/events", true)
-          .permitAll()
-          .and()
-      .logout()
-          .permitAll()
-          .and()
-      .httpBasic();
-      return http.build();
+      http
+		      .authorizeHttpRequests((authorize) -> authorize
+		          .anyRequest().authenticated()
+		      )
+		      .formLogin()
+		          .defaultSuccessUrl("/events", true)
+		          .permitAll()
+		          .and()
+		      .logout()
+		          .permitAll()
+		          .and()
+		      .httpBasic()
+		      .and()
+		      .csrf().disable();
+	      return http.build();
     }
 
     @Bean
@@ -55,7 +57,7 @@ public class WebSecurityConfig {
         UserDetails user2 = User
         		.withUsername("admin")
         		.password(passwordEncoder.encode("admin"))
-        		.roles("USER", "ADMIN")
+        		.roles("ADMIN")
         		.build();
 
     	users.add(user2);
