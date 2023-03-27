@@ -391,31 +391,55 @@ public class TicketguruController {
 		public @ResponseBody List<PrintedTicket> PrintedTicketListRest() {
 			return(List<PrintedTicket>) prrepository.findAll();
 		}
+		
+	
+		
 
 		// REST, get printedticket by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.GET)
-		public @ResponseBody Optional<PrintedTicket> findPrintedTicketRest(@PathVariable("id") Long pTicketId) {
-
-			   try {
-				   return prrepository.findById(pTicketId);
-			    } catch (Exception ex) {
-			        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annetulla id:llä ei löydy tulostettua lippua", ex);
-			    }
-
+		public @ResponseBody List<PrintedTicket> findPrintedTicketRest(@PathVariable("id") Long pTicketId) {
+			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			
+			if(printedticket.isPresent()) {
+				return prrepository.findByPrintedticketid(printedticketid);
+			} else {
+				throw new  ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettua lippua ei löytynyt annetulla id:llä");
+			}
 		}
+				
+			
+	
 
 		// REST, delete sale event by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.DELETE)
 		public @ResponseBody List<PrintedTicket> deletePrintedTicket(@PathVariable("id") Long pTicketId) {
-			prrepository.deleteById(pTicketId);
-			return (List<PrintedTicket>) prrepository.findAll();
+			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			
+			if(printedticket.isPresent()) {
+				prrepository.deleteById(pTicketId);
+				return (List<PrintedTicket>) prrepository.findAll();
+			} else {
+				throw new  ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettua lippua ei löytynyt annetulla id:llä");
+			}
 		}
+			
+			
+			
+		
 
 		//REST, update sale event by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.PUT)
 		public @ResponseBody PrintedTicket editPrintedticket(@Valid @RequestBody PrintedTicket editedPrintedTicket, @PathVariable("id") Long pTicketId) {
-			editedPrintedTicket.setpTicketId(pTicketId);
-			return prrepository.save(editedPrintedTicket);
+			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			
+			if (printedticket.isPresent()) {
+				editedPrintedTicket.setpTicketId(pTicketId);
+				return prrepository.save(editedPrintedticket);
+			} else { // jos tulostetulla ei löydy annetulla id:llä ei muokkaus ole mahdollista eikä luoda uutta tulostettualippua
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettualippua ei löytynyt annetulla id:llä");
+			}
+			
+			
 		}
 
 		// REST, add new printed ticket
@@ -425,6 +449,7 @@ public class TicketguruController {
 				return prrepository.save(printedticket);
 		}
 
+	
 	
 
 	
