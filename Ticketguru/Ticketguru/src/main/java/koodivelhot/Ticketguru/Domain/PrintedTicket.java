@@ -46,7 +46,6 @@ public class PrintedTicket {
 	
 	@NotNull (message = "Printed ticket needs event ")
 	@ManyToOne
-	@JsonIgnore
     @JoinColumn(name = "event_id")
 	private Event event;
 	
