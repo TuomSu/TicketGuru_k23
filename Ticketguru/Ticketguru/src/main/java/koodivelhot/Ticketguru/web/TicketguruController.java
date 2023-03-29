@@ -398,10 +398,10 @@ public class TicketguruController {
 		// REST, get printedticket by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.GET)
 		public @ResponseBody List<PrintedTicket> findPrintedTicketRest(@PathVariable("id") Long pTicketId) {
-			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
 			
 			if(printedticket.isPresent()) {
-				return prrepository.findByPrintedticketid(printedticketid);
+				return prrepository.findBypTicketId(pTicketId);
 			} else {
 				throw new  ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettua lippua ei löytynyt annetulla id:llä");
 			}
@@ -413,7 +413,7 @@ public class TicketguruController {
 		// REST, delete sale event by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.DELETE)
 		public @ResponseBody List<PrintedTicket> deletePrintedTicket(@PathVariable("id") Long pTicketId) {
-			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
 			
 			if(printedticket.isPresent()) {
 				prrepository.deleteById(pTicketId);
@@ -430,11 +430,11 @@ public class TicketguruController {
 		//REST, update sale event by id
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.PUT)
 		public @ResponseBody PrintedTicket editPrintedticket(@Valid @RequestBody PrintedTicket editedPrintedTicket, @PathVariable("id") Long pTicketId) {
-			Optional<PrintedTicket> printedticket = prrepository.findById(printedticket);
+			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
 			
 			if (printedticket.isPresent()) {
 				editedPrintedTicket.setpTicketId(pTicketId);
-				return prrepository.save(editedPrintedticket);
+				return prrepository.save(editedPrintedTicket);
 			} else { // jos tulostetulla ei löydy annetulla id:llä ei muokkaus ole mahdollista eikä luoda uutta tulostettualippua
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettualippua ei löytynyt annetulla id:llä");
 			}
