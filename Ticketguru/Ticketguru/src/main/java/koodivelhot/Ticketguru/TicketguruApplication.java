@@ -66,7 +66,7 @@ public class TicketguruApplication {
 			LocalDateTime preStart = LocalDateTime.parse(preStart1, df);
 			String preEnd1 = "10.12.2023 23:00";
 			LocalDateTime preEnd = LocalDateTime.parse(preEnd1, df);
-			erepository.save(new Event("Testitapahtuma", 10, startDate, endDate, 0, "Tapahtuma testaa tapahtuman toimintaa", preStart, preEnd, vrepository.findByVenueName("Testipaikka").get(0)));
+			erepository.save(new Event("Testitapahtuma", 10, startDate, endDate, 15.5, "Tapahtuma testaa tapahtuman toimintaa", preStart, preEnd, vrepository.findByVenueName("Testipaikka").get(0)));
 			erepository.save(new Event("Demotapahtuma"));
 			
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
@@ -75,8 +75,8 @@ public class TicketguruApplication {
 			UserRole role1 = new UserRole("admin", "all rights");
 			rolerepository.save(role1);
 			
-			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "$2a$10$WDMEAdeX.N/M6oJnNpDyUO5szwepvUl6irlqJ/o5aRcZtth9Yfnom");
-			userrepository.save(user1);
+			//AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "$2a$10$WDMEAdeX.N/M6oJnNpDyUO5szwepvUl6irlqJ/o5aRcZtth9Yfnom");
+			//userrepository.save(user1);
 			
 			String saledate1 = "13.03.2023 16:02";
 			LocalDateTime saleDate = LocalDateTime.parse(saledate1, df); // jostain syystä päivämäärää ei muotoilla oikein?
