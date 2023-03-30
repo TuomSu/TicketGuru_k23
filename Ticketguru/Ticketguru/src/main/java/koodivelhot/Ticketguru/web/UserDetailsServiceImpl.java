@@ -1,4 +1,4 @@
-package koodivelhot.Ticketguru;
+package koodivelhot.Ticketguru.web;
 
 import java.util.List;
 
@@ -7,10 +7,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
@@ -18,15 +20,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        List<AppUser> user = users.findByUsername(username);
-        if (user == null){
+        AppUser curruser = users.findByUsername(username);
+        
+        if (curruser == null){
             throw new UsernameNotFoundException(username + " was not found");
         }
-        return new org.springframework.security.core.userdetails.User(
-                ((UserDetails) user).getUsername(),
-                ((UserDetails) user).getPassword(),
-                AuthorityUtils.createAuthorityList(( (AppUser) user).getRole().getRole())
-        );
+        UserDetails user = new org.springframework.security.core.userdetails.User(username, curruser.getPasswordHash(), 
+        		AuthorityUtils.createAuthorityList(curruser.getRole().getRights()));
+        
+        return user;
     }
 }
