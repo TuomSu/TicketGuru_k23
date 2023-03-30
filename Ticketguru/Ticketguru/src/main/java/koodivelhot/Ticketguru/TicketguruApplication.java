@@ -77,16 +77,16 @@ public class TicketguruApplication {
 			UserRole role2 = new UserRole("basic", "basic user rights");
 			rolerepository.save(role2);
 			
-			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "password");
+			/*AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "password");
 			userrepository.save(user1);
 			AppUser user2 = new AppUser(role2,"Matti","Testaaja", "usernameMatti", "password");
-			userrepository.save(user2);
+			userrepository.save(user2);*/
 
 			
-			String saledate1 = "13.03.2023 16:02";
+			/*String saledate1 = "13.03.2023 16:02";
 			LocalDateTime saleDate = LocalDateTime.parse(saledate1, df); // jostain syystä päivämäärää ei muotoilla oikein?
 			SaleEvent sale1 = new SaleEvent(saleDate, user1);
-			salerepository.save(sale1);
+			salerepository.save(sale1);*/
 			
 			pstrepository.save(new PreSaleTicket(false, 10, salerepository.findBySaleid(Long.valueOf(1)).get(0), erepository.findByEventName("Testitapahtuma").get(0), ttrepository.findByType("Student").get(0)));
 			
