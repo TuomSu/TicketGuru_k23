@@ -31,7 +31,7 @@ public class AppUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userid;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "roleid")
 	@NotNull (message = "Choose a role for the user, cannot be null")

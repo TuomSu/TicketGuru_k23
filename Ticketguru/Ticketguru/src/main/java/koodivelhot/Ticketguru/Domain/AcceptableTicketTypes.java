@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 
 @Entity
+//@Table(name = "acceptable_ticket_types") 
 public class AcceptableTicketTypes {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
