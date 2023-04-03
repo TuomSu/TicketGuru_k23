@@ -31,7 +31,7 @@ ___
 - tapahtumakohtaisten myyntiraporttien näyttäminen, lipputyypeittäin myyntien näyttäminen sekä kronologisessa järjestyksessä tapahtuman myyntitapahtumat näyttämään
 
 
-### TicketGurussa on kolme käyttäjäroolia: Admin, pääkäyttäjä ja käyttäjä:
+### TicketGurussa on kolme käyttäjäroolia: Admin, pääkäyttäjä, käyttäjä + lipuntarkastaja:
 
 **Admin**: pääsääntöisesti lipputoimiston käytössä ja palvelun kehittäjän käytössä, jolla mahdollistetaan kaikkien tietojen muokkaus tietokantaan ja järjestelmään (sis. CRUD toiminnallisuudet)
 
@@ -44,6 +44,11 @@ As an admin user, I want to be able to add/save, edit and delete different event
 As an admin user, I need to be able to set, start and end pre-selling of tickets.
 
 As an admin user, I want to be able to add/save, edit and delete tickets.
+
+**Lisätty 3.4.23**
+- As an admin user I want to be able to add/save, edit and delete different ticket types.
+
+- As ad admin user I want to be able to add acceptable ticket types to each event.
 
 **Pääkäyttäjä**: toimistotyöntekijällä olisi CRUD-oikeudet sekä oikeus ottaa raportteja, 
 
@@ -58,9 +63,13 @@ As the operator at the office, I want to be able to distinguish between used and
 
 *Käyttäjätarinoita:*
 
-As the ticket salesperson, I want to be able to sell discounted tickets for kids for example.
+~~Poistetaan: As the ticket salesperson, I want to be able to sell discounted tickets for kids for example.~~
 
 As the ticket salesperson, I want to be able to see the events and sell tickets and print them to customers so that they can show the ticket before the event.
+
+**Lipuntarkastaja: (lisätty 3.4.23)**
+
+Lipuntarkastajana haluan tarkistaa lipun kelvollisuuden, sekä merkitä lipun käytetyksi, jottei samaa lippua voi käyttää uudelleen.
 
 ___
 
