@@ -82,7 +82,6 @@ public class TicketguruController {
 	//Tapahtuma
 	
 	// REST, get all events
-	@PreAuthorize("hasRole('admin')")
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public @ResponseBody List<Event> eventListRest() {
 		return(List<Event>) erepository.findAll();
@@ -103,7 +102,7 @@ public class TicketguruController {
 	}
 	
 	// REST, add new event
-	//@PreAuthorize("hasAuthority('ADMIN'")
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/events", method = RequestMethod.POST)
 	public @ResponseBody Event newEvent(@RequestBody Event newEvent) {
 		return erepository.save(newEvent);
@@ -262,6 +261,7 @@ public class TicketguruController {
 	// REST, add new tickettype
 	@RequestMapping(value = "/tickettypes", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Lipputyyppi luotu")
+	@PreAuthorize("hasRole('admin')")
 	public @ResponseBody TicketType newTicketType(@Valid @RequestBody TicketType newTicketType) {
 		return ttrepository.save(newTicketType);
 	}
