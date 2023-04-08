@@ -9,7 +9,7 @@ public interface PreSaleTicketRepository extends CrudRepository <PreSaleTicket, 
 		
 	//Optional<PreSaleTicket> findById(Long presaleticketid);
 	
-	//PreSaleTicket findByCode(String code);
+	PreSaleTicket findByCode(String code);
 	
 	List<PreSaleTicket> findByPresaleticketid(Long presaleticketid);
 }
