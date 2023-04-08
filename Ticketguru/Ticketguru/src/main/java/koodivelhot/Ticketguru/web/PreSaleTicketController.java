@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,6 +82,21 @@ public class PreSaleTicketController {
 		} else { // jos ennakkolippua ei löydy annetulla id:llä ei muokkaus ole mahdollista eikä luoda uutta ennakkolippua
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
 		}
+	}
+	
+	// Patch presaleticket
+	@PatchMapping("/presaletickets")
+	public PreSaleTicket usePreSaleTicket(@RequestParam("code") String code) {
+		PreSaleTicket presaleticket = pstrepository.findByCode(code);
+		
+		if (presaleticket == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla koodilla");
+		} else if (presaleticket.getUsed() == true) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Lippu on jo käytetty");
+		}
+			presaleticket.setUsed(true);
+			pstrepository.save(presaleticket);
+			return presaleticket;
 	}
 	
 	// REST, add new presale ticket
