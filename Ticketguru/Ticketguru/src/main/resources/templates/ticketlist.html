@@ -20,6 +20,42 @@
     		<td th:text="${ticket.event.event_id}"></td>
     	</tr>
      </table>
+     <h2>Lipun tarkastaminen</h2>
+     <input class="textInput" type="text" id="code"  placeholder="Syötä lipun koodi">
+     <input class="button" type="button" value="Tarkista lippu" onClick="checkTicket()">
+     <p id="result"></p>
      
 </body>
+<script>
+
+
+
+const checkTicket = async() => {
+
+	var ticketcode = document.getElementById("code").value;
+	var url = "http://localhost:8080/presaletickets?code="
+	var message = " ";
+	
+	try {
+	const response = await fetch(url + ticketcode, {
+            method: 'PATCH'
+            }); 
+ 
+ 		if (response.status == 403) {
+                message = "Lippu on jo käytetty";
+                document.getElementById("result").innerHTML = message;
+    	} else {
+    		message = "Lipun tarkistus onnistui"
+    		document.getElementById("result").innerHTML = message;
+    	}
+	
+	} catch (error) {
+		console.log(error);
+        message = "Lipun tietojen hakeminen ei onnistunut.";
+        document.getElementById("result").innerHTML = message;
+	}
+	
+}
+ 
+</script>
 </html>
