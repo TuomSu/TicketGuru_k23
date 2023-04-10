@@ -1,8 +1,15 @@
 package koodivelhot.Ticketguru.Domain;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +33,8 @@ public class PreSaleTicket {
 	private double price;
 	private String code = UUID.randomUUID().toString(); // tällä luodaan lipulle random koodi 
 
+	private byte[] qrCodeImage; 
+	
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
 	@NotNull (message = "Presale ticket must belong to a sale event")
@@ -126,6 +135,23 @@ public class PreSaleTicket {
 
 	public void setTickettype(TicketType tickettype) {
 		this.tickettype = tickettype;
+	}
+
+	public byte[] getQrCodeImage() {
+		return qrCodeImage;
+	}
+
+	//generoi qr-koodin
+	public void setQrCodeImage() {
+		try {
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			BitMatrix bitMatrix = qrCodeWriter.encode(this.code, BarcodeFormat.QR_CODE, 1, 1);
+			MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+			this.qrCodeImage = outputStream.toByteArray();
+		} catch (WriterException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
