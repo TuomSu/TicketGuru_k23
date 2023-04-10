@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 import jakarta.validation.Valid;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
@@ -108,7 +121,7 @@ public class PreSaleTicketController {
 	// REST, add new presale ticket
 	@RequestMapping(value = "presaletickets/{event_id}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Ennakkolippu luotu")
-	public @ResponseBody PreSaleTicket newPreSaleTicket(@Valid @RequestBody PreSaleTicket newPresaleticket, @PathVariable("event_id") Long event_id) {
+	public @ResponseBody PreSaleTicket newPresaleticket(@Valid @RequestBody PreSaleTicket newPresaleticket, @PathVariable("event_id") Long event_id) {
 		
 		Event event1 = erepository.findById(event_id)
 				.orElseThrow(() -> new EntityNotFoundException("Event not found with id " + event_id));
@@ -117,13 +130,24 @@ public class PreSaleTicketController {
 		if (event1.getSoldTickets() <= event1.getTicketAmount()) {
 			
 			erepository.save(event1);
+				
+		    newPresaleticket.setQrCodeImage(); //luo lippukoodista qr-koodin
+		    
+		    return pstrepository.save(newPresaleticket);
 			
-			return pstrepository.save(newPresaleticket);
 			
 		} else {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Tapahtuma " + event1.getEventName() + " on loppuunmyyty");	
 		}
 		
+	}
+	
+	//Tällä metodilla voi hakea qr koodia
+	@RequestMapping(value = "presaletickets/{id}/qrcode", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> getPreSaleTicketQrCodeImage(@PathVariable("id") Long presaleticketid) {
+	    PreSaleTicket ticket = pstrepository.findById(presaleticketid)
+	            .orElseThrow(() -> new EntityNotFoundException("Pre-sale ticket not found with id " + presaleticketid));
+	    return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(ticket.getQrCodeImage());
 	}
 
 }
