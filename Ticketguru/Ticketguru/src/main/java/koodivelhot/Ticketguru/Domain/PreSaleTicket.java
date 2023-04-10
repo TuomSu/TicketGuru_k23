@@ -48,6 +48,12 @@ public class PreSaleTicket {
 		this.event = event;
 		this.sale = sale;
 	}
+	
+	/*public PreSaleTicket(double price, Event event) {
+		this.price = price;
+		this.event = event;
+	}*/
+
 
 	public PreSaleTicket(@NotNull Boolean used, @NotNull(message = "Price cannot be null") double price,
 			@NotNull(message = "Presale ticket must belong to a sale event") SaleEvent sale,

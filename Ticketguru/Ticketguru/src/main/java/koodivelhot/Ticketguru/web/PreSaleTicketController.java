@@ -16,15 +16,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
+import koodivelhot.Ticketguru.Domain.Event;
+import koodivelhot.Ticketguru.Domain.EventRepository;
 
 @RestController
 public class PreSaleTicketController {
 	
 	@Autowired
 	PreSaleTicketRepository pstrepository;
+	
+	@Autowired
+	EventRepository erepository;
 	
 	// Ennakkoliput
 	
@@ -84,12 +90,24 @@ public class PreSaleTicketController {
 	}
 	
 	// REST, add new presale ticket
-	@RequestMapping(value = "presaletickets", method = RequestMethod.POST)
+	@RequestMapping(value = "presaletickets/{event_id}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Ennakkolippu luotu")
-	public @ResponseBody PreSaleTicket newPreSaleTicket(@Valid @RequestBody PreSaleTicket presaleticket) {
-			return pstrepository.save(presaleticket);
+	public @ResponseBody PreSaleTicket newPreSaleTicket(@Valid @RequestBody PreSaleTicket newPresaleticket, @PathVariable("event_id") Long event_id) {
+		
+		Event event1 = erepository.findById(event_id)
+				.orElseThrow(() -> new EntityNotFoundException("Event not found with id " + event_id));
+		event1.setSoldTickets(event1.getSoldTickets() + 1);
+
+		if (event1.getSoldTickets() <= event1.getTicketAmount()) {
+			
+			erepository.save(event1);
+			
+			return pstrepository.save(newPresaleticket);
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Tapahtuma " + event1.getEventName() + " on loppuunmyyty");	
+		}
+		
 	}
-	
-	
 
 }

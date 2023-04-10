@@ -50,6 +50,7 @@ public class Event {
 	private LocalDateTime eventEndDate;
 	
 	private int ticketAmount; //kuinka monta lippua myynnissä
+	private int soldTickets;
 	@NotNull(message = "Ticket must have a price. If ticket is free, price is 0")
 	private double ticketPrice;
 	private String description;
@@ -149,6 +150,14 @@ public class Event {
 
 	public void setTicketAmount(int ticketAmount) {
 		this.ticketAmount = ticketAmount;
+	}
+
+	public int getSoldTickets() {
+		return soldTickets;
+	}
+
+	public void setSoldTickets(int soldTickets) {
+		this.soldTickets = soldTickets;
 	}
 
 	public double getTicketPrice() {
