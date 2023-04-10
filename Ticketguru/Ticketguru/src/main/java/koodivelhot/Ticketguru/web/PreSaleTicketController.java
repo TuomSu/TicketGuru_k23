@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +26,7 @@ import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 
-@RestController
+@Controller
 public class PreSaleTicketController {
 	
 	@Autowired
@@ -51,6 +53,13 @@ public class PreSaleTicketController {
 		} else {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ennakkolippua ei löytynyt annetulla id:llä");
 		}
+	}
+	
+	// Show all presaletickets on ticketlist.html page
+	@GetMapping("/ticketlist")
+	public String showTickets(Model model) {
+		model.addAttribute("tickets", pstrepository.findAll());
+		return "ticketlist";
 	}
 	
 	// Get presaleticket by code => metodi ennakkolipun hakemiseen koodilla, koodi annetaan parametrina
