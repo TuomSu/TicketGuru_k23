@@ -16,6 +16,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class PreSaleTicket {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long presaleticketid;
@@ -23,7 +24,7 @@ public class PreSaleTicket {
 	private Boolean used;
 	@NotNull (message = "Price cannot be null") // hinta on pakollinen tieto, ilmaislipuille syötetään hinnaksi 0
 	private double price;
-	//private String code = UUID.randomUUID().toString(); // tällä luodaan lipulle random koodi 
+	private String code = UUID.randomUUID().toString(); // tällä luodaan lipulle random koodi 
 
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
@@ -65,18 +66,23 @@ public class PreSaleTicket {
 		this.event = event;
 		this.tickettype = tickettype;
 	}
+	
+	public PreSaleTicket(@NotNull Boolean used) {
+		super();
+		this.used = used;
+	}
 
 	public Long getPresaleticketid() {
 		return presaleticketid;
 	}
-	/*
+	
 	public String getCode() {
 		return code;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
-	}*/
+	}
 
 	public void setPresaleticketid(Long presaleticketid) {
 		this.presaleticketid = presaleticketid;
