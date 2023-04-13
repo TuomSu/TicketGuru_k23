@@ -75,9 +75,10 @@ public class Event {
 	
 	public Event() {}
 	
-	public Event(String eventName, int ticketAmount) {
+	public Event(String eventName, int ticketAmount, LocalDateTime eventStartDate) {
 		this.eventName = eventName;
 		this.ticketAmount = ticketAmount;
+		this.eventStartDate = eventStartDate;
 	}
 	
 	public Event(String eventName, int ticketAmount, LocalDateTime eventStartDate, LocalDateTime eventEndDate, double ticketPrice, String description, 
