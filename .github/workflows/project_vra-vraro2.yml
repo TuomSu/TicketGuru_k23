@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'vra-vraro2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D11E69832EF04D329E2A1AEBB3C24D87 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D1D647418573417E903D5E0385F5DF6A }}
           package: '*.jar'
