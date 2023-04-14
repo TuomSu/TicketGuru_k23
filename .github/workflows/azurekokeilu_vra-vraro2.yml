@@ -8,6 +8,10 @@ on:
     branches:
       - azureKokeilu
   workflow_dispatch:
+  
+ defaults:
+   run:
+     working-directory: Ticketguru/Ticketguru
 
 jobs:
   build:
