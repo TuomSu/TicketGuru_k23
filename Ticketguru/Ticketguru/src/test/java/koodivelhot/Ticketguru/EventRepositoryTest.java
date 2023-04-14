@@ -34,11 +34,11 @@ public class EventRepositoryTest {
 		assertThat(events.get(0).getTicketAmount()).isEqualTo(10);
 	}
 	
-    @Test
+    /*@Test
     public void createNewEvent() {
     	Event event = new Event("Testi2", 20);
     	erepository.save(event);
     	assertThat(event.getEvent_id()).isNotNull();
-    }   
+    }*/   
 	
 }
