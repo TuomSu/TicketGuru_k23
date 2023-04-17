@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tickets</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Ticket info</h1>
+    <table>
+    	<tr th:each = "ticket : ${presaleticket}">
+    		<td th:text="${ticket.presaleticketid}"></td>
+    		<td th:text="${ticket.used}"></td>
+    		<td th:text="${ticket.price}"></td>
+    		<td th:text="${ticket.event.event_id}"></td>
+    	</tr>
+     </table>
+</body>
+</html>
