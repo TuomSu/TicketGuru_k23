@@ -40,7 +40,7 @@ import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 
-@Controller
+@RestController
 public class PreSaleTicketController {
 	
 	@Autowired
@@ -69,15 +69,10 @@ public class PreSaleTicketController {
 		}
 	}
 	
-	// Show all presaletickets on ticketlist.html page
-	@GetMapping("/ticketlist")
-	public String showTickets(Model model) {
-		model.addAttribute("tickets", pstrepository.findAll());
-		return "ticketlist";
-	}
 	
-	// Get presaleticket by code => metodi ennakkolipun hakemiseen koodilla, koodi annetaan parametrina
-	/*@GetMapping(value = "/presaletickets", params = {"code"})
+	
+	//Get presaleticket by code => metodi ennakkolipun hakemiseen koodilla, koodi annetaan parametrina
+	@GetMapping(value = "/presaletickets", params = {"code"})
 	public PreSaleTicket findByCode(@RequestParam("code") String code) {
 		PreSaleTicket presaleticket = pstrepository.findByCode(code);
 		
@@ -85,7 +80,7 @@ public class PreSaleTicketController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Presaleticket with code" + code + "not found");
 		}
 		return presaleticket;
-	}*/
+	}
 	
 	// REST, delete presale ticket by id
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.DELETE)
