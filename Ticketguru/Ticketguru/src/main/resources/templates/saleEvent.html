@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sale-event</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div>
+		<form th:object="${saleEvent}" th:action="@{save}" action="#" method="post">
+		  	<label for="deplist">Add ticket</label>
+			<select id="deplist" th:field="*{event}" class="form-control">
+       			<option th:each="event: ${events}" th:value="${event.event_id}" th:text="${event.eventName} + ' ' + ${event.eventStartDate}"></option> 
+       		</select> <a href="/newTicket" class="btn btn-success">New ticket</a>
+			<div style="clear: both; display: block; height: 10px;"></div>
+		<!--  <label for="deplist">Genre</label>
+			<select id="deplist" th:field="*{genre}" class="form-control">
+       			<option th:each="genre: ${genres}" th:value="${genre.genreid}" th:text="${genre.name}"></option> 
+       		</select> <a href="/newGenre" class="btn btn-success">New genre</a>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="deplist">Year</label>
+			 <select id="deplist" th:field="*{releaseYear}" class="form-control">
+       			<option th:each="releaseYear: ${releaseYears}" th:value="${releaseYear.publishYear}" th:text="${releaseYear.publishYear}"></option>
+    		</select>
+    		<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="duration">Duration (mins)</label>
+			<input type="number" th:field="*{duration}" required/>
+			<div style="clear: both; display: block; height: 10px;"></div>
+    		
+			<input type="submit" value="Save"></input>
+			<input type="button" onclick="history.back()" value="Back" /> -->  	
+		</form>
+	</div>
+</body>
+<!--  <script>
+	var datetime = new Date();
+		console.log(datetime);
+		document.getElementById("time").textContent = datetime;
+</script> -->
+</html>
