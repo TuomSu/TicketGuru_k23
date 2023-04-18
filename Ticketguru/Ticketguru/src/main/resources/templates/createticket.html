@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Presale Ticket</title>
+    
+</head>
+<body>
+    <h1>Add new presaleticket</h1>
+    <form th:action="@{/saveticket}" th:object="${presaleTicket}" method="post">
+    	<div>
+	        <label for="event">Event:  </label>
+	        <select id="eventName" th:field="*{event}">
+	            <option value="">-- Select an event --</option>
+	            <option th:each="event : ${events}" th:value="${event.event_id}" th:text="${event.eventName}"></option>
+	        </select>
+		</div>
+		<div>
+	        <label for="price">Price:</label>
+	        <input type="text" id="price" th:field="*{price}" />
+		</div>
+		<div>
+			<label for="tickettype">Type:</label>
+			<select id="tickettype" th:field="*{tickettype}">
+	            <option value="">-- Select a tickettype --</option>
+	            <option th:each="tickettype : ${tickettypes}" th:value="${tickettype.type_id}" th:text="${tickettype.type}"></option>
+	        </select>
+		</div>
+		<div>
+			<label for="sale">Sale event:</label>
+			<select id="sale" th:field="*{sale}">
+				<option value="">-- Select a sale event --</option>
+	            <option th:each="sale : ${sales}" th:value="${sale.saleid}" th:text="${sale.saleid}"></option>
+			</select>
+		</div>
+		<div>
+            <label for="used">Used:</label>
+            <input type="checkbox" id="used" th:field="*{used}" />
+        </div>
+		<div>
+        	<input type="submit" value="Create Presale Ticket" />
+        </div>
+    </form>
+</body>
+</html>
