@@ -76,6 +76,14 @@ public class PreSaleTicket {
 		this.tickettype = tickettype;
 	}
 	
+	// Testi konstruktori
+	public PreSaleTicket(Event event, double price, TicketType tickettype) {
+		super();
+		this.event = event;
+		this.price = price;
+		this.tickettype = tickettype;
+	}
+	
 	public PreSaleTicket(@NotNull Boolean used) {
 		super();
 		this.used = used;
