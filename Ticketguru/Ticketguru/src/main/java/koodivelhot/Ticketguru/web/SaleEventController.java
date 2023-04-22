@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,12 +46,14 @@ public class SaleEventController {
 	//Myyntitapahtuma
 	
 		// REST, get all sale events
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/saleEvents", method = RequestMethod.GET)
 		public @ResponseBody List<SaleEvent> saleEventListRest() {
 			return(List<SaleEvent>) serepository.findAll();
 		}
 		
 		// REST, get sale event by id
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.GET)
 		public @ResponseBody Optional<SaleEvent> findsaleEventRest(@PathVariable("id") Long saleid) {
 				Optional<SaleEvent> sale = serepository.findById(saleid);
@@ -63,6 +66,7 @@ public class SaleEventController {
 		}
 		
 		// REST, delete sale event by id
+		@PreAuthorize("hasAuthority('admin')")
 		@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.DELETE)
 		public @ResponseBody List<SaleEvent> deleteSaleEvent(@PathVariable("id") Long saleid) {
 			Optional<SaleEvent> sale = serepository.findById(saleid);
@@ -77,6 +81,7 @@ public class SaleEventController {
 		}
 		
 		//REST, update sale event by id
+		@PreAuthorize("hasAuthority('admin')")
 		@RequestMapping(value = "/saleEvent/{id}", method = RequestMethod.PUT)
 		public @ResponseBody SaleEvent editSaleEvent(@RequestBody SaleEvent editedSaleEvent, @PathVariable("id") Long saleid) {
 			Optional<SaleEvent> sale = serepository.findById(saleid);
@@ -91,6 +96,7 @@ public class SaleEventController {
 		}
 		
 		// REST, add new SaleEvent
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "saleEvents", method = RequestMethod.POST)
 		@ResponseStatus(value = HttpStatus.CREATED, reason = "Myyntitapahtuma luotu")
 		public @ResponseBody SaleEvent newSaleEvent(@RequestBody SaleEvent saleevent) {

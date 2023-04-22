@@ -1,6 +1,7 @@
 package koodivelhot.Ticketguru.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,7 @@ public class ClientController {
 	 */
 
 	// Tapahtuma lista html
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = { "/", "eventlist" })
 	public String eventlist(Model model) {
 		model.addAttribute("events", erepository.findAll());
@@ -54,20 +56,22 @@ public class ClientController {
 	}
 
 	// Tapahtuman editointi html (vielä erittäin kesken)
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editEvent(@PathVariable("id") Long event_id, Model model) {
 		model.addAttribute("event", erepository.findById(event_id));
 		return "editevent";
 	}
 	
-	// Show all presaletickets on ticketlist.html page
-	@GetMapping("/ticketlist")
+	// Show on ticketcheck.html page
+	@GetMapping("/ticketcheck")
 	public String showTickets(Model model) {
 		model.addAttribute("tickets", pstrepository.findAll());
-		return "ticketlist";
+		return "ticketcheck";
 	}
 	
 	// Show createticket.html page
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@GetMapping("/createticket")
     public String showCreateForm(Model model) {
         model.addAttribute("presaleTicket", new PreSaleTicket());
@@ -81,6 +85,7 @@ public class ClientController {
     }
 	
 	// Save new presaleticket
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@PostMapping("/saveticket")
 	public String savePresaleTicket(@ModelAttribute("presaleTicket") PreSaleTicket presaleTicket) {
 	    pstrepository.save(presaleTicket);
