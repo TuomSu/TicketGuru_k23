@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,12 +52,14 @@ public class PreSaleTicketController {
 	// Ennakkoliput
 	
 	// REST, get all presale tickects
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/presaletickets", method = RequestMethod.GET)
 	public @ResponseBody List<PreSaleTicket> PreSaleTicketListRest() {
 		return(List<PreSaleTicket>) pstrepository.findAll();
 	}
 		
 	// REST, get presaleticket by id
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<PreSaleTicket> findPreSaleTicketRest(@PathVariable("id") Long presaleticketid) {
 		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
@@ -72,6 +74,7 @@ public class PreSaleTicketController {
 	
 	
 	//Get presaleticket by code => metodi ennakkolipun hakemiseen koodilla, koodi annetaan parametrina
+	@PreAuthorize("hasAnyAuthority('admin','basic', 'controller')")
 	@GetMapping(value = "/presaletickets", params = {"code"})
 	public PreSaleTicket findByCode(@RequestParam("code") String code) {
 		PreSaleTicket presaleticket = pstrepository.findByCode(code);
@@ -83,6 +86,7 @@ public class PreSaleTicketController {
 	}
 	
 	// REST, delete presale ticket by id
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<PreSaleTicket> deletePreSaleTicket(@PathVariable("id") Long presaleticketid) {
 		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
@@ -96,6 +100,7 @@ public class PreSaleTicketController {
 	}
 	
 	//REST, update presale ticket by id
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/presaleticket/{id}", method = RequestMethod.PUT)
 	public @ResponseBody PreSaleTicket editPreSaleticket(@Valid @RequestBody PreSaleTicket editedPreSaleTicket, @PathVariable("id") Long presaleticketid) {
 		Optional<PreSaleTicket> presaleticket = pstrepository.findById(presaleticketid);
@@ -108,7 +113,8 @@ public class PreSaleTicketController {
 		}
 	}
 	
-	// Patch presaleticket
+	// Check tickets by code
+	@PreAuthorize("hasAnyAuthority('admin','basic', 'controller')")
 	@PatchMapping("/presaletickets")
 	public PreSaleTicket usePreSaleTicket(@RequestParam("code") String code) {
 		PreSaleTicket presaleticket = pstrepository.findByCode(code);
@@ -124,6 +130,7 @@ public class PreSaleTicketController {
 	}
 	
 	// REST, add new presale ticket
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "presaletickets/{event_id}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Ennakkolippu luotu")
 	public @ResponseBody PreSaleTicket newPresaleticket(@Valid @RequestBody PreSaleTicket newPresaleticket, @PathVariable("event_id") Long event_id) {
@@ -148,6 +155,7 @@ public class PreSaleTicketController {
 	}
 	
 	//Tällä metodilla voi hakea qr koodia
+	@PreAuthorize("hasAnyAuthority('admin','basic', 'controller')")
 	@RequestMapping(value = "presaletickets/{id}/qrcode", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> getPreSaleTicketQrCodeImage(@PathVariable("id") Long presaleticketid) {
 	    PreSaleTicket ticket = pstrepository.findById(presaleticketid)

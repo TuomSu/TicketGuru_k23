@@ -72,13 +72,17 @@ public class TicketguruApplication {
 			rolerepository.save(role1);
 			UserRole role2 = new UserRole("basic", "basic user rights");
 			rolerepository.save(role2);
+			UserRole role3 = new UserRole("controller", "ticket controller rights, only able to check tickets");
+			rolerepository.save(role3);
 			
 			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "password");
 			userrepository.save(user1);
 			AppUser user2 = new AppUser(role2,"Matti","Testaaja", "usernameMatti", "password");
 			userrepository.save(user2);
+			AppUser user3 = new AppUser(role3,"Tiina","Tarkastaja", "usernameTiina", "password");
+			userrepository.save(user3);
 			
-			log.info("Two users created");
+			log.info("3 users created");
 
 			
 			String saledate1 = "13.03.2023 16:02";
