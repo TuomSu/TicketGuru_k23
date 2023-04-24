@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell tickets</title>
+    <style>
+    	.hidden-form {
+      		display: none;
+    	}
+  	</style>
+</head>
+<body>
+    <h1>Sell tickets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Event name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="event : ${events}">
+                <td th:text="${#temporals.format(event.eventStartDate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(event.eventStartDate, 'HH.mm')}"></td>
+                <td th:text="${event.eventName}"></td>
+                <td>
+                    <a th:href="@{/events/{id}/sell-tickets{id}=${event.event_id}}" onclick="showForm(event)">Sell tickets</a>
+                    <form method="POST" th:action="@{/addpresaletickets}" class="hidden-form">
+                        <input type="hidden" name="id" th:value="${event.event_id}" th:attr="data-value=${event.event_id}">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ticket Type</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="tickettype : ${tickettypes}">
+                                    <td th:text="${tickettype.type}"></td>
+                                    <td>
+                                        <input type="number" id="quantity" th:name="'quantities[' + ${tickettype.type_id} + ']'" min="0" value="0">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit">Sell</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+<script>
+    function showForm(event) {
+        event.preventDefault();
+        var form = event.target.closest('tr').querySelector('form');
+        form.classList.remove('hidden-form');
+    }
+</script>
+</html>
