@@ -1,6 +1,14 @@
 package koodivelhot.Ticketguru.web;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
@@ -37,6 +47,9 @@ public class ClientController {
 	
 	@Autowired
 	TicketTypeRepository ttrepository;
+	
+	@Autowired
+	AppUserRepository urepository;
 		
 	/*
 	 * @RequestMapping(value = "/newSale") public String newSaleEvent(Model model){
@@ -86,5 +99,70 @@ public class ClientController {
 	    pstrepository.save(presaleTicket);
 	    return "redirect:/ticketlist";
 	}
+	
+	@GetMapping("/selltickets")
+	public String sellTickets(Model model) {
+	    Iterable<Event> events = erepository.findAll();
+	    model.addAttribute("events", events);
+	    Iterable<TicketType> tickettypes = ttrepository.findAll();
+        model.addAttribute("tickettypes", tickettypes);
+	    return "selltickets";
+	}
+	
+	@PostMapping("/addpresaletickets")
+	public String addPresaleTickets(@RequestParam("id") Long event_id, @RequestParam Map<String, String> ticketQuantities) {
+		
+		System.out.println("event_id = " + event_id);
+	    System.out.println("ticket quantities = " + ticketQuantities);
+	    
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    String username = authentication.getName();
+	    
+	    AppUser curruser = urepository.findByUsername(username);
+	    
+	    System.out.println("Current user selling tickets: " + curruser);
+	    
+	    SaleEvent sale_event = new SaleEvent();
+	    sale_event.setSaledate(LocalDateTime.now());
+	    sale_event.setUser(curruser);
+	    
+	    serepository.save(sale_event);
+	    
+	    for (Map.Entry<String, String> entry : ticketQuantities.entrySet()) {
+	        String key = entry.getKey();
+	        String value = entry.getValue(); 
+
+	        if (key.startsWith("quantities")) {
+	          
+	            Long ticketTypeId = Long.parseLong(key.substring(key.indexOf("[")+1, key.indexOf("]")));
+
+	            Optional<TicketType> optionalTicketType = ttrepository.findById(ticketTypeId);
+
+	            if (optionalTicketType.isPresent()) {
+	                TicketType ticketType = optionalTicketType.get();
+
+	                for (int i = 0; i < Integer.parseInt(value); i++) {
+	                    PreSaleTicket preSaleTicket = new PreSaleTicket();
+	                    Optional<Event> optionalEvent = erepository.findById(event_id);
+	            	    
+	            	    if (optionalEvent.isPresent()) {
+	            	    	Event event = optionalEvent.get();
+	            	    	preSaleTicket.setEvent(event);
+	            	    	event.setSoldTickets(event.getSoldTickets() + 1);
+	            	    }
+	            	    
+	                    preSaleTicket.setTickettype(ticketType);
+	                    preSaleTicket.setUsed(false);
+	                    preSaleTicket.setSale(sale_event);
+	                    pstrepository.save(preSaleTicket);
+	                }
+	            }
+	        }
+	    }
+
+	    return "redirect:/selltickets";
+	}
+	
 
 }
