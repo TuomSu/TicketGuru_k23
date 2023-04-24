@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tarkista lippu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+     <h2>Lipun tarkastaminen</h2>
+     <input class="textInput" type="text" id="code"  placeholder="Syötä lipun koodi">
+     <input class="button" type="button" value="Näytä lipun tiedot" onClick="showTicket()">
+     <input class="button" type="button" value="Tarkista lippu" onClick="checkTicket()">
+     <p id="result"></p>
+     <p id="result2"></p>
+     
+</body>
+<script>
+
+var url = "http://localhost:8080/presaletickets?code=";
+let message = " ";
+	
+
+const checkTicket = async() => {
+
+	var ticketcode = document.getElementById("code").value;
+
+	try {
+	const response = await fetch(url + ticketcode, {
+            method: 'PATCH'
+            }); 
+
+ 		if (response.status == 403) {
+                message = "Lippu on jo käytetty";
+                document.getElementById("result").innerHTML = message;
+    	} else {
+    		message = "Lipun tarkistus onnistui"
+    		document.getElementById("result").innerHTML = message;
+    	}
+
+	} catch (error) {
+		console.log(error);
+        message = "Lipun tietojen hakeminen ei onnistunut.";
+        document.getElementById("result").innerHTML = message;
+	}
+}
+
+const showTicket = async() => {
+
+	var ticketcode= document.getElementById("code").value;
+
+	try {
+	const response = await fetch(url+ ticketcode, {
+	method: 'GET'
+	}); 
+	const json= await response.json(); // muutetaanvastausjsoniksi
+	console.log(response.status);
+	
+	if (response.status == 404) {
+	message = "Lippua ei löydy annetulla koodilla";
+	document.getElementById("result").innerHTML = message;
+	} else {
+	message = "Lipun tiedot" + "<br>" + `Tapahtuma: ${json.event.eventName}` + "<br>" + `Aika: ${json.event.eventStartDate}` + "<br>" + `Lipputyyppi: ${json.tickettype.type}` + "<br>" + `Hinta: ${json.price}`;
+	document.getElementById("result").innerHTML = message;
+	}
+	
+	} catch (error) {
+	console.log(error);
+	message = "Lipun tietojen hakeminen ei onnistunut.";
+	document.getElementById("result").innerHTML = message;
+	}
+}
+
+</script>
+</html>

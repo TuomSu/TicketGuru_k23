@@ -1,17 +1,13 @@
 package koodivelhot.Ticketguru;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
@@ -67,7 +63,7 @@ public class TicketguruApplication {
 			String preEnd1 = "10.12.2023 23:00";
 			LocalDateTime preEnd = LocalDateTime.parse(preEnd1, df);
 			erepository.save(new Event("Testitapahtuma", 10, startDate, endDate, 15.5, "Tapahtuma testaa tapahtuman toimintaa", preStart, preEnd, vrepository.findByVenueName("Testipaikka").get(0)));
-			erepository.save(new Event("Demotapahtuma"));
+			// erepository.save(new Event("Demotapahtuma"));
 			
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
 			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Child under 7").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
@@ -76,13 +72,17 @@ public class TicketguruApplication {
 			rolerepository.save(role1);
 			UserRole role2 = new UserRole("basic", "basic user rights");
 			rolerepository.save(role2);
+			UserRole role3 = new UserRole("controller", "ticket controller rights, only able to check tickets");
+			rolerepository.save(role3);
 			
 			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "password");
 			userrepository.save(user1);
 			AppUser user2 = new AppUser(role2,"Matti","Testaaja", "usernameMatti", "password");
 			userrepository.save(user2);
+			AppUser user3 = new AppUser(role3,"Tiina","Tarkastaja", "usernameTiina", "password");
+			userrepository.save(user3);
 			
-			log.info("Two users created");
+			log.info("3 users created");
 
 			
 			String saledate1 = "13.03.2023 16:02";

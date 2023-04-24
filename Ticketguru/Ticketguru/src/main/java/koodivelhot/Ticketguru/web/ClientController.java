@@ -1,14 +1,17 @@
 package koodivelhot.Ticketguru.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
@@ -25,22 +28,50 @@ public class ClientController {
 	PreSaleTicketRepository pstrepository;
 	
 	@Autowired
+	SaleEventRepository serepository;
+	
+	@Autowired
+	AppUserRepository aurepository;
+	
+	@Autowired
 	EventRepository erepository;
 	
 	@Autowired
 	TicketTypeRepository ttrepository;
+		
+	/*
+	 * @RequestMapping(value = "/newSale") public String newSaleEvent(Model model){
+	 * model.addAttribute("saleEvent", new SaleEvent()); model.addAttribute("user",
+	 * aurepository.findAll()); model.addAttribute("ticket",
+	 * pstrepository.findAll()); model.addAttribute("event", erepository.findAll());
+	 * return "saleEvent"; }
+	 */
+
+	// Tapahtuma lista html
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = { "/", "eventlist" })
+	public String eventlist(Model model) {
+		model.addAttribute("events", erepository.findAll());
+		return "eventlist";
+	}
+
+	// Tapahtuman editointi html (vielä erittäin kesken)
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editEvent(@PathVariable("id") Long event_id, Model model) {
+		model.addAttribute("event", erepository.findById(event_id));
+		return "editevent";
+	}
 	
-	@Autowired
-	SaleEventRepository serepository;
-	
-	// Show all presaletickets on ticketlist.html page
-	@GetMapping("/ticketlist")
+	// Show on ticketcheck.html page
+	@GetMapping("/ticketcheck")
 	public String showTickets(Model model) {
 		model.addAttribute("tickets", pstrepository.findAll());
-		return "ticketlist";
+		return "ticketcheck";
 	}
 	
 	// Show createticket.html page
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@GetMapping("/createticket")
     public String showCreateForm(Model model) {
         model.addAttribute("presaleTicket", new PreSaleTicket());
@@ -54,6 +85,7 @@ public class ClientController {
     }
 	
 	// Save new presaleticket
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@PostMapping("/saveticket")
 	public String savePresaleTicket(@ModelAttribute("presaleTicket") PreSaleTicket presaleTicket) {
 	    pstrepository.save(presaleTicket);
