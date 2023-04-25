@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
+import koodivelhot.Ticketguru.Domain.PrintedTicket;
+import koodivelhot.Ticketguru.Domain.PrintedTicketRepository;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
 import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
@@ -60,6 +62,9 @@ public class RepositoryTest {
 	@Autowired
 	private SaleEventRepository salerepository;
 	
+	@Autowired
+	private PrintedTicketRepository ptrepository;
+	
 	
 
 	
@@ -76,7 +81,7 @@ public class RepositoryTest {
 	// Event Testaukset
 	@Test
 	public void findByEventName() {
-		List<Event> events = erepository.findByEventName("Demotapahtuma");
+		List<Event> events = erepository.findByEventName("Testitapahtuma");
 		assertThat(events).hasSize(1);
 	}
 	
@@ -258,6 +263,31 @@ public class RepositoryTest {
 		List<PreSaleTicket> newpstickets = pstrepository.findByPresaleticketid(Long.valueOf(1));
 		assertThat(newpstickets).hasSize(0);
 	}
+	
+					//Printedticket test
+	@Test
+	public void findbyprintedTicket() {
+		List<PrintedTicket> printedtickets = ptrepository.findBypTicketId(Long.valueOf(1));
+		assertThat(printedtickets).hasSize(1);
+	}
+	
+	@Test
+	public void createNewPrintedticket() {
+		PrintedTicket printedticket = new PrintedTicket(20.99, true,"10/10/2023", erepository.findByEventName("Testitapahtuma").get(0));
+		ptrepository.save(printedticket);
+		assertThat(printedticket.getpTicketId()).isNotNull();
+	}
+	
+	@Test
+	public void deleteNewPrintedticket() {
+		List<PrintedTicket> printedtickets = ptrepository.findBypTicketId(Long.valueOf(2));
+		PrintedTicket printedticket = printedtickets.get(0);
+		ptrepository.delete(printedticket);
+		List<PrintedTicket> newPrintedtickets = ptrepository.findBypTicketId(Long.valueOf(2));
+		assertThat(newPrintedtickets).hasSize(0);
+		
+	}
+	
 	
 	
 }
