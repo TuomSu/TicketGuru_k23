@@ -172,5 +172,19 @@ public class ClientController {
 	    return "redirect:/selltickets";
 	}
 	
-
+	/* //Salesreport
+	 @RequestMapping(value = "/salesreport")
+	 public String getSalesreport () {
+	 return "salesreport";
+	 }*/
+	 
+	// Tapahtuman editointi html (vielä erittäin kesken)
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
+		@RequestMapping(value = "/salesreport/{id}", method = RequestMethod.GET)
+		public String getEventSalesReport(@PathVariable("id") Long event_id, Model model) {
+			model.addAttribute("event", erepository.findById(event_id));
+			return "salesreport";
+		}
+	
+ 
 }
