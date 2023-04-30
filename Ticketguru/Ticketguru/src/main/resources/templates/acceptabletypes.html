@@ -1,12 +1,22 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Tapahtumat</title>
+    <title>Lipputyypit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Tapahtuman muokkaus</h1>
-	<div>
+	<h1>Lipputyypit</h1>
+	    <table class="table table-striped">
+		<tr>
+		    <th>Lipputyyppi</th>
+		    <th>Kerroin</th>
+		    <th>Toiminnot</th>
+		</tr>  
+    	<tr th:each = "ticketType : ${aTicketTypes.ticketType}">
+    		<td th:text="${ticketType.type}"></td>
+    	</tr>
+     </table>
+	<!-- <div>
 		<form th:object="${event}" th:action="@{../save}" action="#" method="post">
 		<input type="hidden" id="id" th:field="*{event_id}" />
 		  	<label for="eventName">Tapahtuman nimi</label>
@@ -20,7 +30,7 @@
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="deplist">Paikka</label>
 			<select id="deplist" th:field="*{venue}" class="form-control">
-       		<option th:each="venue: ${venues}" th:value="${venue.venue_id}" th:text="${venue.venueName} + ' ' + ${venue.areaCode.city}"></option> <!--  + ' ' + ${venue.areaCode.city} -->
+       		<option th:each="venue: ${venues}" th:value="${venue.venue_id}" th:text="${venue.venueName} + ' ' + ${venue.areaCode.city}"></option>
        		</select> <a href="/newVenue" class="btn btn-success">Uusi tapahtumapaikka</a>
 			<div style="clear: both; display: block; height: 10px;"></div>
        		<label for="description">Kuvaus</label>
@@ -41,6 +51,6 @@
        		
 			<input type="submit" value="Save"></input>
 		</form>
-	</div>
+	</div> -->
 </body>
 </html>

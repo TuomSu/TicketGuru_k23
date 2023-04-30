@@ -11,6 +11,6 @@ public interface AcceptableTicketTypesRepository extends CrudRepository<Acceptab
 	
 	List<AcceptableTicketTypes> findByEventEventName(String eventName);
 	
-	Optional<AcceptableTicketTypes> findByEvent(Long event_id);
+	List<AcceptableTicketTypes> findByEvent(Long event_id);
 
 }
