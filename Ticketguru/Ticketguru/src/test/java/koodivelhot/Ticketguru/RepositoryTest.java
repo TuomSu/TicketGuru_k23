@@ -160,7 +160,7 @@ public class RepositoryTest {
 	@Test
 	public void findbyUsername() {
 		AppUser appusers = aprepository.findByUsername("usernameMatti");
-		assertThat(appusers).hasSize(1);
+		assertThat(appusers.getUsername()).contains("usernameMatti");
 		
 	}
 	
@@ -175,10 +175,9 @@ public class RepositoryTest {
 	@Test
 	public void deleteNewUser() {
 		AppUser appusers = aprepository.findByUsername("käyttäjänimi");
-		AppUser appuser = appusers.get(0);
-		aprepository.delete(appuser);
-		List<AppUser> newAppusers = aprepository.findByUsername("käyttäjänimi");
-		assertThat(newAppusers).hasSize(0);
+		aprepository.delete(appusers);
+		AppUser newAppusers = aprepository.findByUsername("käyttäjänimi");
+		assertThat(newAppusers).isNull();
 		
 	}
 	
