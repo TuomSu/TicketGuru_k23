@@ -5,10 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Tapahtuman muokkaus</h1>
+	<h1>Uusi tapahtuma</h1>
 	<div>
 		<form th:object="${event}" th:action="@{../save}" action="#" method="post">
-		<input type="hidden" id="id" th:field="*{event_id}" />
 		  	<label for="eventName">Tapahtuman nimi</label>
 			<input type="text"  id="eventName" th:field="*{eventName}" />
 			<div style="clear: both; display: block; height: 10px;"></div>

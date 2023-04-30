@@ -1,18 +1,13 @@
 package koodivelhot.Ticketguru.web;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
+import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
+import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
@@ -33,6 +31,7 @@ import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
 import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
+import koodivelhot.Ticketguru.Domain.VenueRepository;
 
 @Controller //jouduin lisäämään uuden controllerin html-sivujen näyttämistä varten
 public class ClientController {
@@ -54,6 +53,15 @@ public class ClientController {
 	
 	@Autowired
 	AppUserRepository urepository;
+
+	@Autowired
+	VenueRepository vrepository;
+
+	@Autowired
+	AreaCodeRepository acrepository;
+	
+	@Autowired
+	AcceptableTicketTypesRepository attrepository;
 		
 	/*
 	 * @RequestMapping(value = "/newSale") public String newSaleEvent(Model model){
@@ -71,14 +79,44 @@ public class ClientController {
 		return "eventlist";
 	}
 
-	// Tapahtuman editointi html (vielä erittäin kesken)
+	// Tapahtuman editointi html
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editEvent(@PathVariable("id") Long event_id, Model model) {
 		model.addAttribute("event", erepository.findById(event_id));
+		model.addAttribute("venues", vrepository.findAll());
+		model.addAttribute("areaCodes", acrepository.findAll());
 		return "editevent";
 	}
 	
+	// Lipputyyppien editointi html (erittäin kesken, eikä vielä toimi)
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.GET)
+	public String editTicketTypes(@PathVariable("id") Long event_id, Model model) {
+		model.addAttribute("acceptableTicketTypes", attrepository.findByEvent(event_id));
+		model.addAttribute("acceptableTicketTypes", attrepository.findAll());
+		model.addAttribute("ticketTypes", ttrepository.findAll());
+		model.addAttribute("acceptableTicketTypes", new AcceptableTicketTypes());
+		model.addAttribute("ticketTypes", new TicketType());
+		return "acceptabletypes";
+	}
+
+	// Tapahtuman lisäys html
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/addEvent")
+	public String addEvent(Model model) {
+		model.addAttribute("event", new Event());
+		model.addAttribute("venues", vrepository.findAll());
+		model.addAttribute("areaCodes", acrepository.findAll());
+		return "addevent";
+	}
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(Event event) {
+		erepository.save(event);
+		return "redirect:eventlist";
+	}
+
 	// Show on ticketcheck.html page
 	@GetMapping("/ticketcheck")
 	public String showTickets(Model model) {

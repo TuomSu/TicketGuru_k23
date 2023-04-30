@@ -24,12 +24,12 @@
     		<td th:text="${event.venue.areaCode.city}"></td>
     		<td th:text="${event.eventName}"></td>
     		<!-- <td><a th:href="@{/delete/{id}(id=${event.id})}">Delete</a> -->
-    		<td><a th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a></td>
+    		<td><a th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a> <a th:href="@{/tickettypes/{id}(id=${event.event_id})}">Lipputyypit</a></td>
 
 
     	</tr>
      </table>
-     <a href="/add" class="btn btn-success">Add event</a>    
+     <a href="/addEvent" class="btn btn-success">Add event</a>    
 </div>  
 </body>
 </html>
