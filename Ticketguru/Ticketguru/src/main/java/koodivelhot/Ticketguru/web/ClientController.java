@@ -1,6 +1,8 @@
 package koodivelhot.Ticketguru.web;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -175,6 +177,8 @@ public class ClientController {
 	    
 	    serepository.save(sale_event);
 	    
+	    List<PreSaleTicket> preSaleTickets = new ArrayList<>();
+	    
 	    for (Map.Entry<String, String> entry : ticketQuantities.entrySet()) {
 	        String key = entry.getKey();
 	        String value = entry.getValue(); 
@@ -187,27 +191,47 @@ public class ClientController {
 
 	            if (optionalTicketType.isPresent()) {
 	                TicketType ticketType = optionalTicketType.get();
-
+	                double price = ticketType.getPrice();
 	                for (int i = 0; i < Integer.parseInt(value); i++) {
 	                    PreSaleTicket preSaleTicket = new PreSaleTicket();
 	                    Optional<Event> optionalEvent = erepository.findById(event_id);
 	            	    
 	            	    if (optionalEvent.isPresent()) {
 	            	    	Event event = optionalEvent.get();
+	            	    	preSaleTicket.setPrice(price);
 	            	    	preSaleTicket.setEvent(event);
 	            	    	event.setSoldTickets(event.getSoldTickets() + 1);
+	            	    	sale_event.setTotalprice(sale_event.getTotalprice() + price);
 	            	    }
-	            	    
 	                    preSaleTicket.setTickettype(ticketType);
 	                    preSaleTicket.setUsed(false);
 	                    preSaleTicket.setSale(sale_event);
+	                    preSaleTickets.add(preSaleTicket);
 	                    pstrepository.save(preSaleTicket);
 	                }
 	            }
 	        }
 	    }
+	    
+	    sale_event.setPresaletickets(preSaleTickets);
+	    
+	    Long saleEventId = sale_event.getSaleid();
+	    String saleEventUrl = "/saleevents/" + saleEventId;
 
-	    return "redirect:/selltickets";
+	    return "redirect:" + saleEventUrl;
+	}
+	
+	@GetMapping("/saleevents/{id}")
+	public String viewSaleEvent(@PathVariable("id") Long id, Model model) {
+	    Optional<SaleEvent> optionalSaleEvent = serepository.findById(id);
+
+	    if (optionalSaleEvent.isPresent()) {
+	        SaleEvent saleEvent = optionalSaleEvent.get();
+	        model.addAttribute("saleEvent", saleEvent);
+	        return "viewsaleevent";
+	    } else {
+	        return "redirect:/selltickets";
+	    }
 	}
 	
 	/* //Salesreport

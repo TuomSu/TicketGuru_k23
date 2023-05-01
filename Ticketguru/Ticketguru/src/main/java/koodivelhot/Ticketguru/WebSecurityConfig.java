@@ -46,7 +46,7 @@ public class WebSecurityConfig {
 		          .anyRequest().authenticated()
 		      )
 		      .formLogin()
-		          .defaultSuccessUrl("/events", true)
+		          .defaultSuccessUrl("/", true)
 		          .permitAll()
 		          .and()
 		      .logout()

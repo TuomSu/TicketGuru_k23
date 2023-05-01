@@ -38,7 +38,6 @@ public class SaleEvent {
 	//@NotNull (message = "Insert user, cannot be null")
 	private AppUser user;
 
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
 	

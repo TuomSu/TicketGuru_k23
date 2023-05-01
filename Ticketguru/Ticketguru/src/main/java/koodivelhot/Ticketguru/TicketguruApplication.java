@@ -46,8 +46,8 @@ public class TicketguruApplication {
 		return (args) -> {
 			log.info("save an event");
 			
-			ttrepository.save(new TicketType(0.5, "Student"));
-			ttrepository.save(new TicketType(0, "Child under 7"));
+			ttrepository.save(new TicketType(120, "Student"));
+			ttrepository.save(new TicketType(100, "Child under 7"));
 			
 			acrepository.save(new AreaCode("00000", "Testikaupunki"));
 			

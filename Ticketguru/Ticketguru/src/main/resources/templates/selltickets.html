@@ -31,12 +31,14 @@
                             <thead>
                                 <tr>
                                     <th>Ticket Type</th>
+                                    <th>Price</th>
                                     <th>Quantity</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="tickettype : ${tickettypes}">
                                     <td th:text="${tickettype.type}"></td>
+                                    <td th:text="${tickettype.price} + ' €'"></td>
                                     <td>
                                         <input type="number" id="quantity" th:name="'quantities[' + ${tickettype.type_id} + ']'" min="0" value="0">
                                     </td>
