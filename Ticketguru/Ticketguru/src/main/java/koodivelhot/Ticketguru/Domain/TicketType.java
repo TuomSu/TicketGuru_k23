@@ -23,8 +23,8 @@ public class TicketType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long type_id;
-	@NotNull (message = "Tickettype must have a multiplier")
-	private double multiplier;
+	@NotNull (message = "Tickettype must have a price")
+	private double price;
 	@NotNull (message = "Tickettype must have a type name")
 	private String type;
 	
@@ -40,26 +40,26 @@ public class TicketType {
 		super();
 	}
 	
-	public TicketType(double multiplier, String type) {
+	public TicketType(double price, String type) {
 		super();
-		this.multiplier = multiplier;
+		this.price = price;
 		this.type = type;
 	}
 	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 	public Long getType_id() {
 		return type_id;
 	}
 	
 	public void setType_id(Long type_id) {
 		this.type_id = type_id;
-	}
-	
-	public double getMultiplier() {
-		return multiplier;
-	}
-	
-	public void setMultiplier(double multiplier) {
-		this.multiplier = multiplier;
 	}
 	
 	public String getType() {
@@ -89,3 +89,4 @@ public class TicketType {
 	
 
 }
+

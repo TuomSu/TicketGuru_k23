@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Sale Event</title>
+    <style>
+        .saledate {
+		  text-align: left;
+		  padding-right: 20px;
+		}
+		.totalprice {
+		  text-align: left;
+		  padding-left: 20px;
+		}
+		.user {
+		  text-align: left;
+		  padding-left: 40px;
+		}
+		.ticket-table {
+		  border-collapse: collapse;
+		  width: 30%;
+		  border: 1px solid #ddd;
+		  font-size: 14px;
+		}
+		.ticket-table th {
+		  background-color: #f2f2f2;
+		  text-align: left;
+		  padding: 8px;
+		  border: 1px solid #ddd;
+		}
+		.ticket-table td {
+		  text-align: left;
+		  padding: 8px;
+		  border: 1px solid #ddd;
+		}
+    </style>
+</head>
+<body>
+    <h1 th:text="'Myyntitapahtuma ID: ' + ${saleEvent.saleid}"></h1>
+    <table>
+        <thead>
+            <tr>
+                <th class="saledate">Maksettu</th>
+                <th class="totalprice">Summa</th>
+                <th class="user">Myyjä</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="saledate" th:text="${#temporals.format(saleEvent.saledate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(saleEvent.saledate, 'HH.mm')}"></td>
+                <td class="totalprice" th:text="${saleEvent.totalprice} + ' €'"></td>
+                <td class="user" th:text="${saleEvent.user.firstName} + ' ' + ${saleEvent.user.lastName}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Liput</h2>
+    <table class="ticket-table">
+        <thead>
+            <tr>
+                <th>Lippu</th>
+                <th>Hinta</th>
+                <th>Tapahtuma</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ticket : ${saleEvent.presaletickets}">
+                <td th:text="${ticket.tickettype.type}"></td>
+                <td th:text="${ticket.price} + ' €'"></td>
+                <td th:text="${ticket.event.eventName}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
