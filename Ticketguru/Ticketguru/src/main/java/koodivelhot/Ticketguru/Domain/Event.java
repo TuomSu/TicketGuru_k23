@@ -209,6 +209,9 @@ public class Event {
 		this.aTicketTypes = aTicketTypes;
 	}
 	
+	public List<PreSaleTicket> getPresaleTickets() {
+		return presaleTickets;
+	}
 	
 
 	/*public List<PrintedTicket> getPrintedTickets() {

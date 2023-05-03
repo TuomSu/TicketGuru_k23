@@ -240,12 +240,18 @@ public class ClientController {
 	 return "salesreport";
 	 }*/
 	 
-	// Tapahtuman editointi html (vielä erittäin kesken)
+	// Tapahtuman myyntitapahtumat html (vielä erittäin kesken)
 		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/salesreport/{id}", method = RequestMethod.GET)
 		public String getEventSalesReport(@PathVariable("id") Long event_id, Model model) {
-			model.addAttribute("event", erepository.findById(event_id));
+			Optional<Event> optionalEvent = erepository.findById(event_id);
+				if(optionalEvent.isPresent()) {
+					Event event = optionalEvent.get();
+			model.addAttribute("event", event);
 			return "salesreport";
+		}else {
+			return "eventlist";
+		}
 		}
 	
  
