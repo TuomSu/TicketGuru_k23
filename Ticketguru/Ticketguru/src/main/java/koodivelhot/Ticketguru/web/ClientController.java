@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
@@ -61,9 +59,6 @@ public class ClientController {
 
 	@Autowired
 	AreaCodeRepository acrepository;
-	
-	@Autowired
-	AcceptableTicketTypesRepository attrepository;
 		
 	/*
 	 * @RequestMapping(value = "/newSale") public String newSaleEvent(Model model){
@@ -91,8 +86,8 @@ public class ClientController {
 		return "editevent";
 	}
 	
-	// Lipputyyppien editointi html (erittäin kesken, eikä vielä toimi)
-	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	// Lipputyyppien editointi html (erittäin kesken, eikä vielä toimi) EDIT: pitää korjata hyväksyttyjen lipputyyppien poiston takia
+	/*@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.GET)
 	public String editTicketTypes(@PathVariable("id") Long event_id, Model model) {
 		model.addAttribute("acceptableTicketTypes", attrepository.findByEvent(event_id));
@@ -101,7 +96,7 @@ public class ClientController {
 		model.addAttribute("acceptableTicketTypes", new AcceptableTicketTypes());
 		model.addAttribute("ticketTypes", new TicketType());
 		return "acceptabletypes";
-	}
+	}*/
 
 	// Tapahtuman lisäys html
 	@PreAuthorize("hasAnyAuthority('admin','basic')")

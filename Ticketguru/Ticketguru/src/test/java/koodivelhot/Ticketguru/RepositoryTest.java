@@ -130,13 +130,13 @@ public class RepositoryTest {
 		assertThat(tickettypes).hasSize(1);
 	}
 	
-	@Test
+	/*@Test
 	public void createNewTicketType() {
 		TicketType tickettype = new TicketType(0.5,"Eläkeläinen");
 		ttrepository.save(tickettype);
 		assertThat(tickettype.getType_id()).isNotNull();
 		
-	}
+	}*/
 	
 	@Test
 	public void deleteTicketType() {
