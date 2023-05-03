@@ -66,7 +66,7 @@ public class Event {
     private Venue venue;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	private List<AcceptableTicketTypes> aTicketTypes;
+	private List<TicketType> TicketTypes;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
@@ -200,17 +200,17 @@ public class Event {
 	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
-
-	public List<AcceptableTicketTypes> getaTicketTypes() {
-		return aTicketTypes;
-	}
-
-	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
-		this.aTicketTypes = aTicketTypes;
-	}
 	
 	public List<PreSaleTicket> getPresaleTickets() {
 		return presaleTickets;
+	}
+
+	public List<TicketType> getTicketTypes() {
+		return TicketTypes;
+	}
+
+	public void setTicketTypes(List<TicketType> ticketTypes) {
+		TicketTypes = ticketTypes;
 	}
 	
 

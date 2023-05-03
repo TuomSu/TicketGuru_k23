@@ -10,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -42,12 +40,9 @@ public class TicketguruApplication {
 	
 	@Bean
 	public CommandLineRunner ticketapplication(EventRepository erepository, VenueRepository vrepository, AreaCodeRepository acrepository, AppUserRepository userrepository, 
-			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, AcceptableTicketTypesRepository attrepository, PreSaleTicketRepository pstrepository, PrintedTicketRepository prrepository) {
+			UserRoleRepository rolerepository, SaleEventRepository salerepository, TicketTypeRepository ttrepository, PreSaleTicketRepository pstrepository, PrintedTicketRepository prrepository) {
 		return (args) -> {
 			log.info("save an event");
-			
-			ttrepository.save(new TicketType(120, "Student"));
-			ttrepository.save(new TicketType(100, "Child under 7"));
 			
 			acrepository.save(new AreaCode("00000", "Testikaupunki"));
 			
@@ -65,8 +60,8 @@ public class TicketguruApplication {
 			erepository.save(new Event("Testitapahtuma", 10, startDate, endDate, 15.5, "Tapahtuma testaa tapahtuman toimintaa", preStart, preEnd, vrepository.findByVenueName("Testipaikka").get(0)));
 			// erepository.save(new Event("Demotapahtuma"));
 			
-			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Student").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
-			attrepository.save(new AcceptableTicketTypes(ttrepository.findByType("Child under 7").get(0), erepository.findByEventName("Testitapahtuma").get(0)));
+			ttrepository.save(new TicketType(120, "Student", erepository.findByEventName("Testitapahtuma").get(0)));
+			ttrepository.save(new TicketType(100, "Child under 7", erepository.findByEventName("Testitapahtuma").get(0)));
 			
 			UserRole role1 = new UserRole("admin", "all rights");
 			rolerepository.save(role1);
