@@ -1,6 +1,8 @@
 package koodivelhot.Ticketguru.web;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
+import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
@@ -31,6 +32,7 @@ import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
 import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
+import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
 @Controller //jouduin lisäämään uuden controllerin html-sivujen näyttämistä varten
@@ -59,9 +61,6 @@ public class ClientController {
 
 	@Autowired
 	AreaCodeRepository acrepository;
-	
-	@Autowired
-	AcceptableTicketTypesRepository attrepository;
 		
 	/*
 	 * @RequestMapping(value = "/newSale") public String newSaleEvent(Model model){
@@ -91,13 +90,12 @@ public class ClientController {
 	
 	// Lipputyyppien editointi html (erittäin kesken, eikä vielä toimi)
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
-	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/atypes/{id}", method = RequestMethod.GET)
 	public String editTicketTypes(@PathVariable("id") Long event_id, Model model) {
-		model.addAttribute("acceptableTicketTypes", attrepository.findByEvent(event_id));
-		model.addAttribute("acceptableTicketTypes", attrepository.findAll());
-		model.addAttribute("ticketTypes", ttrepository.findAll());
-		model.addAttribute("acceptableTicketTypes", new AcceptableTicketTypes());
-		model.addAttribute("ticketTypes", new TicketType());
+		model.addAttribute("event", erepository.findById(event_id));
+		model.addAttribute("ticketTypes", ttrepository.findByEvent(erepository.findById(event_id).get()));
+		// model.addAttribute("ticketTypes", ttrepository.findAll());
+		model.addAttribute("ticketType", new TicketType());
 		return "acceptabletypes";
 	}
 
@@ -110,6 +108,40 @@ public class ClientController {
 		model.addAttribute("areaCodes", acrepository.findAll());
 		return "addevent";
 	}
+
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/newVenue")
+	public String addVenue(Model model) {
+		model.addAttribute("venue", new Venue());
+		model.addAttribute("areaCodes", acrepository.findAll());
+		return "addvenue";
+	}
+
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/newACode")
+	public String addACode(Model model) {
+		model.addAttribute("acode", new AreaCode());
+		return "addacode";
+	}
+
+	@RequestMapping(value = "/saveType", method = RequestMethod.POST)
+	public String save(TicketType type) {
+		ttrepository.save(type);
+		return "redirect:eventlist";
+	}
+
+	@RequestMapping(value = "/saveVenue", method = RequestMethod.POST)
+	public String save(Venue venue) {
+		vrepository.save(venue);
+		return "redirect:addEvent";
+	}
+
+	@RequestMapping(value = "/saveACode", method = RequestMethod.POST)
+	public String save(AreaCode areaCode) {
+		acrepository.save(areaCode);
+		return "redirect:newVenue";
+	}
+
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Event event) {
@@ -175,6 +207,8 @@ public class ClientController {
 	    
 	    serepository.save(sale_event);
 	    
+	    List<PreSaleTicket> preSaleTickets = new ArrayList<>();
+	    
 	    for (Map.Entry<String, String> entry : ticketQuantities.entrySet()) {
 	        String key = entry.getKey();
 	        String value = entry.getValue(); 
@@ -187,27 +221,47 @@ public class ClientController {
 
 	            if (optionalTicketType.isPresent()) {
 	                TicketType ticketType = optionalTicketType.get();
-
+	                double price = ticketType.getPrice();
 	                for (int i = 0; i < Integer.parseInt(value); i++) {
 	                    PreSaleTicket preSaleTicket = new PreSaleTicket();
 	                    Optional<Event> optionalEvent = erepository.findById(event_id);
 	            	    
 	            	    if (optionalEvent.isPresent()) {
 	            	    	Event event = optionalEvent.get();
+	            	    	preSaleTicket.setPrice(price);
 	            	    	preSaleTicket.setEvent(event);
 	            	    	event.setSoldTickets(event.getSoldTickets() + 1);
+	            	    	sale_event.setTotalprice(sale_event.getTotalprice() + price);
 	            	    }
-	            	    
 	                    preSaleTicket.setTickettype(ticketType);
 	                    preSaleTicket.setUsed(false);
 	                    preSaleTicket.setSale(sale_event);
+	                    preSaleTickets.add(preSaleTicket);
 	                    pstrepository.save(preSaleTicket);
 	                }
 	            }
 	        }
 	    }
+	    
+	    sale_event.setPresaletickets(preSaleTickets);
+	    
+	    Long saleEventId = sale_event.getSaleid();
+	    String saleEventUrl = "/saleevents/" + saleEventId;
 
-	    return "redirect:/selltickets";
+	    return "redirect:" + saleEventUrl;
+	}
+	
+	@GetMapping("/saleevents/{id}")
+	public String viewSaleEvent(@PathVariable("id") Long id, Model model) {
+	    Optional<SaleEvent> optionalSaleEvent = serepository.findById(id);
+
+	    if (optionalSaleEvent.isPresent()) {
+	        SaleEvent saleEvent = optionalSaleEvent.get();
+	        model.addAttribute("saleEvent", saleEvent);
+	        return "viewsaleevent";
+	    } else {
+	        return "redirect:/selltickets";
+	    }
 	}
 	
 	/* //Salesreport
@@ -216,12 +270,18 @@ public class ClientController {
 	 return "salesreport";
 	 }*/
 	 
-	// Tapahtuman editointi html (vielä erittäin kesken)
+	// Tapahtuman myyntitapahtumat html (vielä erittäin kesken)
 		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/salesreport/{id}", method = RequestMethod.GET)
 		public String getEventSalesReport(@PathVariable("id") Long event_id, Model model) {
-			model.addAttribute("event", erepository.findById(event_id));
+			Optional<Event> optionalEvent = erepository.findById(event_id);
+				if(optionalEvent.isPresent()) {
+					Event event = optionalEvent.get();
+			model.addAttribute("event", event);
 			return "salesreport";
+		}else {
+			return "eventlist";
+		}
 		}
 	
  

@@ -3,6 +3,37 @@
 <head>
     <title>Myyntiraportti</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        .saledate {
+		  text-align: left;
+		  padding-right: 20px;
+		}
+		.saleid {
+		  text-align: left;
+		  padding-right: 20px;
+		}
+		.totalprice {
+		  text-align: left;
+		  padding-left: 20px;
+		}
+		.ticket-table {
+		  border-collapse: collapse;
+		  width: 30%;
+		  border: 1px solid #ddd;
+		  font-size: 14px;
+		}
+		.ticket-table th {
+		  background-color: #f2f2f2;
+		  text-align: left;
+		  padding: 8px;
+		  border: 1px solid #ddd;
+		}
+		.ticket-table td {
+		  text-align: left;
+		  padding: 8px;
+		  border: 1px solid #ddd;
+		}
+    </style>
 </head>
 <body>
 <div class="container">
@@ -11,20 +42,35 @@
 			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
 		</form>
 	</div>
-	<h1>Tapahtuman nimi</h1>
-    <table class="table table-striped">
-		<tr>
-		    <th>Lipputyyppi</th>
-		    <th>Kpl</th>
-		    <th>Yhteensä</th>
-		</tr>  
-    	<tr tr:each="event : ${event}">
-    		<td th:text=opiskelija></td>
-    		<td th:text=5></td>
-    		<td th:text=20></td>
-    	</tr>
-     </table>
-     <input class="button" type="button" value="Myyntitapahtumat" onClick="checkSaleEvents()">
-</div>  
+    
+
+    
+<h2>Myyntitapahtumat</h2>
+
+<h2 th:text="'Tapahtuma: ' + ${event.event_id} + ' ' +${event.eventName}"></h2>
+    <table class="ticket-table">
+        <thead>
+            <tr>
+                <th class="saledate">Myyntiaika</th>
+                <th class="saleid">myynti ID</th>
+                <th class="price">Summa</th>
+				<th class="type">Lipputyyppi</th>
+			
+                
+           
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ticket : ${event.presaleTickets}">
+                <td class="saledate" th:text="${#temporals.format(ticket.sale.saledate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(ticket.sale.saledate, 'HH.mm')}"></td>
+				<td class="saleid" th:text="${ticket.sale.saleid}"></td>
+                <td class="price" th:text="${ticket.sale.totalprice} + ' €'"></td>
+				<td class="type" th:text="${ticket.tickettype.type}"></td>
+                
+            </tr>
+        </tbody>
+    </table>
+    
+        
 </body>
 </html>

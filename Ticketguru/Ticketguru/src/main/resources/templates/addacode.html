@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tapahtumapaikat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Uusi postinumero</h1>
+	<div>
+		<form th:object="${acode}" th:action="@{saveACode}" action="#" method="post">
+		  	<label for="areaCode">Postinumero</label>
+			<input type="text" id="areaCode" th:field="*{areaCode}" required/>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="city">Kaupunki</label>
+			<input type="text" id="city" th:field="*{city}"/>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<input type="submit" value="Save"></input>
+			<input type="button" onclick="history.back()" value="Back" />
+		</form>
+	</div>
+</body>
+</html>

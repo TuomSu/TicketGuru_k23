@@ -35,6 +35,7 @@ public class PreSaleTicket {
 
 	private byte[] qrCodeImage; 
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
 	//@NotNull (message = "Presale ticket must belong to a sale event")
