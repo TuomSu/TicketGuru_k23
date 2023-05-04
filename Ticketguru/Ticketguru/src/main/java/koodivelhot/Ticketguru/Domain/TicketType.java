@@ -32,7 +32,7 @@ public class TicketType {
 	
 	// Tapahtumissa näkyy hyväksytyt lipputyypit, kun tämä tässä.
 	// Ilman ei näy.
-	@JsonIgnore
+	// @JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event")
 	private Event event;
