@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -61,9 +59,6 @@ public class TicketguruController {
 	
 	@Autowired
 	TicketTypeRepository ttrepository;
-	
-	@Autowired
-	AcceptableTicketTypesRepository attrepository;
 	
 	@Autowired
 	PrintedTicketRepository prrepository;
@@ -136,7 +131,7 @@ public class TicketguruController {
 	//Tapahtumaan hyväksyttävät lipputyypit
 	
 	// REST, delete acceptable ticket type by line id
-	@PreAuthorize("hasAuthority('admin')")
+	/*@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AcceptableTicketTypes> deleteAcceptableTicketTypes(@PathVariable("id") Long lineId) {
 		attrepository.deleteById(lineId);
@@ -149,7 +144,7 @@ public class TicketguruController {
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tapahtumaan hyväksyttävä lipputyyppi luotu")
 	public @ResponseBody AcceptableTicketTypes newAcceptableTicketTypes(@RequestBody AcceptableTicketTypes newAcceptableTicketTypes) {
 		return attrepository.save(newAcceptableTicketTypes);
-	}
+	}*/
 	
 	//Tapahtumapaikka
 	

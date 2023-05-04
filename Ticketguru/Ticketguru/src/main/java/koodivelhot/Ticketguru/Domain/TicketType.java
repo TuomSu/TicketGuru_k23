@@ -2,8 +2,6 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -32,18 +30,22 @@ public class TicketType {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tickettype")
 	private List<PreSaleTicket> presaletickets;
 	
+	// Tapahtumissa näkyy hyväksytyt lipputyypit, kun tämä tässä.
+	// Ilman ei näy.
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketType")
-	private List<AcceptableTicketTypes> aTicketTypes;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event")
+	private Event event;
 	
 	public TicketType() {
 		super();
 	}
 	
-	public TicketType(double price, String type) {
+	public TicketType(double price, String type, Event event) {
 		super();
 		this.price = price;
 		this.type = type;
+		this.event = event;
 	}
 	
 	public double getPrice() {
@@ -70,20 +72,20 @@ public class TicketType {
 		this.type = type;
 	}
 
-	public List<AcceptableTicketTypes> getaTicketTypes() {
-		return aTicketTypes;
-	}
-
-	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
-		this.aTicketTypes = aTicketTypes;
-	}
-
 	public List<PreSaleTicket> getPresaletickets() {
 		return presaletickets;
 	}
 
 	public void setPresaletickets(List<PreSaleTicket> presaletickets) {
 		this.presaletickets = presaletickets;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 	
 	
