@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
+import koodivelhot.Ticketguru.Domain.AreaCode;
 import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
 import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
@@ -31,6 +32,7 @@ import koodivelhot.Ticketguru.Domain.SaleEvent;
 import koodivelhot.Ticketguru.Domain.SaleEventRepository;
 import koodivelhot.Ticketguru.Domain.TicketType;
 import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
+import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
 
 @Controller //jouduin lisäämään uuden controllerin html-sivujen näyttämistä varten
@@ -107,10 +109,37 @@ public class ClientController {
 		return "addevent";
 	}
 
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/newVenue")
+	public String addVenue(Model model) {
+		model.addAttribute("venue", new Venue());
+		model.addAttribute("areaCodes", acrepository.findAll());
+		return "addvenue";
+	}
+
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = "/newACode")
+	public String addACode(Model model) {
+		model.addAttribute("acode", new AreaCode());
+		return "addacode";
+	}
+
 	@RequestMapping(value = "/saveType", method = RequestMethod.POST)
 	public String save(TicketType type) {
 		ttrepository.save(type);
 		return "redirect:eventlist";
+	}
+
+	@RequestMapping(value = "/saveVenue", method = RequestMethod.POST)
+	public String save(Venue venue) {
+		vrepository.save(venue);
+		return "redirect:addEvent";
+	}
+
+	@RequestMapping(value = "/saveACode", method = RequestMethod.POST)
+	public String save(AreaCode areaCode) {
+		acrepository.save(areaCode);
+		return "redirect:newVenue";
 	}
 
 

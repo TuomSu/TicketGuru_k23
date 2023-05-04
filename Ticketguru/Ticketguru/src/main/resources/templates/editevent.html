@@ -13,12 +13,7 @@
 			<input type="text"  id="eventName" th:field="*{eventName}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
 		  	<label for="eventStartDate">Tapahtuma alkaa</label>
-			<input type="datetime-local" id="eventStartDate" th:field="*{eventStartDate}"
-			th:value="${#dates.format(eventStartDate, 'dd.MM.yyyy HH:mm')}"/>
-			<script>
-    			var eventStartDate = /*[[${event.eventStartDate}]]*/ '';
-   				document.getElementById('eventStartDate').value = eventStartDate;
-			</script>
+			<input type="datetime-local" id="eventStartDate" th:field="*{eventStartDate}"/>
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="eventEndDate">Tapahtuma päättyy</label>
 			<input type="datetime-local" id="eventEndDate" th:field="*{eventEndDate}" />
