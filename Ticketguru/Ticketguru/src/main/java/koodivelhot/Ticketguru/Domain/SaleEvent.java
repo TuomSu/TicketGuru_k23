@@ -30,22 +30,28 @@ public class SaleEvent {
 	@NotNull (message = "Sale event must have a saletime")
 	private LocalDateTime saledate;
 	
+	private double totalprice;
+
 	//@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "userid") // myyjä joka on tehnyt myyntitapahtuman
-	@NotNull (message = "Insert user, cannot be null")
+	//@NotNull (message = "Insert user, cannot be null")
 	private AppUser user;
 
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
 	private List<PreSaleTicket> presaletickets;
 	
 	public SaleEvent() {}
 	
-	public SaleEvent(LocalDateTime saledate, @NotNull(message = "Insert user, cannot be null") AppUser user) {
+	public SaleEvent(LocalDateTime saledate, AppUser user) {
 		super();
 		this.saledate = saledate;
 		this.user = user;
+	}
+	
+	public SaleEvent(LocalDateTime saledate) {
+		super();
+		this.saledate = saledate;
 	}
 	
 	public SaleEvent(AppUser user) {
@@ -61,6 +67,14 @@ public class SaleEvent {
 		this.saleid = saleid;
 	}
 
+	public double getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(double totalprice) {
+		this.totalprice = totalprice;
+	}
+	
 	public LocalDateTime getSaledate() {
 		return saledate;
 	}

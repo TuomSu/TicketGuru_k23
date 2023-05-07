@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell tickets</title>
+    <style>
+   		.container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #36454F;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #f2f2f2;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #36454F;
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .hidden-form {
+            display: none;
+        }
+        form input[type="number"] {
+            width: 50px;
+            padding: 5px;
+        }
+        button[type="submit"] {
+            background-color: #36454F;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #444;
+        }
+  	</style>
+</head>
+<body>
+	<div class="container">
+	    <h1>Myy lippuja</h1>
+	    <table>
+	        <thead>
+	            <tr>
+	                <th>Ajankohta</th>
+	                <th>Tapahtuman nimi</th>
+	                <th>Toiminto</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="event : ${events}">
+	                <td th:text="${#temporals.format(event.eventStartDate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(event.eventStartDate, 'HH.mm')}"></td>
+	                <td th:text="${event.eventName}"></td>
+	                <td>
+	                    <a href="" onclick="showForm(event)">Lisää lippuja</a>
+	                    <form method="POST" th:action="@{/addpresaletickets}" class="hidden-form">
+	                        <input type="hidden" name="id" th:value="${event.event_id}" th:attr="data-value=${event.event_id}">
+	                        <table>
+	                            <thead>
+	                                <tr>
+	                                    <th>Lipputyyppi</th>
+	                                    <th>Hinta</th>
+	                                    <th>Määrä</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr th:each="tickettype : ${event.ticketTypes}">
+	                                    <td th:text="${tickettype.type}"></td>
+	                                    <td th:text="${tickettype.price} + ' €'"></td>
+	                                    <td>
+	                                        <input type="number" id="quantity" th:name="'quantities[' + ${tickettype.type_id} + ']'" min="0" value="0">
+	                                    </td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                        <button type="submit">Myy</button>
+	                    </form>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+    </div>
+</body>
+
+<script>
+function showForm(event) {
+    event.preventDefault();
+    var form = event.target.closest('tr').querySelector('form');
+    if (form.classList.contains('hidden-form')) {
+        form.classList.remove('hidden-form');
+    } else {
+        form.classList.add('hidden-form');
+    }
+}
+</script>
+</html>

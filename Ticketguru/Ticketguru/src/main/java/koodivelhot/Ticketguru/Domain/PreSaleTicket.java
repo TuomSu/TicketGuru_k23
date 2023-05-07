@@ -27,22 +27,23 @@ public class PreSaleTicket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long presaleticketid;
-	@NotNull
+	//@NotNull
 	private Boolean used;
-	@NotNull (message = "Price cannot be null") // hinta on pakollinen tieto, ilmaislipuille syötetään hinnaksi 0
+	//@NotNull (message = "Price cannot be null") // hinta on pakollinen tieto, ilmaislipuille syötetään hinnaksi 0
 	private double price;
 	private String code = UUID.randomUUID().toString(); // tällä luodaan lipulle random koodi 
 
 	private byte[] qrCodeImage; 
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "sale") // myyntitapahtuma, johon lippu liittyy
-	@NotNull (message = "Presale ticket must belong to a sale event")
+	//@NotNull (message = "Presale ticket must belong to a sale event")
     private SaleEvent sale;
 	
 	@ManyToOne
     @JoinColumn(name = "event") // tapahtuma, johon lippu liittyy
-	@NotNull (message = "Presale ticket must belong to an event")
+	//@NotNull (message = "Presale ticket must belong to an event")
     private Event event;
 	
 	@ManyToOne
@@ -73,6 +74,19 @@ public class PreSaleTicket {
 		this.price = price;
 		this.sale = sale;
 		this.event = event;
+		this.tickettype = tickettype;
+	}
+	
+	// Testi konstruktori
+	public PreSaleTicket(Event event, double price, TicketType tickettype) {
+		super();
+		this.event = event;
+		this.price = price;
+		this.tickettype = tickettype;
+	}
+	
+	public PreSaleTicket(TicketType tickettype) {
+		super();
 		this.tickettype = tickettype;
 	}
 	

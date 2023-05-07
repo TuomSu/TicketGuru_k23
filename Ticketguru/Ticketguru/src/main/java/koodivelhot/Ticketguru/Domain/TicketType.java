@@ -2,8 +2,6 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.util.List;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -23,8 +21,8 @@ public class TicketType {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long type_id;
-	@NotNull (message = "Tickettype must have a multiplier")
-	private double multiplier;
+	@NotNull (message = "Tickettype must have a price")
+	private double price;
 	@NotNull (message = "Tickettype must have a type name")
 	private String type;
 	
@@ -32,34 +30,38 @@ public class TicketType {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tickettype")
 	private List<PreSaleTicket> presaletickets;
 	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketType")
-	private List<AcceptableTicketTypes> aTicketTypes;
+	// Tapahtumissa näkyy hyväksytyt lipputyypit, kun tämä tässä.
+	// Ilman ei näy.
+	// @JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event")
+	private Event event;
 	
 	public TicketType() {
 		super();
 	}
 	
-	public TicketType(double multiplier, String type) {
+	public TicketType(double price, String type, Event event) {
 		super();
-		this.multiplier = multiplier;
+		this.price = price;
 		this.type = type;
+		this.event = event;
 	}
 	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 	public Long getType_id() {
 		return type_id;
 	}
 	
 	public void setType_id(Long type_id) {
 		this.type_id = type_id;
-	}
-	
-	public double getMultiplier() {
-		return multiplier;
-	}
-	
-	public void setMultiplier(double multiplier) {
-		this.multiplier = multiplier;
 	}
 	
 	public String getType() {
@@ -70,14 +72,6 @@ public class TicketType {
 		this.type = type;
 	}
 
-	public List<AcceptableTicketTypes> getaTicketTypes() {
-		return aTicketTypes;
-	}
-
-	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
-		this.aTicketTypes = aTicketTypes;
-	}
-
 	public List<PreSaleTicket> getPresaletickets() {
 		return presaletickets;
 	}
@@ -85,7 +79,16 @@ public class TicketType {
 	public void setPresaletickets(List<PreSaleTicket> presaletickets) {
 		this.presaletickets = presaletickets;
 	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 	
 	
 
 }
+

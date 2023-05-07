@@ -1,12 +1,8 @@
 package koodivelhot.Ticketguru.Domain;
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,17 +16,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
-import jakarta.websocket.OnMessage;
 
 @Entity
 public class Event {
@@ -65,8 +53,9 @@ public class Event {
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-	private List<AcceptableTicketTypes> aTicketTypes;
+	private List<TicketType> ticketTypes;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
@@ -200,15 +189,22 @@ public class Event {
 	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
-
-	public List<AcceptableTicketTypes> getaTicketTypes() {
-		return aTicketTypes;
-	}
-
-	public void setaTicketTypes(List<AcceptableTicketTypes> aTicketTypes) {
-		this.aTicketTypes = aTicketTypes;
-	}
 	
+	public List<PreSaleTicket> getPresaleTickets() {
+		return presaleTickets;
+	}
+
+	public List<TicketType> getTicketTypes() {
+		return ticketTypes;
+	}
+
+	public void setTicketTypes(List<TicketType> ticketTypes) {
+		this.ticketTypes = ticketTypes;
+	}
+
+	public void setPresaleTickets(List<PreSaleTicket> presaleTickets) {
+		this.presaleTickets = presaleTickets;
+	}
 	
 
 	/*public List<PrintedTicket> getPrintedTickets() {

@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypes;
-import koodivelhot.Ticketguru.Domain.AcceptableTicketTypesRepository;
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
 import koodivelhot.Ticketguru.Domain.AreaCode;
@@ -63,9 +61,6 @@ public class TicketguruController {
 	TicketTypeRepository ttrepository;
 	
 	@Autowired
-	AcceptableTicketTypesRepository attrepository;
-	
-	@Autowired
 	PrintedTicketRepository prrepository;
 	
 	@GetMapping("testi")
@@ -82,12 +77,14 @@ public class TicketguruController {
 	//Tapahtuma
 	
 	// REST, get all events
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public @ResponseBody List<Event> eventListRest() {
 		return(List<Event>) erepository.findAll();
 	}
 	
 	// REST, get event by id
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Event> findEventRest(@PathVariable("id") Long event_id) {
 		Optional<Event> event = erepository.findById(event_id);
@@ -109,6 +106,7 @@ public class TicketguruController {
 	}
 	
 	//REST, update event by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Event editEvent(@RequestBody Event editedEvent, @PathVariable("id") Long event_id) {
 		editedEvent.setEvent_id(event_id);
@@ -116,6 +114,7 @@ public class TicketguruController {
 	}
 	
 	//rest, delete by id and show updated list of events
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<Event> deleteEvent(@PathVariable("id") Long event_id) {
 		Optional<Event> event = erepository.findById(event_id);
@@ -132,6 +131,7 @@ public class TicketguruController {
 	//Tapahtumaan hyväksyttävät lipputyypit
 	
 	// REST, delete acceptable ticket type by line id
+	/*@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/atickettypes/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AcceptableTicketTypes> deleteAcceptableTicketTypes(@PathVariable("id") Long lineId) {
 		attrepository.deleteById(lineId);
@@ -139,33 +139,38 @@ public class TicketguruController {
 	}
 
 	// REST, add new acceptable ticket type
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/acceptabletickettypes", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tapahtumaan hyväksyttävä lipputyyppi luotu")
 	public @ResponseBody AcceptableTicketTypes newAcceptableTicketTypes(@RequestBody AcceptableTicketTypes newAcceptableTicketTypes) {
 		return attrepository.save(newAcceptableTicketTypes);
-	}
+	}*/
 	
 	//Tapahtumapaikka
 	
 	// REST, get all venues
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venues", method = RequestMethod.GET)
 	public @ResponseBody List<Venue> venueListRest() {
 		return(List<Venue>) vrepository.findAll();
 	}
 	
 	// REST, get venue by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Venue> findVenueRest(@PathVariable("id") Long venue_id) {
 		return vrepository.findById(venue_id);
 	}
 	
 	// REST, add new venue
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venues", method = RequestMethod.POST)
 	public @ResponseBody Venue newVenue(@RequestBody Venue newVenue) {
 		return vrepository.save(newVenue);
 	}
 	
 	//REST, update venue by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Venue editVenue(@RequestBody Venue editedVenue, @PathVariable("id") Long venue_id) {
 		editedVenue.setVenue_id(venue_id);
@@ -173,6 +178,7 @@ public class TicketguruController {
 	}
 	
 	//rest, delete by id and show updated list of venues
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<Venue> deleteVenue(@PathVariable("id") Long venue_id) {
 		vrepository.deleteById(venue_id);
@@ -182,24 +188,28 @@ public class TicketguruController {
 	//Kaupunki
 	
 	// REST, get all areacodes
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/acodes", method = RequestMethod.GET)
 	public @ResponseBody List<AreaCode> areacodeListRest() {
 		return(List<AreaCode>) acrepository.findAll();
 	}
 	
 	// REST, get areacode
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<AreaCode> findAreaCodeRest(@PathVariable("id") String areaCode) {
 		return acrepository.findByAreaCode(areaCode);
 	}
 	
 	// REST, add new areacode
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/acodes", method = RequestMethod.POST)
 	public @ResponseBody AreaCode newAreaCode(@RequestBody AreaCode newAreaCode) {
 		return acrepository.save(newAreaCode);
 	}
 	
 	//REST, update areacode by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public @ResponseBody AreaCode editAreaCode(@RequestBody AreaCode editedAreaCode, @PathVariable("id") String areaCode) {
 		editedAreaCode.setAreaCode(areaCode);
@@ -207,6 +217,7 @@ public class TicketguruController {
 	}
 	
 	//rest, delete by id and show updated list of areacodes
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AreaCode> deleteAreaCode(@PathVariable("id") String areaCode) {
 		acrepository.deleteById(areaCode);
@@ -215,12 +226,14 @@ public class TicketguruController {
 	// Lipputyypit
 	
 	// REST, get all tickettypes
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/tickettypes", method = RequestMethod.GET)
 	public @ResponseBody List<TicketType> tickettypeListRest() {
 		return(List<TicketType>) ttrepository.findAll();
 	}
 	
 	// REST, get tickettype by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<TicketType> findTicketTypeRest(@PathVariable("id") Long type_id) {
 		Optional<TicketType> type = ttrepository.findById(type_id);
@@ -233,6 +246,7 @@ public class TicketguruController {
 	}
 
 	// REST, update tickettype by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.PUT)
 	public @ResponseBody TicketType editTicketType(@Valid @RequestBody TicketType editedTicketType, @PathVariable("id") Long type_id) {
 		Optional<TicketType> type = ttrepository.findById(type_id);
@@ -246,6 +260,7 @@ public class TicketguruController {
 	}
 
 	// REST, delete tickettype by id
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "tickettype/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<TicketType> deleteTicketType(@PathVariable("id") Long type_id) {
 		Optional<TicketType> type = ttrepository.findById(type_id);
@@ -259,9 +274,9 @@ public class TicketguruController {
 	}
 
 	// REST, add new tickettype
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/tickettypes", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED, reason = "Lipputyyppi luotu")
-	@PreAuthorize("hasRole('admin')")
 	public @ResponseBody TicketType newTicketType(@Valid @RequestBody TicketType newTicketType) {
 		return ttrepository.save(newTicketType);
 	}
@@ -269,15 +284,14 @@ public class TicketguruController {
 	//PrintedTicket
 
 		// REST, get all printed tickets
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/printedtickets", method = RequestMethod.GET)
 		public @ResponseBody List<PrintedTicket> PrintedTicketListRest() {
 			return(List<PrintedTicket>) prrepository.findAll();
 		}
 		
-	
-		
-
 		// REST, get printedticket by id
+		@PreAuthorize("hasAnyAuthority('admin','basic')")
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.GET)
 		public @ResponseBody List<PrintedTicket> findPrintedTicketRest(@PathVariable("id") Long pTicketId) {
 			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
@@ -289,10 +303,8 @@ public class TicketguruController {
 			}
 		}
 				
-			
-	
-
-		// REST, delete sale event by id
+		// REST, delete printed ticket by id
+		@PreAuthorize("hasAuthority('admin')")
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.DELETE)
 		public @ResponseBody List<PrintedTicket> deletePrintedTicket(@PathVariable("id") Long pTicketId) {
 			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
@@ -304,12 +316,9 @@ public class TicketguruController {
 				throw new  ResponseStatusException(HttpStatus.NOT_FOUND, "Tulostettua lippua ei löytynyt annetulla id:llä");
 			}
 		}
-			
-			
-			
-		
 
-		//REST, update sale event by id
+		//REST, update printed ticket by id
+		@PreAuthorize("hasAuthority('admin')")
 		@RequestMapping(value = "/printedticket/{id}", method = RequestMethod.PUT)
 		public @ResponseBody PrintedTicket editPrintedticket(@Valid @RequestBody PrintedTicket editedPrintedTicket, @PathVariable("id") Long pTicketId) {
 			Optional<PrintedTicket> printedticket = prrepository.findById(pTicketId);
@@ -325,6 +334,7 @@ public class TicketguruController {
 		}
 
 		// REST, add new printed ticket
+		@PreAuthorize("hasAuthority('admin')")
 		@RequestMapping(value = "printedtickets", method = RequestMethod.POST)
 		@ResponseStatus(value = HttpStatus.CREATED, reason = "Tulostettu luotu")
 		public @ResponseBody PrintedTicket newPrintedTicket(@Valid @RequestBody PrintedTicket printedticket) {
@@ -338,75 +348,81 @@ public class TicketguruController {
 	// Käyttäjät
 	
 	//REST, get all users
-	
+	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public @ResponseBody List<AppUser> UserListRest() {
 		return(List<AppUser>) urepository.findAll();
 	}
 	
 	// GET user by id
-		@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-		public @ResponseBody Optional<AppUser> findUserRest(@PathVariable("id") Long userid) {
-			Optional<AppUser> user = urepository.findById(userid);
-			if(user.isPresent()) {
-				return urepository.findById(userid);
-			}else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
-			}
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<AppUser> findUserRest(@PathVariable("id") Long userid) {
+		Optional<AppUser> user = urepository.findById(userid);
+		if(user.isPresent()) {
+			return urepository.findById(userid);
+		}else {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
+		}
+	}
+		
+	// REST, add new user
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "users", method = RequestMethod.POST)
+	public @ResponseBody AppUser newAppUser(@Valid @RequestBody AppUser appuser) {
+			return urepository.save(appuser);
 		}
 		
-		// REST, add new user
-			@RequestMapping(value = "users", method = RequestMethod.POST)
-			public @ResponseBody AppUser newAppUser(@Valid @RequestBody AppUser appuser) {
-				return urepository.save(appuser);
-			}
+	//REST, update user
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+	public @ResponseBody AppUser editUser(@Valid @RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
+		Optional<AppUser> user = urepository.findById(userid);
+		if(user.isPresent()) {
+			editedUser.setUserid(userid);
+			return urepository.save(editedUser);
+		}else { //jos käyttäjää ei löydy annetulla id:llä, ei muokkaus ole mahdollista eikä luoda uutta käyttäjää
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
+		}
+	}
 			
-			//REST, update user
-			@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-			public @ResponseBody AppUser editUser(@Valid @RequestBody AppUser editedUser, @PathVariable("id") Long userid) {
-			Optional<AppUser> user = urepository.findById(userid);
-			if(user.isPresent()) {
-				editedUser.setUserid(userid);
-				return urepository.save(editedUser);
-			}else { //jos käyttäjää ei löydy annetulla id:llä, ei muokkaus ole mahdollista eikä luoda uutta käyttäjää
+	//REST, delete by id user
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody List<AppUser> deleteUser(@PathVariable("id") Long userid) {
+		Optional<AppUser> user = urepository.findById(userid);
+		if(user.isPresent()) {
+			urepository.deleteById(userid);
+			return (List<AppUser>) urepository.findAll();
+		}else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
 			}
-		}
-			
-			//REST, delete by id user
-			@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-			public @ResponseBody List<AppUser> deleteUser(@PathVariable("id") Long userid) {
-				Optional<AppUser> user = urepository.findById(userid);
-				if(user.isPresent()) {
-					urepository.deleteById(userid);
-					return (List<AppUser>) urepository.findAll();
-				}else {
-					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Käyttäjää ei löytynyt annetulla id:llä");
-					}
-			}
+	}
 
 	// REST, get all ROLES
-			@RequestMapping(value = "/roles", method = RequestMethod.GET)
-			public @ResponseBody List<UserRole> UserRoleRest() {
-				return(List<UserRole>) rrepository.findAll();
-			}
-			// GET role by id
-			@RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
-			public @ResponseBody Optional<UserRole> findRoleRest(@PathVariable("id") Long roleid) {
-				Optional<UserRole> role = rrepository.findById(roleid);
-				if(role.isPresent()) {
-					return rrepository.findById(roleid);
-				}else {
-					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Roolia ei löytynyt annetulla id:llä");
-				}
-				
-			}
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/roles", method = RequestMethod.GET)
+	public @ResponseBody List<UserRole> UserRoleRest() {
+		return(List<UserRole>) rrepository.findAll();
+	}
+	// GET role by id
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<UserRole> findRoleRest(@PathVariable("id") Long roleid) {
+		Optional<UserRole> role = rrepository.findById(roleid);
+		if(role.isPresent()) {
+			return rrepository.findById(roleid);
+		}else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Roolia ei löytynyt annetulla id:llä");
+		}
+		
+	}
 			
-			// REST, add new role
-				@RequestMapping(value = "roles", method = RequestMethod.POST)
-				public @ResponseBody UserRole newUserRole(@RequestBody UserRole role) {
-					return rrepository.save(role);
-				}
-	
+	// REST, add new role
+	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "roles", method = RequestMethod.POST)
+	public @ResponseBody UserRole newUserRole(@RequestBody UserRole role) {
+		return rrepository.save(role);
+	}
 	
 }
