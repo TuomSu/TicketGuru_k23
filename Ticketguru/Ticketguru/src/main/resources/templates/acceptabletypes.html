@@ -21,7 +21,7 @@
      </table>
      <div>
 		<form th:object="${ticketType}" th:action="@{../saveType}" action="#" method="post">
-		<input type="hidden" id="event" th:field="*{event}" />
+		<input type="hidden" id="event" th:field="*{event.event_id}" />
 		  	<label for="type">Kuvaus</label>
 			<input type="text"  id="type" th:field="*{type}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
