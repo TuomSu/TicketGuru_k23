@@ -72,12 +72,20 @@ public class ClientController {
 
 	// Tapahtuma lista html
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
-	@RequestMapping(value = { "/", "eventlist" })
+	@RequestMapping(value = {"eventlist" })
 	public String eventlist(Model model) {
 		model.addAttribute("events", erepository.findAll());
 		return "eventlist";
 	}
 
+	
+	// Etusivu
+	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@RequestMapping(value = { "/", "frontpage" })
+	public String frontpage() {
+		return "frontpage";
+	}
+	
 	// Tapahtuman editointi html
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
