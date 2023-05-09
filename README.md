@@ -11,11 +11,11 @@
 
 ## Johdanto
 
-Projektin tavoitteena on tuottaa lipputoimiston tilaama lipunmyyntijärjestelmä, jonka avulla lipputoimiston henkilökunta voi myydä lippuja erilaisiin tapahtumiin myyntipisteessä. Asiakas voi määritellä järjestelmään ne tapahtumat, joihin lippuja myydään.  
+Projektin tavoitteena on tuottaa lipputoimiston tilaama lipunmyyntijärjestelmä, jonka avulla lipputoimiston henkilökunta voi myydä lippuja erilaisiin tapahtumiin myyntipisteessä. Lipputoimiston henkilökunta voi määritellä järjestelmään ne tapahtumat, joihin lippuja myydään.  
 
 Järjestelmän avulla lipputoimiston lipunmyynti tehostuu ja heidän on helpompi hallita myytäviä tapahtumia. Lisäksi asiakas saa järjestelmästä liiketoiminnan kehittämisen kannalta hyödyllisiä myyntiraportteja. Järjestelmän alustava nimi on TicketGuru.
 
-Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Käyttöliittymäratkaisut ja -teknologiat tarkentuvat myöhemmin.
+Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Yksinkertainen käyttöliittymäratkaisu on toteutettu Thymeleaf template enginen avulla. 
 ___
 
 ## Järjestelmän määrittely
@@ -98,7 +98,10 @@ ___
 
 ## Tietokanta
 
+Kuvassa 2 on esitetty sovelluksen tietokantakaavio, josta eri taulujen väliset suhteet käyvät ilmi. Sen jälkeen käydään läpi kunkin taulun sisältö.
+
 ![Tietokantakaavio](https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot/blob/develop/tietokantakaavio_TicketGuru.png)
+Kuva 2. Tietokantakaavio
 
 ### Myyntitapahtumat
 *Myyntitapahtumat-taulu sisältää ennakkolippujen myyntitapahtumat. Sama myyntitapahtuma voi kuulua usealle ennakkolipulle. Ennakkolipulla on aina vain yksi myyntitapahtuma*
@@ -204,8 +207,10 @@ ___
 *Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
 
 * Missä mikäkin järjestelmän komponentti ajetaan (tietokone, palvelinohjelma) ja komponenttien väliset yhteydet (vaikkapa tähän tyyliin: https://security.ufl.edu/it-workers/risk-assessment/creating-an-information-systemdata-flow-diagram/)
-* Palvelintoteutuksen yleiskuvaus: teknologiat, deployment-ratkaisut yms.
-* Keskeisten rajapintojen kuvaukset, esimerkit REST-rajapinta. Tarvittaessa voidaan rajapinnan käyttöä täsmentää UML-sekvenssikaavioilla
+
+### Palvelintoteutuksen yleiskuvaus
+
+teknologiat, deployment-ratkaisut yms.
 
 ### REST API -rajapinta
 
@@ -246,9 +251,23 @@ Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä*
 *Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.*
 
 ## Asennustiedot
-*Järjestelmän asennus on syytä dokumentoida kahdesta näkökulmasta:*
 
-* järjestelmän kehitysympäristö: miten järjestelmän kehitysympäristön saisi rakennettua johonkin toiseen koneeseen
+### Järjestelmän kehitysympäristön asentaminen
+
+1. Tietokoneelle tulee asentaa Eclipse tai muu ohjelmistokehitykseen soveltuva ohjelma (IDE)
+2. Projektin repositorio kloonataan tietokoneelle osoitteesta https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot.git
+3. Asennetaan tietokoneelle MariaDB ja HeidiSQL
+4. HeidiSQL:stä luodaan yhteys MariaDB-palvelimeen
+5. Yhteyden muodostamisen jälkeen luodaan HeidiSQL:ssä uusi tietokanta
+6. Application.properties tiedostoon lisätään tietokantaa koskevat tiedot: sijainti ja nimi sekä tunnus ja salasana
+7. Kun ongelma on käynnistetty, HeidiSQL:n puolella päivitetään kohdassa 5 luotu tietokanta, jolloin saadaan tietokantaan tarvittavat taulut näkyviin
+
+Kehitysympäristön käyttäminen H2-tietokannalla:
+
+* Application.properties tiedostosta kommentoidaan pois MariaDB:tä koskevat tiedot ja kommentoidaan H2:sta koskevat rivit aktiivisiksi
+* Pom.xml -tiedostosta palautetaan H2:sen dependency aktiiviseksi
+
+### Järjestelmän tuotantoympäristön asentaminen
 
 * järjestelmän asentaminen tuotantoympäristöön: miten järjestelmän saisi asennettua johonkin uuteen ympäristöön.
 
