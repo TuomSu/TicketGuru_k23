@@ -24,7 +24,7 @@ ___
 1.	Lipunmyynti
 - myynnistä muodostuu myyntitapahtuma, josta päästään tulostamaan asiakkaalle lippu
 - lippuja myydään ennakkoon tietty määrä, ja loput, joista ei ole muodostunut myyntitapahtumaa, tulostetaan ja myydään ovella.
-- lipputyyppejä on erihintaisia (tässä voitaisiin käyttää kerrointa, esim. lapsen lippu x0,5)
+- lipputyyppejä on erihintaisia
 2.	Tapahtumien hallinta
 - tapahtumia on pystyttävä luomaan järjestelmässä, mutta tämän lisäksi myös muokkaamaan ja poistamaan
 3.	Myyntiraportti
@@ -82,7 +82,7 @@ ___
 
 ## Käyttöliittymä
 
-Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. 
+Käyttöliittymän tärkeimpiä näkymiä ovat lipunmyyntinäkymä, yksittäisen myyntitapahtuman näkymä, tapahtumien hallinnan näkymä sekä myyntiraporttinäkymä. Lisäksi käyttöliittymästä löytyy näkymä, jossa voidaan tarkastaa lippuja.
 
 Lipunmyyntinäkymässä on listaus myytävissä olevissa tapahtumista. Listauksessa näytetään tapahtumista perustiedot kuten aika ja nimi. Klikkaamalla tapahtumariviä päästään valitsemaan, kuinka monta lippua kyseiseen tapahtumaan halutaan myydä. Myynnin jälkeen avautuu yksittäisen myyntitapahtuman näkymä, jossa näkyy myyntitapahtuman maksutiedot sekä ostetut liput. Sivulta löytyy linkki, josta liput voidaan tulostaa.
 
@@ -122,6 +122,7 @@ ___
 | saleid | intFK      |    Viittaus lipun myyntitapahtumaan myyntitapahtumat - taulussa |
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
+| code      | varchar      |   Lipun yksilöivä koodi, jolla voidaan merkitä lippu käytetyksi. |
 
 ### Tulostettulippu
 *Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut liput kuuluuvain tapahtumaan. Tulostetulla lipulla ei ole lipputyyppiä, vaan toimii itsenäisesti, ja se sisältää hinnan ja myynti ajankohdan.
@@ -204,14 +205,40 @@ ___
 
 * Missä mikäkin järjestelmän komponentti ajetaan (tietokone, palvelinohjelma) ja komponenttien väliset yhteydet (vaikkapa tähän tyyliin: https://security.ufl.edu/it-workers/risk-assessment/creating-an-information-systemdata-flow-diagram/)
 * Palvelintoteutuksen yleiskuvaus: teknologiat, deployment-ratkaisut yms.
-* Keskeisten rajapintojen kuvaukset, esimerkit REST-rajapinta. Tarvittaessa voidaan rajapinnan käyttöä täsmentää UML-sekvenssikaavioilla.
-* Toteutuksen yleisiä ratkaisuja, esim. turvallisuus.
-*Tämän lisäksi*
+* Keskeisten rajapintojen kuvaukset, esimerkit REST-rajapinta. Tarvittaessa voidaan rajapinnan käyttöä täsmentää UML-sekvenssikaavioilla
 
-* ohjelmakoodin tulee olla kommentoitua
-* luokkien, metodien ja muuttujien tulee olla kuvaavasti nimettyjä ja noudattaa johdonmukaisia nimeämiskäytäntöjä
-* ohjelmiston pitää olla organisoitu komponentteihin niin, että turhalta toistolta vältytään
+### REST API -rajapinta
 
+Alla on esitetty sovelluksen REST API -rajapinnan endpointtien toiminta.
+
+**Tapahtumat** 
+
+Tapahtumien käsittelyyn liittyvät endpointit
+
+* [**Näytä kaikki tapahtumat**](API-dokumentaatio/events/get.md) : `GET /events`
+* [**Näytä tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/get.md) : `GET /events/{id}`
+* [**Lisää uusi tapahtuma**](API-dokumentaatio/events/post.md) : `POST /events`
+* [**Muokkaa tapahtumaa ID:n perusteella**](API-dokumentaatio/events/pk/put.md) : `PUT /events/{id}`
+* [**Poista tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/delete.md) : `DELETE /events/{id}`
+
+**Lipputyypit**
+
+**Tapahtumapaikat**
+
+**Postikoodit**
+
+**Ennakkoliput**
+
+* [**Näytä kaikki ennakkoliput**](API-dokumentaatio/presaletickets/get.md) : `GET /presaletickets`
+* [**Näytä ennakkolippu id:n perusteella**](API-dokumentaatio/presaletickets/get.md) : `GET /presaletickets/{id}`
+* [**Lisää uusi ennakkolippu**](API-dokumentaatio/presaletickets/get.md) : `POST /presaletickets`
+* [**Merkitse ennakkolippu käytetyksi koodin perusteella**](API-dokumentaatio/presaletickets/get.md) : `PATCH /presaletickets?code={code}`
+
+**Myyntitapahtumat**
+
+**Käyttäjät**
+
+Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä**](API-dokumentaatio/users/CRUD.md).
 
 ## Testaus
 *Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa. Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan erillisiin dokumentteihin.*
