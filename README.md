@@ -230,7 +230,7 @@ Tapahtumien käsittelyyn liittyvät endpointit
 
 * [**Näytä kaikki lipputyypit**](API-dokumentaatio/tickettypes/get.md) : `GET /tickettypes`
 * [**Näytä lipputyyppi ID:n perusteella**](API-dokumentaatio/tickettypes/pk/get.md) : `GET /tickettype/{id}`
-* [**Lisää uusi lipputyyppi**](API-dokumentaatio/tickettypes/post.md) : `POST /events`
+* [**Lisää uusi lipputyyppi**](API-dokumentaatio/tickettypes/post.md) : `POST /tickettypes`
 * [**Muokkaa lipputyyppiä ID:n perusteella**](API-dokumentaatio/tickettypes/pk/put.md) : `PUT /tickettype/{id}`
 * [**Poista lipputyyppi ID:n perusteella**](API-dokumentaatio/tickettypes/pk/delete.md) : `DELETE /tickettype/{id}`
 
