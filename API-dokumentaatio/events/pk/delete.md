@@ -2,7 +2,7 @@
 
 Yksittäisen tapahtuman poistaminen sovelluksesta
 
-**URL** : `/events/{id}`
+**URL** : `/event/{id}`
 
 **URL Parametrit** : `{id}` jossa id on tapahtuman yksilöivä tunnus
 

@@ -221,12 +221,18 @@ Alla on esitetty sovelluksen REST API -rajapinnan endpointtien toiminta.
 Tapahtumien käsittelyyn liittyvät endpointit
 
 * [**Näytä kaikki tapahtumat**](API-dokumentaatio/events/get.md) : `GET /events`
-* [**Näytä tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/get.md) : `GET /events/{id}`
+* [**Näytä tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/get.md) : `GET /event/{id}`
 * [**Lisää uusi tapahtuma**](API-dokumentaatio/events/post.md) : `POST /events`
-* [**Muokkaa tapahtumaa ID:n perusteella**](API-dokumentaatio/events/pk/put.md) : `PUT /events/{id}`
-* [**Poista tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/delete.md) : `DELETE /events/{id}`
+* [**Muokkaa tapahtumaa ID:n perusteella**](API-dokumentaatio/events/pk/put.md) : `PUT /event/{id}`
+* [**Poista tapahtuma ID:n perusteella**](API-dokumentaatio/events/pk/delete.md) : `DELETE /event/{id}`
 
 **Lipputyypit**
+
+* [**Näytä kaikki lipputyypit**](API-dokumentaatio/tickettypes/get.md) : `GET /tickettypes`
+* [**Näytä lipputyyppi ID:n perusteella**](API-dokumentaatio/tickettypes/pk/get.md) : `GET /tickettype/{id}`
+* [**Lisää uusi lipputyyppi**](API-dokumentaatio/tickettypes/post.md) : `POST /events`
+* [**Muokkaa lipputyyppiä ID:n perusteella**](API-dokumentaatio/tickettypes/pk/put.md) : `PUT /tickettype/{id}`
+* [**Poista lipputyyppi ID:n perusteella**](API-dokumentaatio/tickettypes/pk/delete.md) : `DELETE /tickettype/{id}`
 
 **Tapahtumapaikat**
 
