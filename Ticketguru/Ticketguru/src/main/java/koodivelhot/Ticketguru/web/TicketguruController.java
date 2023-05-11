@@ -61,7 +61,7 @@ public class TicketguruController {
 	TicketTypeRepository ttrepository;
 	
 	@Autowired
-	PrintedTicketRepository prrepository;
+	private PrintedTicketRepository prrepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -73,6 +73,8 @@ public class TicketguruController {
     public String login() {	
         return "login";
     }
+    
+
 	
 	//Tapahtuma
 	
