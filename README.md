@@ -110,8 +110,8 @@ Kuva 2. Tietokantakaavio
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
 | saleid      | int PK | Myyntitapahtuman id |
-| sale_date    | Date     |   Myyntitapahtuman päivämäärä |
-| sale_time | Time      |    Myyntitapahtuman kellonaika |
+| sale_date    | LocalDateTime     |   Myyntitapahtuman päivämäärä & kellonaika |
+| totelprice      | double      |   myyntitapahtuman kokonaishinta |
 | user_id      | int FK      |   Viittaus myyntitapahtuman myyjään käyttäjä-taulussa |
 
 ### Ennakkoliput
@@ -120,15 +120,19 @@ Kuva 2. Tietokantakaavio
 
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
-| preticketid      | int PK | Ennakkolipun id |
+| presaleticketid      | int PK | Ennakkolipun id |
 | tickettypeid    | int FK     |   Viittaus lipputyyppiin lipputyypit - taulussa |
 | saleid | intFK      |    Viittaus lipun myyntitapahtumaan myyntitapahtumat - taulussa |
 | eventid      | int FK      |   Viittaus tapahtumaan tapahtumat-taulussa |
 | used      | BOOLEAN      |   Arvo, joka kertoo, onko lippu käytetty |
+| price      | double      |   lipun hinta |
 | code      | varchar      |   Lipun yksilöivä koodi, jolla voidaan merkitä lippu käytetyksi. |
+| qrcodeImage      | byte[]      |   Lipulle luotava qr-koodi |
 
 ### Tulostettulippu
-*Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut liput kuuluuvain tapahtumaan. Tulostetulla lipulla ei ole lipputyyppiä, vaan toimii itsenäisesti, ja se sisältää hinnan ja myynti ajankohdan.
+Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut liput kuuluuvat tapahtumaan. Tulostetulla lipulla ei ole lipputyyppiä, vaan toimii itsenäisesti, ja se sisältää hinnan ja myyntiajankohdan. 
+
+*Huom.16.5.2023 demottavassa versiossa emme esittele toimintaa ennakkomyynnin jälkeisten lippujen tulostukseen liittyen. Tämä toiminto huomioidaan sovelluksen jatkokehittelyssä.*
 
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
@@ -144,9 +148,9 @@ Kuva 2. Tietokantakaavio
 
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
-| tickettypeid      | int PK | Lipputyypin id |
-| multiplier    | Double     |  Lipputyypin hintakerroin |
-| tickettype    | varchar    | Lipputyyppi |
+| type_id      | int PK | Lipputyypin id |
+| price    | Double     |  Lipputyypin hinta |
+| type    | varchar    | Lipputyyppi |
 
 ### Postinumero
 *Postinumerot-taulu sisältää postinumerot, sekä niiden kaupungit*
@@ -166,6 +170,8 @@ Kuva 2. Tietokantakaavio
 | venue_id     | int PK | Tapahtumapaikka ID |
 | venueName    | varchar     |   Tapahtumapaikan nimi |
 | areaCode | varchar FK     |    Tapahtumapaikan postinumero |
+| description | varchar FK     |    Tapahtumapaikan kuvaus |
+| address | varchar     |    Tapahtumapaikan osoite |
 
 ### Tapahtumat
 *Tapahtumat-taulu sisältää tapahtumat*
@@ -178,7 +184,8 @@ Kuva 2. Tietokantakaavio
 | eventStartDate | Date    |    Tapahtuman aloitus päivämärää ja aika |
 | eventEndDate | Date    |    Tapahtuman lopetus päivämärää ja aika |
 | ticketAmount | int    |    Kuinka monta lippua tapahtumaan on myynnissä |
-| ticketPrice | Double    |    Kuinka paljon tapahtuman lippu maksaa |
+| soldTickets | int    |    Kuinka monta lippua tapahtumaan on myyty |
+| ticketPrice | Double    |    Kuinka paljon tapahtuman lippu maksaa, tosin hinta muodostuu myyntitapahtumaan lipputyypin mukaan |
 | description | varchar    |    Tapahtuman kuvaus |
 | presaleStarts | Date    |    Lippujen ennakkomyynti alkaa |
 | presaleEnds | Date    |    Lippujen ennakkomyynti päättyy |
@@ -190,16 +197,16 @@ Kuva 2. Tietokantakaavio
 
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
-| user_id      | int PK | käyttäjän id |
-| role_id      | int FK      |   käyttäjärooli id, viittaus käyttäjäroolitauluun |
+| userid      | int PK | käyttäjän id |
+| role      | int FK      |   käyttäjärooli id, viittaus käyttäjäroolitauluun |
 | first name | varchar      |    etunimi |
 | last name      | varchar      |   sukunimi |
 | username      |    varchar |käyttäjätunnus|
-| password      | varchar      |   salasana|
+| passwordHash      | varchar      |   salasana|
 
 | Kenttä        | Tyyppi           | Kuvaus  |
 | ------------- |:-------------:| -----:|
-| role_id      | int PK | käyttäjärooli id |
+| roleid      | int PK | käyttäjärooli id |
 | role      | varchar      |   roolin kuvaus |
 | rights | varchar      |    kuvaus oikeuksista |
 
@@ -252,9 +259,13 @@ Tapahtumien käsittelyyn liittyvät endpointit
 Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä**](API-dokumentaatio/users/CRUD.md).
 
 ## Testaus
-*Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa. Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan erillisiin dokumentteihin.*
+*Ohjelmiston oikea toiminta on varmistettu testaamalla projektin aikana eri tasoisilla testeillä: JUnit-yksikkötestejä käytetty luokkien testaukseen, palvelun ohjelmointirajapintojen kautta on testattu palvelun osien yhteistoimintaa (API-testaus) sekä käyttöliittymän testausta (UI-testaus). Testauksen tarkempia sisältöjä ja testisuoritusten tuloksia:*
+- repository testauksissa varmistuttiin siitä, että tieto kulkeutuu halutulla tavalla luokkien ja repositorien välillä ja että tieto on repositoreista saatavilla toivotuilla hakukriteereillä. 
+- application testeillä myös tarkistettiin, että tieto luokista tallentuu repositoreihin
+- weblayer testeillä varmistetiin sisäänkirjautumisen toiminto clientin puolella. 
 
-*Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.*
+*Järjestelmän tunnetut ongelmat, joita ei ole korjattu:*
+- Ennakkomyynnin jälkeen tulostettavien lippujen tulostustoimintoa ei ole testattu vielä tässä versiossa. 
 
 ## Asennustiedot
 
@@ -280,6 +291,10 @@ Kehitysympäristön käyttäminen H2-tietokannalla:
 *Asennusohjeesta tulisi ainakin käydä ilmi, miten käytettävä tietokanta ja käyttäjät tulee ohjelmistoa asentaessa määritellä (käytettävä tietokanta, käyttäjätunnus, salasana, tietokannan luonti yms.).*
 
 ## Käynnistys- ja käyttöohje
-*Tyypillisesti tässä riittää kertoa ohjelman käynnistykseen tarvittava URL sekä mahdolliset kirjautumiseen tarvittavat tunnukset. Jos järjestelmän käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimintajärjestykseen liittyviä asioita, nekin kerrotaan tässä yhteydessä.*
+Ohjelman käynnistykseen tarvittava URL sekä kirjautumiseen tarvittava tunnus ja salasana:
 
-*Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat järjestelmän pariin !*
+**vra-vraro2.azurewebsites.net**
+
+ADMIN
+- Username: usernameAnna
+- Password: password
