@@ -2,6 +2,7 @@ package koodivelhot.Ticketguru.Domain;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -151,8 +152,8 @@ public class PreSaleTicket {
 		this.tickettype = tickettype;
 	}
 
-	public byte[] getQrCodeImage() {
-		return qrCodeImage;
+	public String getQrCodeImage() {
+		return Base64.getEncoder().encodeToString(qrCodeImage);
 	}
 
 	//generoi qr-koodin

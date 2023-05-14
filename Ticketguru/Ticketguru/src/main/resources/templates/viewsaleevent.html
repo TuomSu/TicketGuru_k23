@@ -33,6 +33,9 @@
 		  padding: 8px;
 		  border: 1px solid #ddd;
 		}
+		.qr-code-image {
+		  image-rendering: pixelated;
+		}
     </style>
 </head>
 <body>
@@ -60,6 +63,8 @@
                 <th>Lippu</th>
                 <th>Hinta</th>
                 <th>Tapahtuma</th>
+                <th>Koodi</th>
+                <th>QR-koodi</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +72,8 @@
                 <td th:text="${ticket.tickettype.type}"></td>
                 <td th:text="${ticket.price} + ' €'"></td>
                 <td th:text="${ticket.event.eventName}"></td>
+                <td th:text="${ticket.code}"></td>
+                <td class="qr-code-image"><img th:src="'data:image/png;base64,' + ${ticket.qrCodeImage}" width="100" height="100" /></td>
             </tr>
         </tbody>
     </table>
