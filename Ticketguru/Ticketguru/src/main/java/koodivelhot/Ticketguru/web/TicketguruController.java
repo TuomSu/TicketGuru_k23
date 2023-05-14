@@ -6,13 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -103,6 +98,7 @@ public class TicketguruController {
 	// REST, add new event
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/events", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tapahtuma luotu")
 	public @ResponseBody Event newEvent(@RequestBody Event newEvent) {
 		return erepository.save(newEvent);
 	}
@@ -161,7 +157,13 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Venue> findVenueRest(@PathVariable("id") Long venue_id) {
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		if (venue.isPresent()) {
 		return vrepository.findById(venue_id);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+		}
 	}
 	
 	// REST, add new venue
@@ -213,7 +215,13 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<AreaCode> findAreaCodeRest(@PathVariable("id") String areaCode) {
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		
+		if (acode.isPresent()) {
 		return acrepository.findByAreaCode(areaCode);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");
+		}
 	}
 	
 	// REST, add new areacode
