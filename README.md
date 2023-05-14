@@ -211,13 +211,10 @@ Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut
 | rights | varchar      |    kuvaus oikeuksista |
 
 ## Tekninen kuvaus
-*Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset ratkaisut, esim.*
 
-* Missä mikäkin järjestelmän komponentti ajetaan (tietokone, palvelinohjelma) ja komponenttien väliset yhteydet (vaikkapa tähän tyyliin: https://security.ufl.edu/it-workers/risk-assessment/creating-an-information-systemdata-flow-diagram/)
+### Toteutuksen yleiskuvaus
 
-### Palvelintoteutuksen yleiskuvaus
-
-teknologiat, deployment-ratkaisut yms.
+Järjestelmän back end eli palveinpuoli on toteutettu Java Spring Boot sovelluskehystä käyttäen Maven-projektina. Ohjelmointiympäristönä on toiminut Eclipse IDE for Java EE, joka soveltuu hyvin Javan kehitysympäristöksi. Järjestelmän tietokanta on toteutettu MariaDB:n avulla, mutta järjestelmää voi käyttää myös H2-tietokannan avulla. Sovellus on julkaista Azuren pilvipalvelussa. Käyttäliittymä on tehty Thymeleafilla.
 
 ### REST API -rajapinta
 
@@ -243,7 +240,19 @@ Tapahtumien käsittelyyn liittyvät endpointit
 
 **Tapahtumapaikat**
 
-**Postikoodit**
+* [**Näytä kaikki tapahtumapaikat**](API-dokumentaatio/venues/get.md) : `GET /venues`
+* [**Näytä tapahtumapaikka ID:n perusteella**](API-dokumentaatio/venues/pk/get.md) : `GET /venue/{id}`
+* [**Lisää uusi tapahtumapaikka**](API-dokumentaatio/venues/post.md) : `POST /venues`
+* [**Muokkaa tapahtumapaikkaa ID:n perusteella**](API-dokumentaatio/venues/pk/put.md) : `PUT /venues/{id}`
+* [**Poista tapahtumapaikka ID:n perusteella**](API-dokumentaatio/venues/pk/delete.md) : `DELETE /venue/{id}`
+
+**Postinumerot**
+
+* [**Näytä kaikki postinumerot**](API-dokumentaatio/areacodes/get.md) : `GET /areacodes`
+* [**Näytä postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/get.md) : `GET /areacode/{id}`
+* [**Lisää uusi postinumero**](API-dokumentaatio/areacodes/post.md) : `POST /areacodes`
+* [**Muokkaa postinumeroa ID:n perusteella**](API-dokumentaatio/areacodes/pk/put.md) : `PUT /areacode/{id}`
+* [**Poista postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/delete.md) : `DELETE /areacode/{id}`
 
 **Ennakkoliput**
 
@@ -253,6 +262,12 @@ Tapahtumien käsittelyyn liittyvät endpointit
 * [**Merkitse ennakkolippu käytetyksi koodin perusteella**](API-dokumentaatio/presaletickets/get.md) : `PATCH /presaletickets?code={code}`
 
 **Myyntitapahtumat**
+
+* [**Näytä kaikki myyntitapahtumat**](API-dokumentaatio/saleevents/get.md) : `GET /saleEvents`
+* [**Näytä myyntitapahtuma ID:n perusteella**](API-dokumentaatio/saleevents/pk/get.md) : `GET /saleEvent/{id}`
+* [**Lisää uusi myyntitapahtuma**](API-dokumentaatio/saleevents/post.md) : `POST /saleEvents`
+* [**Muokkaa myyntitapahtumaa ID:n perusteella**](API-dokumentaatio/saleevents/pk/put.md) : `PUT /saleEvent/{id}`
+* [**Poista myyntitapahtuma ID:n perusteella**](API-dokumentaatio/saleevents/pk/delete.md) : `DELETE /saleEvent/{id}`
 
 **Käyttäjät**
 
