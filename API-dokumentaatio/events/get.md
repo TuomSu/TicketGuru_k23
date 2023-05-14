@@ -8,7 +8,7 @@ Näyttää kaikki sovellukseen lisätyt tapahtumat
 
 **Kirjautuminen vaaditaan** : Kyllä
 
-**Permissions required** : None
+**Vaaditut oikeudet** : Admin tai basic käyttöoikeudet
 
 **Data constraints** : `{}`
 
@@ -24,35 +24,55 @@ Näyttää kaikki sovellukseen lisätyt tapahtumat
 
 **Ehdot** : Sovellukseen on lisätty yksi tai useampia tapahtumia
 
-**Code** : `200 OK`
+**Koodi** : `200 OK`
 
-**Content** : Tässä esimerkissä sovellukseen on lisätty kaksi tapahtumaa, jotka listataan käyttäjälle
+**Esimerkkisisältö** :
 
 ```json
 [
-    "event": {
-        "id": 1,
-        "eventName": "HEDBERG ON THE ROAD - STAND UP KIERTUE 2023",
-        "eventStartDate": 2023-03-16,
-        "eventEndDate": 2023-03-16,
-        "ticketAmount": 500,
-        "ticketPrice": 35,
-        "description": "Hedberg On the Road starttaa torstaina 16.3.2023. Kevään hauskimmalla kiertueella nautitaan Samin käsikirjoittamista nauruhermoja kutkuttavista tarinoista, mielikuvituksen synnyttämistä hahmoista sekä improvisaatiosta.",
-        "presaleStarts": 2023-01-01,
-        "presaleEnds": 2023-03-15,
-        "venue": "Apollo Live Club"
+    {
+        "event_id": 1,
+        "eventName": "Testitapahtuma",
+        "eventStartDate": "11.12.2023 12:00",
+        "eventEndDate": "11.12.2023 23:00",
+        "ticketAmount": 10,
+        "soldTickets": 0,
+        "ticketPrice": 15.5,
+        "description": "Tapahtuma testaa tapahtuman toimintaa",
+        "presaleStarts": "01.10.2023 01:00",
+        "presaleEnds": "10.12.2023 23:00",
+        "venue": {
+            "venue_id": 1,
+            "venueName": "Testipaikka",
+            "description": "Testi",
+            "address": "Testikuja 2",
+            "areaCode": {
+                "areaCode": "00000",
+                "city": "Testikaupunki"
+            }
+        }
     },
-    "event": {
-        "id": 2,
-        "eventName": "Patti Smith (USA) and band",
-        "eventStartDate": 2023-05-15,
-        "eventEndDate": 2023-05-15,
-        "ticketAmount": 1500,
-        "ticketPrice": 58,
-        "description": "Patti Smith yhtyeineen saapuu Suomeen",
-        "presaleStarts": 2023-02-01,
-        "presaleEnds": 2023-05-01,
-        "venue": "Kulttuuritalo"
-    },
+    {
+        "event_id": 2,
+        "eventName": "Kokeilutapahtuma",
+        "eventStartDate": "11.12.2023 12:00",
+        "eventEndDate": "11.12.2023 23:00",
+        "ticketAmount": 10,
+        "soldTickets": 0,
+        "ticketPrice": 15.5,
+        "description": "Tapahtuma kokeilee tapahtuman toimintaa",
+        "presaleStarts": "01.10.2023 01:00",
+        "presaleEnds": "10.12.2023 23:00",
+        "venue": {
+            "venue_id": 1,
+            "venueName": "Testipaikka",
+            "description": "Testi",
+            "address": "Testikuja 2",
+            "areaCode": {
+                "areaCode": "00000",
+                "city": "Testikaupunki"
+            }
+        }
+    }
 ]
 ```
