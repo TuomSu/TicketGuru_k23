@@ -1,10 +1,10 @@
-# Tapahtumapaikan poistaminen
+# Postinumeron poistaminen
 
-Yksittäisen tapahtumapaikan poistaminen sovelluksesta
+Yksittäisen postinumeron poistaminen sovelluksesta
 
-**URL** : `/venue/{id}`
+**URL** : `/{areaCode}`
 
-**URL Parametrit** : `{id}` jossa id on lipputyypin yksilöivä tunnus
+**URL Parametrit** : `{areaCode}` jossa areaCode on postinumero
 
 **Metodi** : `DELETE`
 
@@ -14,32 +14,26 @@ Yksittäisen tapahtumapaikan poistaminen sovelluksesta
 
 ## Onnistuneen pyynnön vastauskoodi
 
-**Ehdot** : Annetun parametrin mukainen tapahtumapaikka on olemassa eikä tapahtumapaikkaa ei ole liitetty mihinkään tapahtumaan.
+**Ehdot** : Annetun parametrin mukainen postinumeto on olemassa eikä sitä ei ole liitetty mihinkään tapahtumapaikkaan.
 
 **Koodi** : `200 OK`
 
 **Sisältö** : 
 
-Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäljellä olevista tapahtumapaikoista.
+Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäljellä olevista postinumeroista.
 
 ```json
 [
     {
-        "venue_id": 1,
-        "venueName": "Testipaikka",
-        "description": "Testi",
-        "address": "Testikuja 2",
-        "areaCode": {
-            "areaCode": "00000",
-            "city": "Testikaupunki"
-        }
+        "areaCode": "00000",
+        "city": "Testikaupunki"
     }
 ]
 ```
 
 ## Virhekoodit
 
-**Ehdot** : Jos annetulla parametrilla ei löytynyt tapahtumapaikkaa, jonka voisi poistaa
+**Ehdot** : Jos annetulla parametrilla ei löytynyt postinumeroa, jonka voisi poistaa
 
 **Koodi** : `404 NOT FOUND`
 
@@ -47,7 +41,7 @@ Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäl
 
 ```json
 {
-    "message" : "Tapahtumapaikkaa ei löytynyt annetulla id:llä"
+    "message" : "Annettua postinumeroa ei löytynyt"
 }
 ```
 

@@ -1,20 +1,20 @@
-# Näytä yksittäinen tapahtumapaikka
+# Näytä yksittäinen postinumero
 
-Hakee yksittäisen tapahtumapaikan id:n perusteella
+Hakee yksittäisen postinumeron
 
-**URL** : `/venue/{id}`
+**URL** : `/{areaCode}`
 
-**URL Parametrit** : `{id}` jossa id on tapahtumapaikan yksilöivä tunnus
+**URL Parametrit** : `{areaCode}` jossa areaCode on postinumero
 
 **Method** : `GET`
 
 **Kirjautuminen vaaditaan** : Kyllä
 
-**Vaaditut oikeudet** : Käyttäjällä on admin tai basic oikeudet
+**Vaaditut oikeudet** : Käyttäjällä on admin oikeudet
 
 ## Onnistuneen pyynnön vastaus
 
-**Ehdot** : Jos tapahtumapaikka on olemassa ja käyttäjällä on oikeudet tarkastella tapahtumapaikkoja
+**Ehdot** : Jos postinumero on olemassa ja käyttäjällä on oikeudet tarkastella postinumeroita
 
 **Koodi** : `200 OK`
 
@@ -22,20 +22,14 @@ Hakee yksittäisen tapahtumapaikan id:n perusteella
 
 ```json
 {
-    "venue_id": 1,
-    "venueName": "Testipaikka",
-    "description": "Testi",
-    "address": "Testikuja 2",
-    "areaCode": {
         "areaCode": "00000",
         "city": "Testikaupunki"
-    }
 }
 ```
 
 ## Virhekoodit
 
-**Ehdot** : Jos tapahtumapaikka ei löydy annetulla id - paramterilla
+**Ehdot** : Jos postinumeroa ei löydy annetulla paramterilla
 
 **Koodi** : `404 NOT FOUND`
 
@@ -43,6 +37,6 @@ Hakee yksittäisen tapahtumapaikan id:n perusteella
 
 ```json
 {
-    "message" : "Tapahtumapaikkaa ei löytynyt annetulla id:llä"
+    "message" : "Annettua postinumeroa ei löytynyt"
 }
 ```

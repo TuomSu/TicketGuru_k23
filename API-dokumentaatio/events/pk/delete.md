@@ -18,7 +18,7 @@ Yksittäisen tapahtuman poistaminen sovelluksesta
 
 **Ehdot** : Annetun parametrin mukainen tapahtuma on olemassa
 
-**Koodi** : `204 NO CONTENT`
+**Koodi** : `200 OK`
 
 **Sisältö** : `{}`
 
@@ -28,15 +28,3 @@ Yksittäisen tapahtuman poistaminen sovelluksesta
 
 **Koodi** : `404 NOT FOUND`
 
-**Content** : `{}`
-
-### Tai
-
-**Ehdot** : Käyttäjällä ei ole oikeuksia poistaa tapahtumia
-
-**Code** : `403 FORBIDDEN`
-
-**Content** : 
-```json
-{"detail": "Sinulla ei ole oikeuksia suorittaa tätä toimenpidettä."}
-```

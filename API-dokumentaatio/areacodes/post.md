@@ -2,7 +2,7 @@
 
 Postinumeron luominen
 
-**URL** : `/tickettypes/`
+**URL** : `/acodes/`
 
 **Metodi** : `POST`
 
@@ -12,18 +12,18 @@ Postinumeron luominen
 
 **Rajoitukset**
 
-Lipputyypille tulee määritellä hinta ja nimi. Ilman niitä tiedon tallentaminen ei onnistu.
+Postinumerolle tulee antaa postinumero ja kaupunki.
 
 ```json
-{
-    "price" : "double",
-    "name" : "String"
-}
+ {
+        "areaCode": "00200",
+        "city": "Helsinki"
+ }
 ```
 
 ## Onnistuneen pyynnön vastaus
 
-**Ehdot** : Kaikki tarvittavat tiedot on annettu ja data on oikean muotoista. Käyttäjällä on oikeus luoda lipputyyppejä.
+**Ehdot** : Kaikki tarvittavat tiedot on annettu ja data on oikean muotoista. Käyttäjällä on oikeus luoda postinumeroita.
 
 **Koodi** : `201 CREATED`
 
@@ -40,11 +40,3 @@ Lipputyypille tulee määritellä hinta ja nimi. Ilman niitä tiedon tallentamin
 **Ehdot** : Jos kaikkia tarvittavia kenttiä ei ole täytetty
 
 **Koodi** : `400 BAD REQUEST`
-
-**Esimerkki sisällöstä**
-
-```json
-{
-    Mitä tulee vastaukseksi?
-}
-```

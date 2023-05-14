@@ -56,13 +56,3 @@ Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
 **Ehdot** : Jos kaikkia tarvittavia kenttiä ei ole täytetty
 
 **Koodi** : `400 BAD REQUEST`
-
-**Esimerkki sisällöstä**
-
-```json
-{
-    "eventName": [
-        "Tämä kenttä vaaditaan"
-    ]
-}
-```

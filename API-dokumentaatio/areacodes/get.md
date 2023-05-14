@@ -2,7 +2,7 @@
 
 Näyttää kaikki sovellukseen lisätyt postinumerot
 
-**URL** : `/venues/`
+**URL** : `/acodes/`
 
 **Metodi** : `GET`
 
@@ -28,6 +28,9 @@ Näyttää kaikki sovellukseen lisätyt postinumerot
 
 ```json
 [
-    Listaus kaikista postinumeroista
+    {
+        "areaCode": "00000",
+        "city": "Testikaupunki"
+    }
 ]
 ```

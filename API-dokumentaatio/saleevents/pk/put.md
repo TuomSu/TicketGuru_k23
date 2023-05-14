@@ -1,10 +1,10 @@
-# Muokkaa tapahtumapaikkaa
+# Muokkaa myyntitapahtumaa
 
-Yksittäisen tapahtumapaikan muokkaaminen
+Yksittäisen myyntitapahtuman muokkaaminen
 
-**URL** : `/venue/{id}`
+**URL** : `/saleEvent/{id}`
 
-**URL Parametrit** : `{id}` jossa id on tapahtumapaikan yksilöivä tunnus
+**URL Parametrit** : `{id}` jossa id on myyntitapahtuman yksilöivä tunnus
 
 **Metodi** : `PUT`
 
@@ -14,16 +14,22 @@ Yksittäisen tapahtumapaikan muokkaaminen
 
 **Rajoitukset**
 
-Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä tiedon tallentaminen ei onnistu.
+Myyntitapahtumalle tulee määritellä myyntipäivä ja käyttäjä. Ilman niitä tiedon tallentaminen ei onnistu.
 
 ```json
 {
-    "venueName": "Tavastia",
-    "description": "Ikoninen keikkapaikka",
-    "address": "Testikuja 3",
-    "areaCode": {
-        "areaCode": "00000",
-        "city": "Testikaupunki"
+    "saledate": "2023-03-13T16:05:00",
+    "user": {
+        "userid": 1,
+        "role": {
+            "roleid": 1,
+            "role": "admin",
+            "rights": "all rights"
+        },
+        "firstName": "Anna",
+        "lastName": "Anttonen",
+        "username": "usernameAnna",
+        "password": "password"
     }
 }
 ```
@@ -38,20 +44,27 @@ Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä t
 
 ```json
 {
-    "venue_id": "2",
-    "venueName": "Tavastia",
-    "description": "Ikoninen keikkapaikka",
-    "address": "Testikuja 5",
-    "areaCode": {
-        "areaCode": "00000",
-        "city": "Testikaupunki"
-    }
+    "saleid": 2,
+    "saledate": "2023-03-13T16:05:00",
+    "totalprice": 350,
+    "user": {
+        "userid": 1,
+        "role": {
+            "roleid": 1,
+            "role": "admin",
+            "rights": "all rights"
+        },
+        "firstName": "Anna",
+        "lastName": "Anttonen",
+        "username": "usernameAnna"
+    },
+    "presaletickets": []
 }
 ```
 
 ## Virhekoodi
 
-**Ehto** : Kutsussa annetulla id:llä ei löydy tapahtumapaikkaa
+**Ehto** : Kutsussa annetulla id:llä ei löydy myyntitapahtumaa
 
 **Koodi** : `404 NOT FOUND`
 
@@ -59,7 +72,7 @@ Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä t
 
 ```json
 {
-    "message" : "Tapahtumapaikkaa ei löytynyt annetulla id:llä"
+    "message" : "Myyntitapahtumaa ei löytynyt annetulla id:llä"
 }
 ```
 

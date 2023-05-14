@@ -1,10 +1,10 @@
-# Tapahtumapaikan poistaminen
+# Myyntitapahtuman poistaminen
 
-Yksittäisen tapahtumapaikan poistaminen sovelluksesta
+Yksittäisen myyntitapahtuman poistaminen sovelluksesta
 
-**URL** : `/venue/{id}`
+**URL** : `/saleEvent/{id}`
 
-**URL Parametrit** : `{id}` jossa id on lipputyypin yksilöivä tunnus
+**URL Parametrit** : `{id}` jossa id on myyntitapahtuman yksilöivä tunnus
 
 **Metodi** : `DELETE`
 
@@ -14,32 +14,39 @@ Yksittäisen tapahtumapaikan poistaminen sovelluksesta
 
 ## Onnistuneen pyynnön vastauskoodi
 
-**Ehdot** : Annetun parametrin mukainen tapahtumapaikka on olemassa eikä tapahtumapaikkaa ei ole liitetty mihinkään tapahtumaan.
+**Ehdot** : Annetun parametrin mukainen myyntitapahtuma on olemassa.
 
 **Koodi** : `200 OK`
 
 **Sisältö** : 
 
-Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäljellä olevista tapahtumapaikoista.
+Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäljellä olevista myyntitapahtumista.
 
 ```json
 [
     {
-        "venue_id": 1,
-        "venueName": "Testipaikka",
-        "description": "Testi",
-        "address": "Testikuja 2",
-        "areaCode": {
-            "areaCode": "00000",
-            "city": "Testikaupunki"
-        }
+        "saleid": 2,
+        "saledate": "2023-03-13T16:05:00",
+        "totalprice": 300,
+        "user": {
+            "userid": 1,
+            "role": {
+                "roleid": 1,
+                "role": "admin",
+                "rights": "all rights"
+            },
+            "firstName": "Anna",
+            "lastName": "Anttonen",
+            "username": "usernameAnna"
+        },
+        "presaletickets": []
     }
 ]
 ```
 
 ## Virhekoodit
 
-**Ehdot** : Jos annetulla parametrilla ei löytynyt tapahtumapaikkaa, jonka voisi poistaa
+**Ehdot** : Jos annetulla parametrilla ei löytynyt myyntitapahtumaa, jonka voisi poistaa
 
 **Koodi** : `404 NOT FOUND`
 
@@ -47,7 +54,7 @@ Onnistuneen poistamisen jälkeen palautetaan listaus kaikista tietokannassa jäl
 
 ```json
 {
-    "message" : "Tapahtumapaikkaa ei löytynyt annetulla id:llä"
+    "message" : "Myyntitapahtumaa ei löytynyt annetulla id:llä"
 }
 ```
 
