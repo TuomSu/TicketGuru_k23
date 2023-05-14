@@ -8,23 +8,31 @@ Luo tapahtuma
 
 **Kirjautuminen vaaditaan** : Kyllä
 
-**Vaaditut oikeudet** : Käyttäjällä on oikeus luoda tapahtumia
+**Vaaditut oikeudet** : Käyttäjällä täytyy olla admin-oikeudet
 
-**Rajoitukset**
-
-Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
+**Esimerkkipyyntö**
 
 ```json
 {
-    "eventName": String,
-    "eventStartDate": DATE,
-    "eventEndDate": DATE,
-    "ticketAmount": int,
-    "ticketPrice": double,
-    "description": String,
-    "presaleStarts": DATE,
-    "presaleEnds": DATE,
-    "venue": String
+    "eventName": "Testitapahtuma",
+    "eventStartDate": "11.12.2023 12:00",
+    "eventEndDate": "11.12.2023 23:00",
+    "ticketAmount": 10,
+    "soldTickets": 0,
+    "ticketPrice": 15.5,
+    "description": "Tapahtuma testaa tapahtuman toimintaa",
+    "presaleStarts": "01.10.2023 01:00",
+    "presaleEnds": "10.12.2023 23:00",
+    "venue": {
+        "venue_id": 1,
+        "venueName": "Testipaikka",
+        "description": "Testi",
+        "address": "Testikuja 2",
+        "areaCode": {
+            "areaCode": "00000",
+            "city": "Testikaupunki"
+        }
+    }
 }
 ```
 
@@ -38,17 +46,26 @@ Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
 
 ```json
 {
-    "id": 2,
-    "eventName": "Patti Smith (USA) and band",
-    "eventStartDate": 2023-05-15,
-    "eventEndDate": 2023-05-15,
-    "ticketAmount": 1500,
-    "ticketPrice": 58,
-    "description": "Patti Smith yhtyeineen saapuu Suomeen",
-    "presaleStarts": 2023-02-01,
-    "presaleEnds": 2023-05-01,
-    "venue": "Kulttuuritalo"
-}
+        "event_id": 1,
+        "eventName": "Testitapahtuma",
+        "eventStartDate": "11.12.2023 12:00",
+        "eventEndDate": "11.12.2023 23:00",
+        "ticketAmount": 10,
+        "soldTickets": 0,
+        "ticketPrice": 15.5,
+        "description": "Tapahtuma testaa tapahtuman toimintaa",
+        "presaleStarts": "01.10.2023 01:00",
+        "presaleEnds": "10.12.2023 23:00",
+        "venue": {
+            "venue_id": 1,
+            "venueName": "Testipaikka",
+            "description": "Testi",
+            "address": "Testikuja 2",
+            "areaCode": {
+                "areaCode": "00000",
+                "city": "Testikaupunki"
+            }
+        }
 ```
 
 ## Virhekoodit
