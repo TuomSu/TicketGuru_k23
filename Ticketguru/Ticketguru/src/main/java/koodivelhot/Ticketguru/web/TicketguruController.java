@@ -206,6 +206,7 @@ public class TicketguruController {
 	// REST, add new areacode
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/acodes", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Postinumero lisätty")
 	public @ResponseBody AreaCode newAreaCode(@RequestBody AreaCode newAreaCode) {
 		return acrepository.save(newAreaCode);
 	}
@@ -214,17 +215,31 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public @ResponseBody AreaCode editAreaCode(@RequestBody AreaCode editedAreaCode, @PathVariable("id") String areaCode) {
-		editedAreaCode.setAreaCode(areaCode);
-		return acrepository.save(editedAreaCode);
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		if (acode.isPresent()) {
+			editedAreaCode.setAreaCode(areaCode);
+			return acrepository.save(editedAreaCode);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");	
+		}
+		
+		
+		
 	}
 	
 	//rest, delete by id and show updated list of areacodes
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AreaCode> deleteAreaCode(@PathVariable("id") String areaCode) {
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		if (acode.isPresent()) {
 		acrepository.deleteById(areaCode);
 		return (List<AreaCode>) acrepository.findAll();
+		} else {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");	
+		}
 	}
+	
 	// Lipputyypit
 	
 	// REST, get all tickettypes
