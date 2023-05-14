@@ -1,6 +1,6 @@
-# Luo lipputyyppi
+# Luo postinumero
 
-Lipputyypin luominen
+Postinumeron luominen
 
 **URL** : `/tickettypes/`
 
