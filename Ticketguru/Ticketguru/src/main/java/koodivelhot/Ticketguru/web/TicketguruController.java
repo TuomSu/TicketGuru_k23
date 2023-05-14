@@ -175,16 +175,29 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Venue editVenue(@RequestBody Venue editedVenue, @PathVariable("id") Long venue_id) {
-		editedVenue.setVenue_id(venue_id);
-		return vrepository.save(editedVenue);
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		
+			if (venue.isPresent()) {
+			editedVenue.setVenue_id(venue_id);
+			return vrepository.save(editedVenue);
+			} else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+			} 
 	}
 	
 	//rest, delete by id and show updated list of venues
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<Venue> deleteVenue(@PathVariable("id") Long venue_id) {
-		vrepository.deleteById(venue_id);
-		return (List<Venue>) vrepository.findAll();
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		if (venue.isPresent()) {
+			vrepository.deleteById(venue_id);
+			return (List<Venue>) vrepository.findAll();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+		} 
 	}
 	
 	//Kaupunki
@@ -232,11 +245,13 @@ public class TicketguruController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AreaCode> deleteAreaCode(@PathVariable("id") String areaCode) {
 		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		
 		if (acode.isPresent()) {
-		acrepository.deleteById(areaCode);
-		return (List<AreaCode>) acrepository.findAll();
+			acrepository.deleteById(areaCode);
+			return (List<AreaCode>) acrepository.findAll();
+			
 		} else {
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");	
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");
 		}
 	}
 	
