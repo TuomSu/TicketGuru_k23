@@ -59,15 +59,10 @@ Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
 
 **Koodi** : `404 NOT FOUND`
 
-**Sisältö** : `{}`
+**Sisältö** :
 
-### Tai
-
-**Ehdot** : Käyttäjällä ei ole oikeus muokata tapahtumia
-
-**Koodi** : `403 FORBIDDEN`
-
-**Sisältö** : 
 ```json
-{"detail": "Sinulla ei ole oikeuksia suorittaa tätä toimenpidettä."}
+{
+    "message" : "Tapahtumaa ei löytynyt annetulla id:llä"
+}
 ```

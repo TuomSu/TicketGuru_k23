@@ -1,10 +1,10 @@
-# Muokkaa tapahtumapaikkaa
+# Muokkaa postinumeroa
 
-Yksittäisen tapahtumapaikan muokkaaminen
+Yksittäisen postinumeron muokkaaminen
 
-**URL** : `/venue/{id}`
+**URL** : `/{areaCode}`
 
-**URL Parametrit** : `{id}` jossa id on tapahtumapaikan yksilöivä tunnus
+**URL Parametrit** : `{areaCode}` jossa areaCode on postinumero
 
 **Metodi** : `PUT`
 
@@ -14,17 +14,11 @@ Yksittäisen tapahtumapaikan muokkaaminen
 
 **Rajoitukset**
 
-Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä tiedon tallentaminen ei onnistu.
+Postinumerolle tulee antaa kaupunki. Vain kaupunkia voi muokata.
 
 ```json
 {
-    "venueName": "Tavastia",
-    "description": "Ikoninen keikkapaikka",
-    "address": "Testikuja 3",
-    "areaCode": {
-        "areaCode": "00000",
-        "city": "Testikaupunki"
-    }
+        "city": "Helsinki"
 }
 ```
 
@@ -38,20 +32,14 @@ Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä t
 
 ```json
 {
-    "venue_id": "2",
-    "venueName": "Tavastia",
-    "description": "Ikoninen keikkapaikka",
-    "address": "Testikuja 5",
-    "areaCode": {
-        "areaCode": "00000",
-        "city": "Testikaupunki"
-    }
+    "areaCode": "00000",
+    "city": "Helsinki"
 }
 ```
 
 ## Virhekoodi
 
-**Ehto** : Kutsussa annetulla id:llä ei löydy tapahtumapaikkaa
+**Ehto** : Kutsussa annettua postinumeroa ei löydy
 
 **Koodi** : `404 NOT FOUND`
 
@@ -59,7 +47,7 @@ Tapahtumapaikalle tulee määritellä nimi, osoite ja postikoodi. Ilman niitä t
 
 ```json
 {
-    "message" : "Tapahtumapaikkaa ei löytynyt annetulla id:llä"
+    "message" : "Annettua postinumeroa ei löytynyt"
 }
 ```
 

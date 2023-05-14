@@ -1,29 +1,40 @@
-# Luo lipputyyppi
+# Luo myyntitapahtuma
 
-Lipputyypin luominen
+Myyntitapahtuman luominen
 
-**URL** : `/tickettypes/`
+**URL** : `/saleEvents/`
 
 **Metodi** : `POST`
 
 **Kirjautuminen vaaditaan** : Kyllä
 
-**Vaaditut oikeudet** : Käyttäjällä on admin-käyttöoikeudet
+**Vaaditut oikeudet** : Käyttäjällä on admin- tai basic käyttöoikeudet
 
 **Rajoitukset**
 
-Lipputyypille tulee määritellä hinta ja nimi. Ilman niitä tiedon tallentaminen ei onnistu.
+Myyntiapahtumalle tulee määritellä myyntipäivä ja myynnin tehnyt käyttäjä. Ilman niitä tiedon tallentaminen ei onnistu.
 
 ```json
 {
-    "price" : "double",
-    "name" : "String"
-}
+        "saledate": "2023-03-13T16:05:00",
+        "user": {
+            "userid": 1,
+            "role": {
+                "roleid": 1,
+                "role": "admin",
+                "rights": "all rights"
+            },
+            "firstName": "Anna",
+            "lastName": "Anttonen",
+            "username": "usernameAnna",
+            "password": "password"
+        }
+    }
 ```
 
 ## Onnistuneen pyynnön vastaus
 
-**Ehdot** : Kaikki tarvittavat tiedot on annettu ja data on oikean muotoista. Käyttäjällä on oikeus luoda lipputyyppejä.
+**Ehdot** : Kaikki tarvittavat tiedot on annettu ja data on oikean muotoista. Käyttäjällä on oikeus luoda myyntitapahtumia.
 
 **Koodi** : `201 CREATED`
 
@@ -31,7 +42,7 @@ Lipputyypille tulee määritellä hinta ja nimi. Ilman niitä tiedon tallentamin
 
 ```json
 {
-    "message": "Lipputyyppi luotu",
+    "message": "Myyntitapahtuma luotu",
 }
 ```
 
@@ -40,11 +51,3 @@ Lipputyypille tulee määritellä hinta ja nimi. Ilman niitä tiedon tallentamin
 **Ehdot** : Jos kaikkia tarvittavia kenttiä ei ole täytetty
 
 **Koodi** : `400 BAD REQUEST`
-
-**Esimerkki sisällöstä**
-
-```json
-{
-    Mitä tulee vastaukseksi?
-}
-```

@@ -15,7 +15,7 @@ Projektin tavoitteena on tuottaa lipputoimiston tilaama lipunmyyntijärjestelmä
 
 Järjestelmän avulla lipputoimiston lipunmyynti tehostuu ja heidän on helpompi hallita myytäviä tapahtumia. Lisäksi asiakas saa järjestelmästä liiketoiminnan kehittämisen kannalta hyödyllisiä myyntiraportteja. Järjestelmän alustava nimi on TicketGuru.
 
-Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Yksinkertainen käyttöliittymäratkaisu on toteutettu Thymeleaf template enginen avulla. 
+Palvelu toteutetaan Javalla Spring Boot -kehystä käyttäen. Yksinkertainen käyttöliittymäratkaisu tehdään Thymeleaf template enginen avulla. 
 ___
 
 ## Järjestelmän määrittely
@@ -111,7 +111,7 @@ Kuva 2. Tietokantakaavio
 | ------------- |:-------------:| -----:|
 | saleid      | int PK | Myyntitapahtuman id |
 | sale_date    | LocalDateTime     |   Myyntitapahtuman päivämäärä & kellonaika |
-| totelprice      | double      |   myyntitapahtuman kokonaishinta |
+| totalprice      | double      |   myyntitapahtuman kokonaishinta |
 | user_id      | int FK      |   Viittaus myyntitapahtuman myyjään käyttäjä-taulussa |
 
 ### Ennakkoliput
@@ -214,7 +214,7 @@ Tulostettulippu-taulu sisältää tapahtumaan myydyt tulostetutliput. Tulostetut
 
 ### Toteutuksen yleiskuvaus
 
-Järjestelmän back end eli palveinpuoli on toteutettu Java Spring Boot sovelluskehystä käyttäen Maven-projektina. Ohjelmointiympäristönä on toiminut Eclipse IDE for Java EE, joka soveltuu hyvin Javan kehitysympäristöksi. Järjestelmän tietokanta on toteutettu MariaDB:n avulla, mutta järjestelmää voi käyttää myös H2-tietokannan avulla. Sovellus on julkaista Azuren pilvipalvelussa. Käyttäliittymä on tehty Thymeleafilla.
+Järjestelmän back end eli palvelinpuoli on toteutettu Java Spring Boot sovelluskehystä käyttäen Maven-projektina. Ohjelmointiympäristönä on toiminut Eclipse IDE for Java EE, joka soveltuu hyvin Javan kehitysympäristöksi. Järjestelmän tietokanta on toteutettu MariaDB:n avulla, mutta järjestelmää voi käyttää myös H2-tietokannalla. Sovellus on julkaista Azuren pilvipalvelussa. Käyttöliittymä on tehty Thymeleafilla.
 
 ### REST API -rajapinta
 
@@ -249,10 +249,10 @@ Tapahtumien käsittelyyn liittyvät endpointit
 **Postinumerot**
 
 * [**Näytä kaikki postinumerot**](API-dokumentaatio/areacodes/get.md) : `GET /areacodes`
-* [**Näytä postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/get.md) : `GET /areacode/{id}`
+* [**Näytä postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/get.md) : `GET /{areaCode}`
 * [**Lisää uusi postinumero**](API-dokumentaatio/areacodes/post.md) : `POST /areacodes`
-* [**Muokkaa postinumeroa ID:n perusteella**](API-dokumentaatio/areacodes/pk/put.md) : `PUT /areacode/{id}`
-* [**Poista postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/delete.md) : `DELETE /areacode/{id}`
+* [**Muokkaa postinumeroa ID:n perusteella**](API-dokumentaatio/areacodes/pk/put.md) : `PUT /{areaCode}`
+* [**Poista postinumero ID:n perusteella**](API-dokumentaatio/areacodes/pk/delete.md) : `DELETE /{areaCode}`
 
 **Ennakkoliput**
 
@@ -301,9 +301,7 @@ Kehitysympäristön käyttäminen H2-tietokannalla:
 
 ### Järjestelmän tuotantoympäristön asentaminen
 
-* järjestelmän asentaminen tuotantoympäristöön: miten järjestelmän saisi asennettua johonkin uuteen ympäristöön.
-
-*Asennusohjeesta tulisi ainakin käydä ilmi, miten käytettävä tietokanta ja käyttäjät tulee ohjelmistoa asentaessa määritellä (käytettävä tietokanta, käyttäjätunnus, salasana, tietokannan luonti yms.).*
+TicketGuru on julkaistu Azure-pilvipalvelussa. Sitä voi käyttää osoitteessa vra-vraro2.azurewebsites.net. Kirjautumiseen tarvittavat tunnukset löytyvät käynnistys- ja käyttöohjeesta.
 
 ## Käynnistys- ja käyttöohje
 Ohjelman käynnistykseen tarvittava URL sekä kirjautumiseen tarvittava tunnus ja salasana:

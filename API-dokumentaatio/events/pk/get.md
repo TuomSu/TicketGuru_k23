@@ -43,16 +43,11 @@ Näyttää yksittäisen tapahtuman
 
 **Koodi** : `404 NOT FOUND`
 
-**Sisältö** : `{}`
 
-### Tai
-
-**Ehdot** : Jos tapahtuma on olemassa, mutta käyttäjällä ei ole tarvittavia oikeuksia
-
-**Sisältö** : `403 FORBIDDEN`
-
-**Content** :
+**Sisältö** :
 
 ```json
-{"detail": "Sinulla ei ole oikeuksia suorittaa tätä toimenpidettä."}
+{
+    "message" : "Tapahtumaa ei löytynyt annetulla id:llä"
+}
 ```

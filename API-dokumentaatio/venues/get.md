@@ -1,6 +1,6 @@
 # Näytä tapahtumapaikat
 
-Näyttää kaikki sovellukseen lisätyt lipputyypit
+Näyttää kaikki sovellukseen lisätyt tapahtumapaikat
 
 **URL** : `/venues/`
 
