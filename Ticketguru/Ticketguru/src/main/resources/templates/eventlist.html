@@ -85,6 +85,7 @@
     		<a sec:authorize="hasAnyAuthority('admin','basic')" class="btn btn-danger" th:href="@{/salesreport/{id}(id=${event.event_id})}">Myyntiraportti</a></td>
 
 
+
     	</tr>
      </table>
      <a sec:authorize="hasAuthority('admin')" href="/addEvent" class="btn btn-success">Add event</a>    
