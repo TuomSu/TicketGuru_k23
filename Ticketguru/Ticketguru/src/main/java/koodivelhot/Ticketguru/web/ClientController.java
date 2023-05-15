@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import koodivelhot.Ticketguru.Domain.AppUser;
 import koodivelhot.Ticketguru.Domain.AppUserRepository;
@@ -99,11 +100,11 @@ public class ClientController {
 	// Lipputyyppien editointi html (erittäin kesken, eikä vielä toimi)
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/atypes/{id}", method = RequestMethod.GET)
-	public String editTicketTypes(@PathVariable("id") Long event_id, Model model) {
-		model.addAttribute("event", erepository.findById(event_id));
-		model.addAttribute("ticketTypes", ttrepository.findByEvent(erepository.findById(event_id).get()));
+	public String editTicketTypes(@PathVariable("id") Event event, Model model) {
+		// model.addAttribute("event", erepository.findById(event_id));
+		model.addAttribute("ticketTypes", ttrepository.findByEvent(event)); // erepository.findById(event_id).get()
 		// model.addAttribute("ticketTypes", ttrepository.findAll());
-		model.addAttribute("ticketType", new TicketType());
+		model.addAttribute("ticketType", new TicketType(0, null, event));
 		return "acceptabletypes";
 	}
 
@@ -133,9 +134,10 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/saveType", method = RequestMethod.POST)
-	public String save(TicketType type) {
+	public String save(TicketType type, RedirectAttributes redirectAttributes) {
 		ttrepository.save(type);
-		return "redirect:eventlist";
+		redirectAttributes.addAttribute("id", type.getEvent().getEvent_id());
+		return "redirect:atypes/{id}";
 	}
 
 	@RequestMapping(value = "/saveVenue", method = RequestMethod.POST)

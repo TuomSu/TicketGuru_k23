@@ -10,7 +10,6 @@
 		<tr>
 		    <th>Kuvaus</th>
 		    <th>Hinta</th>
-		    <th>Toiminnot</th> 
 		</tr>  
     	<tr th:each = "ticketType : ${ticketTypes}">
     		<td th:text="${ticketType.type}"></td>
@@ -21,15 +20,15 @@
      </table>
      <div>
 		<form th:object="${ticketType}" th:action="@{../saveType}" action="#" method="post">
-		<input type="hidden" id="event" th:field="*{event.event_id}" />
 		  	<label for="type">Kuvaus</label>
 			<input type="text"  id="type" th:field="*{type}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
 		  	<label for="price">Hinta</label>
 			<input type="number" id="price" th:field="*{price}" step=".01"/>
 			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="hidden" id="id" th:field="*{event.event_id}"/>
        		
-			<input type="submit" value="Save"></input>
+			<input type="submit" value="Save" ></input>
 		</form>
 	</div>
 </body>
