@@ -257,9 +257,12 @@ Tapahtumien käsittelyyn liittyvät endpointit
 **Ennakkoliput**
 
 * [**Näytä kaikki ennakkoliput**](API-dokumentaatio/presaletickets/get.md) : `GET /presaletickets`
-* [**Näytä ennakkolippu id:n perusteella**](API-dokumentaatio/presaletickets/get.md) : `GET /presaletickets/{id}`
-* [**Lisää uusi ennakkolippu**](API-dokumentaatio/presaletickets/get.md) : `POST /presaletickets`
+* [**Näytä ennakkolippu id:n perusteella**](API-dokumentaatio/presaletickets/get.md) : `GET /presaleticket/{id}`
+* [**Lisää uusi ennakkolippu**](API-dokumentaatio/presaletickets/get.md) : `POST /presaletickets{id}`
 * [**Merkitse ennakkolippu käytetyksi koodin perusteella**](API-dokumentaatio/presaletickets/get.md) : `PATCH /presaletickets?code={code}`
+* [**Hae ennakkolipun tiedot koodin perusteella**](API-dokumentaatio/presaletickets/get.md) : `GET /presaletickets?code={code}`
+* [**Poista ennakkolippu id:n perusteella**](API-dokumentaatio/presaletickets/delete.md) : `DELETE /presaleticket/{id}`
+* [**Muokkaa ennakkolippua**](API-dokumentaatio/presaletickets/put.md) : `PUT /presaleticket/{id}`
 
 **Myyntitapahtumat**
 
