@@ -3,14 +3,56 @@
 <head>
     <title>Tarkista lippu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+  h1 {
+  text-align: center;
+  padding: 20px;
+  font-size: 2.5em;
+  }
+  
+  .center{
+  position: relative;
+  text-align: center;
+  }
+.btn:hover {
+  background-color: grey;
+}
+
+  
+  .btn {
+ 
+  background-color: white;
+  padding: 22px 26px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  font-size: 30px;
+  
+}
+
+ 
+   
+    </style>
 </head>
+
 <body>
-     <h2>Lipun tarkastaminen</h2>
+		<a href="/">
+		<button  class="btn"><i ></i>🏠</button>
+		</a>
+		
+     <h1>Lipun tarkastaminen</h1>
+     <div class="center">
      <input class="textInput" type="text" id="code"  placeholder="Syötä lipun koodi">
      <input class="button" type="button" value="Näytä lipun tiedot" onClick="showTicket()">
      <input class="button" type="button" value="Tarkista lippu" onClick="checkTicket()">
+     <br>
+     <br>
      <p id="result"></p>
      <p id="result2"></p>
+     </div>
+     
      
 </body>
 <script>

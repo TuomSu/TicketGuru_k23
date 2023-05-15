@@ -80,7 +80,7 @@ public class ClientController {
 
 	
 	// Etusivu
-	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	@PreAuthorize("hasAnyAuthority('admin','basic', 'controller')")
 	@RequestMapping(value = { "/", "frontpage" })
 	public String frontpage() {
 		return "frontpage";

@@ -49,6 +49,7 @@ public class Event {
 	@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
 	private LocalDateTime presaleEnds;
 	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue") // tapahtumapaikka. Kaupunki tulee tämän kautta.
     private Venue venue;
