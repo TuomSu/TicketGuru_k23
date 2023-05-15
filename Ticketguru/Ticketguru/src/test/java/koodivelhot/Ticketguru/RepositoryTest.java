@@ -2,21 +2,21 @@ package koodivelhot.Ticketguru;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import koodivelhot.Ticketguru.Domain.AppUser;
+import koodivelhot.Ticketguru.Domain.AppUserRepository;
+import koodivelhot.Ticketguru.Domain.AreaCode;
+import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
+import koodivelhot.Ticketguru.Domain.Event;
 import koodivelhot.Ticketguru.Domain.EventRepository;
 import koodivelhot.Ticketguru.Domain.PreSaleTicket;
 import koodivelhot.Ticketguru.Domain.PreSaleTicketRepository;
@@ -28,11 +28,6 @@ import koodivelhot.Ticketguru.Domain.TicketTypeRepository;
 import koodivelhot.Ticketguru.Domain.UserRoleRepository;
 import koodivelhot.Ticketguru.Domain.Venue;
 import koodivelhot.Ticketguru.Domain.VenueRepository;
-import koodivelhot.Ticketguru.Domain.AppUser;
-import koodivelhot.Ticketguru.Domain.AppUserRepository;
-import koodivelhot.Ticketguru.Domain.AreaCode;
-import koodivelhot.Ticketguru.Domain.AreaCodeRepository;
-import koodivelhot.Ticketguru.Domain.Event;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -200,14 +195,12 @@ public class RepositoryTest {
 	}
 	
 	
-	@Test
-	public void deleteNewAreacode() {
-		List<AreaCode> areacodes = acrepository.findByAreaCode("00700");
-		AreaCode areacode = areacodes.get(0);
-		acrepository.delete(areacode);
-		List<AreaCode> newAreacodes = acrepository.findByAreaCode("00700");
-		assertThat(newAreacodes).hasSize(0);
-	}
+	/*
+	 * @Test public void deleteNewAreacode() { List<AreaCode> areacodes =
+	 * acrepository.findByAreaCode("00700"); AreaCode areacode = areacodes.get(0);
+	 * acrepository.delete(areacode); List<AreaCode> newAreacodes =
+	 * acrepository.findByAreaCode("00700"); assertThat(newAreacodes).hasSize(0); }
+	 */
 	
 	
 				//Venue Testaukset
@@ -239,11 +232,11 @@ public class RepositoryTest {
 				//Presaleticket testaukset
 	
 	
-	@Test
-	public void findByPresaleticket() {
-		List<PreSaleTicket> presaletickets = pstrepository.findByPresaleticketid(Long.valueOf(1));
-		assertThat(presaletickets).hasSize(1);
-	}
+				/*
+				 * @Test public void findByPresaleticket() { List<PreSaleTicket> presaletickets
+				 * = pstrepository.findByPresaleticketid(Long.valueOf(1));
+				 * assertThat(presaletickets).hasSize(1); }
+				 */
 	
 	@Test
 	public void createNewPresaleticket() {

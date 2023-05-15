@@ -107,7 +107,7 @@
             <tr th:each="ticket : ${event.presaleTickets}">
                 <td class="saledate" th:text="${#temporals.format(ticket.sale.saledate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(ticket.sale.saledate, 'HH.mm')}"></td>
 				<td class="saleid" th:text="${ticket.sale.saleid}"></td>
-                <td class="price" th:text="${ticket.sale.totalprice} + ' €'"></td>
+                <td class="price" th:text="${ticket.price} + ' €'"></td>
 				<td class="type" th:text="${ticket.tickettype.type}"></td>
                 
             </tr>
