@@ -80,7 +80,7 @@ public class ClientController {
 
 	
 	// Etusivu
-	@PreAuthorize("hasAnyAuthority('admin','basic')")
+	// @PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = { "/", "frontpage" })
 	public String frontpage() {
 		return "frontpage";
@@ -198,6 +198,9 @@ public class ClientController {
 	@PostMapping("/addpresaletickets")
 	public String addPresaleTickets(@RequestParam("id") Long event_id, @RequestParam Map<String, String> ticketQuantities) {
 		
+		Optional<Event> optionalEvent = erepository.findById(event_id);
+		Event event = optionalEvent.get();
+		
 		System.out.println("event_id = " + event_id);
 	    System.out.println("ticket quantities = " + ticketQuantities);
 	    
@@ -232,18 +235,16 @@ public class ClientController {
 	                double price = ticketType.getPrice();
 	                for (int i = 0; i < Integer.parseInt(value); i++) {
 	                    PreSaleTicket preSaleTicket = new PreSaleTicket();
-	                    Optional<Event> optionalEvent = erepository.findById(event_id);
 	            	    
-	            	    if (optionalEvent.isPresent()) {
-	            	    	Event event = optionalEvent.get();
-	            	    	preSaleTicket.setPrice(price);
-	            	    	preSaleTicket.setEvent(event);
-	            	    	event.setSoldTickets(event.getSoldTickets() + 1);
-	            	    	sale_event.setTotalprice(sale_event.getTotalprice() + price);
-	            	    }
+	            	    preSaleTicket.setPrice(price);
+	            	    preSaleTicket.setEvent(event);
+	            	    event.setSoldTickets(event.getSoldTickets() + 1);
+	            	    sale_event.setTotalprice(sale_event.getTotalprice() + price);
+	            	    
 	                    preSaleTicket.setTickettype(ticketType);
 	                    preSaleTicket.setUsed(false);
 	                    preSaleTicket.setSale(sale_event);
+	                    preSaleTicket.setQrCodeImage();
 	                    preSaleTickets.add(preSaleTicket);
 	                    pstrepository.save(preSaleTicket);
 	                }
