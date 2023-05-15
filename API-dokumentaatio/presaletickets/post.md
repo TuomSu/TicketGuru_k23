@@ -2,29 +2,27 @@
 
 Luo ennakkolippu
 
-**URL** : `/presaletickets/`
+**URL** : `/presaletickets/{id}`
 
 **Metodi** : `POST`
+
+**URL Parametrit** : `{id}` sen tapahtuman id, johon ennakkolippu halutaan lisätä
 
 **Kirjautuminen vaaditaan** : Kyllä
 
 **Vaaditut oikeudet** : Käyttäjällä täytyy olla admin tai basic oikeudet
 
-**Rajoitukset**
-
-Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
+**Esimerkkipyyntö**
 
 ```json
 {
-    "used": Boolean,
-    "price": double,
-    "sale_id": int,
-    "event_id": int,
-    "type_id": int
+    "used": false,
+    "tickettype": {
+        "type_id": 1,
 }
 ```
 
-## Success Response
+## Onnistuneen pyynnön vastauskoodi
 
 **Ehdot** : Kaikki tarvittavat kentät on täytetty ja data on oikean muotoista. Käyttäjällä on oikeus luoda ennakkolippuja. Ennakkolipulle määritetyt sale_id, event_id ja type_id löytyvät tietokannasta.
 
@@ -38,7 +36,7 @@ Kaikki kentät vaaditaan ja niiden tulee olla oikean muotoisia
 }
 ```
 
-## Virhekoodit
+## Virhekoodii
 
 **Ehdot** : Jos kaikkia tarvittavia kenttiä ei ole täytetty
 
