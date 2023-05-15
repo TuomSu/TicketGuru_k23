@@ -81,8 +81,7 @@
     		<td th:text="${event.eventStartDate}"></td>
     		<td th:text="${event.venue.areaCode.city}"></td>
     		<td th:text="${event.eventName}"></td>
-    		<td sec:authorize="hasAuthority('admin')" ><a class="btn btn-warning"  th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a> <a class="btn btn-info" th:href="@{/atypes/{id}(id=${event.event_id})}">Lipputyypit</a>
-    		<a class="btn btn-danger" th:href="@{/delete/{id}(id=${event.event_id})}">Delete</a></td>
+    		<td sec:authorize="hasAuthority('admin')" ><a class="btn btn-warning"  th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a> <a class="btn btn-info" th:href="@{/atypes/{id}(id=${event.event_id})}">Lipputyypit</a></td>
 
 
     	</tr>
