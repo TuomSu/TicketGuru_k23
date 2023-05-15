@@ -157,7 +157,7 @@ public class PreSaleTicketController {
 	//Tällä metodilla voi hakea qr koodia
 	@PreAuthorize("hasAnyAuthority('admin','basic', 'controller')")
 	@RequestMapping(value = "presaletickets/{id}/qrcode", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<byte[]> getPreSaleTicketQrCodeImage(@PathVariable("id") Long presaleticketid) {
+	public ResponseEntity<String> getPreSaleTicketQrCodeImage(@PathVariable("id") Long presaleticketid) {
 	    PreSaleTicket ticket = pstrepository.findById(presaleticketid)
 	            .orElseThrow(() -> new EntityNotFoundException("Pre-sale ticket not found with id " + presaleticketid));
 	    return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(ticket.getQrCodeImage());
