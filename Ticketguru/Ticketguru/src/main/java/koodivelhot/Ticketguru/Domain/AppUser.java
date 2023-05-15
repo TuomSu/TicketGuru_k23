@@ -47,7 +47,7 @@ public class AppUser {
 	@NotNull (message = "username cannot be null")
 	private String username;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 	
