@@ -34,6 +34,7 @@ public class PreSaleTicket {
 	private double price;
 	private String code = UUID.randomUUID().toString(); // tällä luodaan lipulle random koodi 
 
+	@JsonIgnore
 	private byte[] qrCodeImage; 
 	
 	@JsonIgnore

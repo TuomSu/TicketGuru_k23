@@ -98,7 +98,7 @@ nav{
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  bottom: 89px;
+  bottom: -150px;
   transform: skewY(-5deg) scale(.89) rotateX(-5deg) rotateZ(-3deg);
 }
 
@@ -113,7 +113,7 @@ nav{
 
 .menu-item:hover .sub-menu{
   pointer-events: all;
-  animation: showBounce 300ms cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards;
+  animation: showBounce 350ms cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards;
   transform-style: preserve-3d;
 }
 
@@ -170,33 +170,33 @@ nav{
 }
 
 nav > ol > .menu-item:nth-of-type(1) > a:before{
-  content: '📅';
+  content: '📛';
 }
 
 nav > ol > .menu-item:nth-of-type(2) > a:before{
-  content: '📝';
+  content: '🎫';
 }
 
 
 
 nav > ol > .menu-item:nth-of-type(3) > a:before{
-  content: '➕📆';
+  content: '🎟️';
 }
 nav > ol > .menu-item:nth-of-type(4) > a:before{
-  content: '🎫';
+  content: '📆';
 }
 nav > ol > .menu-item:nth-of-type(5) > a:before{
-  content: '🎟️';
+  content: '📝';
 }
 
 nav > ol > .menu-item:nth-of-type(6) > a:before{
-  content: '📛';
+  content: '➕📆';
 }
 
 
 
 
-nav > ol > .menu-item:nth-of-type(3) ol li:nth-of-type(1) a:before{
+nav > ol > .menu-item:nth-of-type(6) ol li:nth-of-type(1) a:before{
   content: '📪';
   display: inline-flex;
   font-size: inherit;
@@ -204,7 +204,7 @@ nav > ol > .menu-item:nth-of-type(3) ol li:nth-of-type(1) a:before{
   margin-right: 5px;
   transition: transform 300ms ease-out;
 }
-nav > ol > .menu-item:nth-of-type(3) ol li:nth-of-type(2) a:before{
+nav > ol > .menu-item:nth-of-type(6) ol li:nth-of-type(2) a:before{
  content: '📍';
   display: inline-flex;
   font-size: inherit;
@@ -213,7 +213,7 @@ nav > ol > .menu-item:nth-of-type(3) ol li:nth-of-type(2) a:before{
   transition: transform 300ms ease-out;	
 }
 
-nav > ol > .menu-item:nth-of-type(3) ol li:nth-of-type(3) a:before{
+nav > ol > .menu-item:nth-of-type(6) ol li:nth-of-type(3) a:before{
  content: '📆';
   display: inline-flex;
   font-size: inherit;
@@ -259,13 +259,21 @@ display: flex;
   justify-content: center;
   
 }
-
+.status {
+position: absolute;
+    top: 95%;
+    left: 0%;
+    
+}
  
 
 
 </style>
+
 </head>
 <body>
+
+
 
 
 	<div class=text-center1>
@@ -280,9 +288,12 @@ display: flex;
 <div class="keski">
 <nav class="menu">
   <ol>
-    <li class="menu-item"><a href="/eventlist">Tapahtumat</a></li>
-    <li class="menu-item"><a href="/salesreport/1">Myyntitapahtumat</a></li>
-    <li sec:authorize="hasAuthority('ADMIN')"  class="menu-item">
+  	<li class="menu-item" ><a href="/logout">Kirjaudu ulos</a></li>
+  	<li class="menu-item"><a href="/ticketcheck">Tarkista lippu</a></li>
+  	 <li  sec:authorize="hasAnyAuthority('admin','basic')" class="menu-item"><a href="/selltickets">Myy lippuja</a></li>
+    <li  sec:authorize="hasAnyAuthority('admin','basic')" class="menu-item"><a href="/eventlist">Tapahtumat</a></li>
+    <li  sec:authorize="hasAnyAuthority('admin','basic')" class="menu-item"><a href="/salesreport/1">Myyntitapahtumat</a></li>
+    <li sec:authorize="hasAuthority('admin')"  class="menu-item">
       <a href="#0">Lisää uusi</a>
       <ol class="sub-menu">
         <li class="menu-item"><a href="/newACode">Postinumero</a></li>
@@ -290,13 +301,20 @@ display: flex;
         <li class="menu-item"><a href="/addEvent">Tapahtuma</a></li>
       </ol>
     </li>
-     <li class="menu-item"><a href="/selltickets">Myy lippuja</a></li>
-     <li class="menu-item"><a href="/createticket">Luo lippu</a></li>
    
-    <li class="menu-item" ><a href="/logout">Kirjaudu ulos</a></li>
+   	
   </ol>
 </nav>
 </div>
+
+
+<div class="status">
+		<i>Welcome <b sec:authentication="name"></b>, 
+        your role is <b sec:authentication="principal.authorities"></b>
+	</div>
+
+
+
 
         
 </body>
