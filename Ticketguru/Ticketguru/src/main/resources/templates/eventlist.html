@@ -3,34 +3,90 @@
 <head>
     <title>Tapahtumat</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--   <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> -->
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+        <style>
+         h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+           
+        }
+        
+		.ticket-table {
+		  border-collapse: collapse;
+		  width: 100%;
+		  border: 1px solid #f2f2f2;
+		  font-size: 14px;
+		}
+		.ticket-table th {
+		  background-color: #36454F;
+		  text-align: left;
+		  padding: 8px;
+		  color: #fff;
+		 
+		}
+		.ticket-table td {
+		  text-align: left;
+		  padding: 8px;
+		 
+		}
+		.center {
+		position: absolute;
+		}
+			.container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        
+        .btnA:hover {
+  background-color: grey;
+}
+
+  
+  .btnA {
+ 
+  background-color: white;
+  padding: 22px 26px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  font-size: 30px;
+  border: none;
+  
+}
+        
+        
+    </style>
 </head>
+
 <body>
+
+
+<a href="/">
+		<button  class="btnA"><i ></i>🏠</button>
+		</a>
+		
 <div class="container">
-	<div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
-	</div>
 	<h1>Tapahtumat</h1>
-    <table class="table table-striped">
+    <table class="ticket-table">
 		<tr>
 		    <th>Aika</th>
 		    <th>Kaupunki</th>
 		    <th>Tapahtuman nimi</th>
-		    <th>Toiminnot</th> 
+		    <th sec:authorize="hasAuthority('admin')" >Toiminnot</th> 
 		</tr>  
     	<tr th:each = "event : ${events}">
     		<td th:text="${event.eventStartDate}"></td>
     		<td th:text="${event.venue.areaCode.city}"></td>
     		<td th:text="${event.eventName}"></td>
-    		<!-- <td><a th:href="@{/delete/{id}(id=${event.id})}">Delete</a> -->
-    		<td><a th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a> <a th:href="@{/atypes/{id}(id=${event.event_id})}">Lipputyypit</a></td>
+    		<td sec:authorize="hasAuthority('admin')" ><a class="btn btn-warning"  th:href="@{/edit/{id}(id=${event.event_id})}">Muokkaa</a> <a class="btn btn-info" th:href="@{/atypes/{id}(id=${event.event_id})}">Lipputyypit</a></td>
 
 
     	</tr>
      </table>
-     <a href="/addEvent" class="btn btn-success">Add event</a>    
+     <a sec:authorize="hasAuthority('admin')" href="/addEvent" class="btn btn-success">Add event</a>    
 </div>  
 </body>
 </html>

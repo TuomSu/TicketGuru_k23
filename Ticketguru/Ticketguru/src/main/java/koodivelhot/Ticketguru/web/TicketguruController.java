@@ -6,13 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,7 +56,7 @@ public class TicketguruController {
 	TicketTypeRepository ttrepository;
 	
 	@Autowired
-	PrintedTicketRepository prrepository;
+	private PrintedTicketRepository prrepository;
 	
 	@GetMapping("testi")
 	@ResponseBody
@@ -73,6 +68,8 @@ public class TicketguruController {
     public String login() {	
         return "login";
     }
+    
+
 	
 	//Tapahtuma
 	
@@ -101,6 +98,7 @@ public class TicketguruController {
 	// REST, add new event
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/events", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Tapahtuma luotu")
 	public @ResponseBody Event newEvent(@RequestBody Event newEvent) {
 		return erepository.save(newEvent);
 	}
@@ -159,7 +157,13 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Venue> findVenueRest(@PathVariable("id") Long venue_id) {
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		if (venue.isPresent()) {
 		return vrepository.findById(venue_id);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+		}
 	}
 	
 	// REST, add new venue
@@ -173,16 +177,29 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Venue editVenue(@RequestBody Venue editedVenue, @PathVariable("id") Long venue_id) {
-		editedVenue.setVenue_id(venue_id);
-		return vrepository.save(editedVenue);
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		
+			if (venue.isPresent()) {
+			editedVenue.setVenue_id(venue_id);
+			return vrepository.save(editedVenue);
+			} else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+			} 
 	}
 	
 	//rest, delete by id and show updated list of venues
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/venue/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<Venue> deleteVenue(@PathVariable("id") Long venue_id) {
-		vrepository.deleteById(venue_id);
-		return (List<Venue>) vrepository.findAll();
+		Optional<Venue> venue = vrepository.findById(venue_id);
+		
+		if (venue.isPresent()) {
+			vrepository.deleteById(venue_id);
+			return (List<Venue>) vrepository.findAll();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua tapahtumapaikkaa ei löytynyt");
+		} 
 	}
 	
 	//Kaupunki
@@ -198,12 +215,19 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<AreaCode> findAreaCodeRest(@PathVariable("id") String areaCode) {
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		
+		if (acode.isPresent()) {
 		return acrepository.findByAreaCode(areaCode);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");
+		}
 	}
 	
 	// REST, add new areacode
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/acodes", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED, reason = "Postinumero lisätty")
 	public @ResponseBody AreaCode newAreaCode(@RequestBody AreaCode newAreaCode) {
 		return acrepository.save(newAreaCode);
 	}
@@ -212,17 +236,33 @@ public class TicketguruController {
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public @ResponseBody AreaCode editAreaCode(@RequestBody AreaCode editedAreaCode, @PathVariable("id") String areaCode) {
-		editedAreaCode.setAreaCode(areaCode);
-		return acrepository.save(editedAreaCode);
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		if (acode.isPresent()) {
+			editedAreaCode.setAreaCode(areaCode);
+			return acrepository.save(editedAreaCode);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");	
+		}
+		
+		
+		
 	}
 	
 	//rest, delete by id and show updated list of areacodes
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody List<AreaCode> deleteAreaCode(@PathVariable("id") String areaCode) {
-		acrepository.deleteById(areaCode);
-		return (List<AreaCode>) acrepository.findAll();
+		Optional<AreaCode> acode = acrepository.findById(areaCode);
+		
+		if (acode.isPresent()) {
+			acrepository.deleteById(areaCode);
+			return (List<AreaCode>) acrepository.findAll();
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Annettua postikoodia ei löytynyt");
+		}
 	}
+	
 	// Lipputyypit
 	
 	// REST, get all tickettypes

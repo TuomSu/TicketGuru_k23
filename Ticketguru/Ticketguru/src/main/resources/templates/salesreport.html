@@ -3,7 +3,29 @@
 <head>
     <title>Myyntiraportti</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+    
     <style>
+    
+    .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+    
+       h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+           }
+           
+              h2 {
+        
+            margin-bottom: 20px;
+            text-align: center;
+             }
+    
         .saledate {
 		  text-align: left;
 		  padding-right: 20px;
@@ -18,35 +40,56 @@
 		}
 		.ticket-table {
 		  border-collapse: collapse;
-		  width: 30%;
-		  border: 1px solid #ddd;
+		  width: 100%;
+		 border: 1px solid #f2f2f2;
 		  font-size: 14px;
 		}
 		.ticket-table th {
-		  background-color: #f2f2f2;
+		 background-color: #36454F;
 		  text-align: left;
 		  padding: 8px;
-		  border: 1px solid #ddd;
+		   color: #fff;
+		
 		}
 		.ticket-table td {
 		  text-align: left;
 		  padding: 8px;
-		  border: 1px solid #ddd;
+		  
 		}
+		
+	        
+        .btnA:hover {
+  background-color: grey;
+}
+
+  
+  .btnA {
+ 
+  background-color: white;
+  padding: 22px 26px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  font-size: 30px;
+  border: none;
+  
+}	
+		
     </style>
 </head>
 <body>
-<div class="container">
-	<div class="col-md-4" style="padding:20px 0">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-		</form>
-	</div>
+	
+	<a href="/">
+		<button  class="btnA"><i ></i>🏠</button>
+		</a>
+		
+	
+
     
 
     
-<h2>Myyntitapahtumat</h2>
+<h1>Myyntitapahtumat</h1>
 
+	<div class="container">
 <h2 th:text="'Tapahtuma: ' + ${event.event_id} + ' ' +${event.eventName}"></h2>
     <table class="ticket-table">
         <thead>
@@ -64,13 +107,13 @@
             <tr th:each="ticket : ${event.presaleTickets}">
                 <td class="saledate" th:text="${#temporals.format(ticket.sale.saledate, 'dd.MM.yyyy') + ' klo ' + #temporals.format(ticket.sale.saledate, 'HH.mm')}"></td>
 				<td class="saleid" th:text="${ticket.sale.saleid}"></td>
-                <td class="price" th:text="${ticket.sale.totalprice} + ' €'"></td>
+                <td class="price" th:text="${ticket.price} + ' €'"></td>
 				<td class="type" th:text="${ticket.tickettype.type}"></td>
                 
             </tr>
         </tbody>
     </table>
-    
+    </div>
         
 </body>
 </html>

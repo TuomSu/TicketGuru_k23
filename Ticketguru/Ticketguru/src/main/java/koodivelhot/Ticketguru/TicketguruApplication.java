@@ -76,7 +76,7 @@ public class TicketguruApplication {
 			
 			AppUser user1 = new AppUser((rolerepository.findByRole("admin").get(0)),"Anna","Anttonen", "usernameAnna", "password");
 			userrepository.save(user1);
-			AppUser user2 = new AppUser(role2,"Matti","Testaaja", "usernameMatti", "password");
+			AppUser user2 = new AppUser(role2,"Matti","Testaaja", "usernameMatti", "password"); // ei muokkaamaan eikä lisämään tapahtumia
 			userrepository.save(user2);
 			AppUser user3 = new AppUser(role3,"Tiina","Tarkastaja", "usernameTiina", "password");
 			userrepository.save(user3);

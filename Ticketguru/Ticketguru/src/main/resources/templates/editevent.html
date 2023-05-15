@@ -16,7 +16,7 @@
 			<input type="text" id="eventStartDate" th:field="*{eventStartDate}"/>
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="eventEndDate">Tapahtuma päättyy</label>
-			<input type="datetime-local" id="eventEndDate" th:field="*{eventEndDate}"/>
+			<input type="text" id="eventEndDate" th:field="*{eventEndDate}"/>
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="deplist">Paikka</label>
 			<select id="deplist" th:field="*{venue}" class="form-control">
@@ -33,13 +33,13 @@
 			<input type="number" id="ticketPrice" th:field="*{ticketPrice}" step=".01"/>
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="presaleStarts">Ennakkomyynti alkaa</label>
-			<input type="datetime-local" id="presaleStarts" th:field="*{presaleStarts}" />
+			<input type="text" id="presaleStarts" th:field="*{presaleStarts}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="presaleEnds">Ennakkomyynti päättyy</label>
-			<input type="datetime-local" id="presaleEnds" th:field="*{presaleEnds}" />
+			<input type="text" id="presaleEnds" th:field="*{presaleEnds}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
        		
-			<input type="submit" value="Save"></input>
+			<input  type="submit" value="Save"></input>
 		</form>
 	</div>
 </body>
