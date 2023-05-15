@@ -118,6 +118,8 @@ public class ClientController {
 		model.addAttribute("areaCodes", acrepository.findAll());
 		return "addevent";
 	}
+	
+
 
 	@PreAuthorize("hasAnyAuthority('admin','basic')")
 	@RequestMapping(value = "/newVenue")
