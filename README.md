@@ -291,7 +291,7 @@ Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä*
 ### Järjestelmän kehitysympäristön asentaminen
 
 1. Tietokoneelle tulee asentaa Eclipse tai muu ohjelmistokehitykseen soveltuva ohjelma (IDE)
-2. Projektin repositorio kloonataan tietokoneelle osoitteesta https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot.git
+2. Projektin repositorio kloonataan tietokoneelle osoitteesta https://github.com/VesaLiukkonen/ElokuvalippusovellusKoodivelhot.git. Sovellus löytyy projektin project - haarasta. Develop - haarassa on järjestelmän dokumentaatio.
 3. Asennetaan tietokoneelle MariaDB ja HeidiSQL
 4. HeidiSQL:stä luodaan yhteys MariaDB-palvelimeen
 5. Yhteyden muodostamisen jälkeen luodaan HeidiSQL:ssä uusi tietokanta
