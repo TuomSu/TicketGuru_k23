@@ -283,7 +283,8 @@ Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä*
 - weblayer testeillä varmistetiin sisäänkirjautumisen toiminto clientin puolella. 
 
 *Järjestelmän tunnetut ongelmat, joita ei ole korjattu:*
-- Ennakkomyynnin jälkeen tulostettavien lippujen tulostustoimintoa ei ole testattu vielä tässä versiossa. 
+- Ennakkomyynnin jälkeen tulostettavien lippujen tulostustoimintoa ei ole testattu vielä tässä versiossa.
+- Jos yrittää poistaa sellaisen tietueen, jota vaaditaan toisessa taulussa, tulee virheviestiksi 500 Internal Server Error. Jatkokehityksessä tähän tulisi lisätä parempi vastauskoodi, jotta käyttäjä tietää miksi poisto ei onnistunut. Koskee esimerkiksi tilannetta, jossa yrittää poistaa tapahtumapaikan, joka on jo liitetty johonkin tapahtumaan. 
 
 ## Asennustiedot
 
@@ -295,7 +296,7 @@ Käyttäjien käsittelyyn tarvittavien endpointtien kuvaus löytyy [**täältä*
 4. HeidiSQL:stä luodaan yhteys MariaDB-palvelimeen
 5. Yhteyden muodostamisen jälkeen luodaan HeidiSQL:ssä uusi tietokanta
 6. Application.properties tiedostoon lisätään tietokantaa koskevat tiedot: sijainti ja nimi sekä tunnus ja salasana
-7. Kun ongelma on käynnistetty, HeidiSQL:n puolella päivitetään kohdassa 5 luotu tietokanta, jolloin saadaan tietokantaan tarvittavat taulut näkyviin
+7. Kun ohjelma on käynnistetty, HeidiSQL:n puolella päivitetään kohdassa 5 luotu tietokanta, jolloin saadaan tietokantaan tarvittavat taulut näkyviin
 
 Kehitysympäristön käyttäminen H2-tietokannalla:
 
